@@ -1,3 +1,19 @@
 .navbar-color {
-    background-color: #00cc00;
+  background-color: rgba(15, 255, 25, 0.3); 
+  backdrop-filter: blur(5px);
+    
+
+}
+.jumbotron{
+     background-color: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(5px);
+}
+
+body{
+    
+/*     background-color: rgba(23, 14, 25, 0.3); */
+ 
+    
+    background-image: url(https://i.redd.it/i1uiukykj6g31.jpg);
+        background-size:contain;
 }

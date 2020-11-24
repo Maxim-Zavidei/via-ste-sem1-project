@@ -1,0 +1,5 @@
+/* Style of the navbar on all pages. */
+.navbar-color {
+  background-color: rgba(15, 255, 25, 0.3);
+  backdrop-filter: blur(5px);
+}

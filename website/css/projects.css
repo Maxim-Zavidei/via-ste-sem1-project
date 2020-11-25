@@ -24,7 +24,8 @@ color:  black;
 .table tbody tr:hover td, .table tbody tr:hover th {
     background-color:rgba(15, 163, 177, 0.2);
 }
-/*maybe add the background later*/
+/*the background image*/
 body {
-  /*background-color: rgba(23, 14, 25, 0.3);*/
+  background-image: url(/media/images/logo2Asset%204d.png)  ;
+    background-size: cover;
 }

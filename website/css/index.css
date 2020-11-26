@@ -1,0 +1,10 @@
+.carousel-inner img{
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.carousel-caption{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

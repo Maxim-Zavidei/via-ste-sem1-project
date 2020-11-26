@@ -4,16 +4,21 @@
 
 /* Style of the navbar on all pages. */
 .navbar-color {
-  background-color: rgba(15, 163, 177, 0.5);
+  background-color: rgba(24, 172, 186, 0.55);
   backdrop-filter: blur(5px);
+  box-shadow: inset 0px 8px 12px -3px rgba(0, 0, 0, 0.8), inset 0px -2px 5px -5px rgba(0, 0, 0, 0.5);
 }
 
+/* Style of the footer on all pages. */
 .footer {
-  background-color: #aa3a00;
+  background-color: #14cfe3;
+  box-shadow: inset 0px 0px 15px 3px rgba(2, 116, 143, 0.75);
 }
 
+/* Style of the sub footer on all pages. */
 .sub-footer {
-  background-color: #aa3a3a;
+  background-color: #027381;
+  color: white;
   border-top: 1px solid #000000;
-  box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
+  box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.5);
 }

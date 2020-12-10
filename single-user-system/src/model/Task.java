@@ -111,10 +111,8 @@ public class Task {
     return true;
   }
 
-  public boolean unAssignRequirement(Requirement requirement)
-      throws NullPointerException
-  {
-    for (Requirement requirement1 : requirement)
+  public boolean unAssignRequirement(Requirement requirement) throws NullPointerException {
+    for (Requirement requirement1 : requirementList)
     {
       if (requirement1.equals(requirement))
       {

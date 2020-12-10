@@ -92,6 +92,16 @@ public class Task {
     return requirementList.size();
   }
 
+  public int getNumberOfAssignedMembers()
+  {
+    return memberList.size();
+  }
+
+  public ArrayList<Member> getAllAssignedMembers()
+  {
+    return memberList;
+  }
+
   public ArrayList<Requirement> getRequirements()
   {
     return requirementList;

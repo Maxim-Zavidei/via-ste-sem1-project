@@ -13,17 +13,20 @@ public class Requirement
   private MyDate deadline;
   private ArrayList<Task> assignedTask;
 
-  public Requirement(String id, String title, String description,MyDate deadline, String priorityGroup)
+  public Requirement(String id, String title, String description,
+      MyDate deadline, String priorityGroup)
   {
-     setTitle(title);
-     setId(id);
-     setDescription(description);
-     setDeadline(deadline);
-     setPriorityGroup(priorityGroup);
-     isApproved = false;
-     assignedTask = new ArrayList<>();
+    setTitle(title);
+    setId(id);
+    setDescription(description);
+    setDeadline(deadline);
+    setPriorityGroup(priorityGroup);
+    isApproved = false;
+    assignedTask = new ArrayList<>();
   }
-  public Requirement(String id, String title,MyDate deadline, String priorityGroup)
+
+  public Requirement(String id, String title, MyDate deadline,
+      String priorityGroup)
   {
     setTitle(title);
     setId(id);
@@ -99,7 +102,7 @@ public class Requirement
   {
     int estimateH = 0;
 
-    for(int i = 0; i < assignedTask.size(); i++)
+    for (int i = 0; i < assignedTask.size(); i++)
     {
       estimateH += assignedTask.get(i).getEstimatedWorkHours();
     }
@@ -111,7 +114,7 @@ public class Requirement
   {
     int estimateT = 0;
 
-    for(int i = 0; i < assignedTask.size(); i++)
+    for (int i = 0; i < assignedTask.size(); i++)
     {
       estimateT += assignedTask.get(i).getTotalWorkedHours();
     }
@@ -134,10 +137,17 @@ public class Requirement
     return assignedTask;
   }
 
-//  public ArrayList<Member> getAllMembersWorkingOnRequirement()
-//  {
-//
-//  }
+  public ArrayList<Member> getAllMembersWorkingOnRequirement()
+  {
+    ArrayList<Member> members = new ArrayList<>();
+
+    for (int i = 0; i < assignedTask.size(); i++)
+    {
+      members.addAll(assignedTask.get(i).getAllAssignedMembers());
+
+    } return members;
+
+  }
 
   public boolean assignTask(Task task)
   {
@@ -162,18 +172,18 @@ public class Requirement
         return true;
       }
     }
-   return false;
+    return false;
   }
 
-   public boolean unassignFromEveryTask()
-   {
+  public boolean unassignFromEveryTask()
+  {
 
-     for (int i = 0; i < assignedTask.size(); i++)
-     {
-       assignedTask.remove(i);
-     }
-      return true;
-   }
+    for (int i = 0; i < assignedTask.size(); i++)
+    {
+      assignedTask.remove(i);
+    }
+    return true;
+  }
 
   public void approvedOrDisapprove(boolean isApproved)
   {
@@ -186,19 +196,21 @@ public class Requirement
     {
       return false;
     }
-    Requirement other = (Requirement)obj;
+    Requirement other = (Requirement) obj;
 
     for (int i = 0; i < assignedTask.size(); i++)
     {
-      if (!(assignedTask.get(i).getId().equals(other.assignedTask.get(i).getId())))
+      if (!(assignedTask.get(i).getId()
+          .equals(other.assignedTask.get(i).getId())))
       {
         return false;
       }
     }
 
-    return id.equals(other.id) && title.equals(other.title) && description.equals(other.description)
-        && status.equals(other.status) && priorityGroup.equals(other.priorityGroup) && isApproved == other.isApproved
-        && deadline.equals(other.deadline);
+    return id.equals(other.id) && title.equals(other.title) && description
+        .equals(other.description) && status.equals(other.status)
+        && priorityGroup.equals(other.priorityGroup)
+        && isApproved == other.isApproved && deadline.equals(other.deadline);
   }
 }
 

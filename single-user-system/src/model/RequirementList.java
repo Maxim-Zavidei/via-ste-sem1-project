@@ -148,6 +148,22 @@ return false;
      return false;
 
     }
+  public boolean addRequirement(Requirement requirement)
+  {
+
+
+    for (int i = 0; i < requirementList.size(); i++)
+    {
+      if (!requirementList.contains(requirement))
+      {
+        requirementList.add(requirement);
+        return true;
+      }
+    }
+    return false;
+
+  }
+
 
   public boolean  removeRequirement(String ID)
   {

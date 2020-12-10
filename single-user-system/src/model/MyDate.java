@@ -58,8 +58,7 @@ public class MyDate
     return year;
   }
 
-  public boolean isLeapYear()
-  {
+  public boolean isLeapYear() {
     return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
   }
 

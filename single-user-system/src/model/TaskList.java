@@ -20,7 +20,7 @@ public class TaskList
         ArrayList<Task> listReturn = new ArrayList<>();
 
         for(Task temp : taskList){
-            if(temp.getDeadline().isBefore(date){
+            if(temp.getDeadline().isBefore(date)){
                 listReturn.add(temp);
             }
         }

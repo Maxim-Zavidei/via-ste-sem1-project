@@ -104,38 +104,76 @@ public class RequirementList
     return requirementList.get(index);
   }
 
-//should figure it out
-  public Requirement getRequirementByID(String ID)
+
+  public Requirement getRequirementById(String ID)
   {
     for (int i = 0; i < requirementList.size(); i++)
     {
-      if (requirementList.get(i).getID().equals(ID))
+      if (requirementList.get(i).getId().equals(ID))
       {
         return requirementList.get(i);
       }
 
     }
-
+     throw new IllegalStateException("No requirement by this ID");
   }
 
-//  public boolean addRequirement(String ID, String title, String description, MyDate deadline, String priorityGroup)
-//  {
-//
-//  }
+  public boolean addRequirement(String ID, String title, String description, MyDate deadline, String priorityGroup)
+  {
+    Requirement requirement = new Requirement(ID, title, description, deadline, priorityGroup);
 
-//  public boolean addRequirement(String ID, String title, MyDate deadline, String priorityGroup)
-//   {
-//
-//    }
+    for (int i = 0; i < requirementList.size(); i++)
+    {
+      if (!requirementList.contains(requirement))
+      {
+        requirementList.add(requirement);
+        return true;
+      }
+    }
+return false;
+  }
 
-//  public boolean  removeRequirement(String ID)
-//  {
-//  }
+  public boolean addRequirement(String ID, String title, MyDate deadline, String priorityGroup)
+   {
+     Requirement requirement = new Requirement(ID, title, deadline, priorityGroup);
 
-//  public boolean  removeRequirement(Requirement requirement)
-//  {
-//
-//  }
+     for (int i = 0; i < requirementList.size(); i++)
+     {
+       if (!requirementList.contains(requirement))
+       {
+         requirementList.add(requirement);
+         return true;
+       }
+     }
+     return false;
+
+    }
+
+  public boolean  removeRequirement(String ID)
+  {
+    for (int i = 0; i < requirementList.size(); i++)
+    {
+      if (requirementList.get(i).getId().equals(ID))
+      {
+        requirementList.remove(i);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean  removeRequirement(Requirement requirement)
+  {
+    for (int i = 0; i < requirementList.size(); i++)
+    {
+      if (requirementList.contains(requirement))
+      {
+        requirementList.remove(requirement);
+        return true;
+      }
+    }
+    return false;
+  }
 
 public boolean equals(Object obj)
 {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Requirement
 {
-  private String ID;
+  private String id;
   private String title;
   private String description;
   private String status;
@@ -13,20 +13,20 @@ public class Requirement
   private MyDate deadline;
   private ArrayList<Task> assignedTask;
 
-  public Requirement(String ID, String title, String description,MyDate deadline, String priorityGroup)
+  public Requirement(String id, String title, String description,MyDate deadline, String priorityGroup)
   {
      setTitle(title);
-     setID(ID);
+     setId(id);
      setDescription(description);
      setDeadline(deadline);
      setPriorityGroup(priorityGroup);
      isApproved = false;
      assignedTask = new ArrayList<>();
   }
-  public Requirement(String ID, String title,MyDate deadline, String priorityGroup)
+  public Requirement(String id, String title,MyDate deadline, String priorityGroup)
   {
     setTitle(title);
-    setID(ID);
+    setId(id);
     setDeadline(deadline);
     setPriorityGroup(priorityGroup);
     description = null;
@@ -35,14 +35,14 @@ public class Requirement
 
   }
 
-  public String getID()
+  public String getId()
   {
-    return ID;
+    return id;
   }
 
-  public void setID(String ID)
+  public void setId(String ID)
   {
-    this.ID = ID;
+    this.id = id;
   }
 
   public String getTitle()
@@ -190,13 +190,13 @@ public class Requirement
 
     for (int i = 0; i < assignedTask.size(); i++)
     {
-      if (!(assignedTask.get(i).getID().equals(other.assignedTask.get(i).getID())))
+      if (!(assignedTask.get(i).getId().equals(other.assignedTask.get(i).getId())))
       {
         return false;
       }
     }
 
-    return ID.equals(other.ID) && title.equals(other.title) && description.equals(other.description)
+    return id.equals(other.id) && title.equals(other.title) && description.equals(other.description)
         && status.equals(other.status) && priorityGroup.equals(other.priorityGroup) && isApproved == other.isApproved
         && deadline.equals(other.deadline);
   }

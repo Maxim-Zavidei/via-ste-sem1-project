@@ -197,6 +197,6 @@ public class Task {
     }
 
     Task other = (Task) obj;
-    return other.id == ((Task) obj).id;
+    return other.id.equals(id);
   }
 }

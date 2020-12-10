@@ -207,7 +207,7 @@ public class Project
 
   public ArrayList<Requirement> getRequirementsWithGivenStatus(String status)
   {
-    return requirementList.getRequirementsWithGivenStatus(String status);
+    return requirementList.getRequirementsWithGivenStatus(status);
   }
 
   public ArrayList<Requirement> getRequirementsBeforeDeadline(MyDate deadline)

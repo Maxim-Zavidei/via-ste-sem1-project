@@ -139,20 +139,41 @@ public class Requirement
 //
 //  }
 
-//  public boolean assignTask(Task task)
-//  {
-//
-//  }
+  public boolean assignTask(Task task)
+  {
+    for (int i = 0; i < assignedTask.size(); i++)
+    {
+      if (assignedTask.get(i).equals(task))
+      {
+        return false;
+      }
+    }
+    assignedTask.add(task);
+    return true;
+  }
 
-//  public boolean unassignTask(Task task)
-//  {
-//
-//  }
+  public boolean unassignTask(Task task)
+  {
+    for (int i = 0; i < assignedTask.size(); i++)
+    {
+      if (assignedTask.get(i).equals(task))
+      {
+        assignedTask.remove(task);
+        return true;
+      }
+    }
+   return false;
+  }
 
-//   public boolean unassignFromEveryTask()
-//   {
-//
-//   }
+   public boolean unassignFromEveryTask()
+   {
+
+     for (int i = 0; i < assignedTask.size(); i++)
+     {
+       assignedTask.remove(i);
+     }
+      return true;
+   }
 
   public void approvedOrDisapprove(boolean isApproved)
   {

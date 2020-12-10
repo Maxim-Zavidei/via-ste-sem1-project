@@ -132,12 +132,17 @@ public class Member
     return false;
   }
 
-//  public boolean unassignFromEveryTask(Task task)
-//  {
-//
-//  }
+  public boolean unassignFromEveryTask()
+  {
 
-//  telephoneNumber, should revise
+    for (int i = 0; i < assignedTasks.size(); i++)
+    {
+      assignedTasks.remove(i);
+    }
+    return true;
+  }
+
+
   public boolean equals(Object obj)
   {
     if (!(obj instanceof Member))

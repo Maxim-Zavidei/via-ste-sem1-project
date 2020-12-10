@@ -1,6 +1,5 @@
 package model;
 
-import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.util.ArrayList;
 
 public class MemberList
@@ -31,29 +30,30 @@ public class MemberList
     return members;
   }
 
-  //  public Member getMemberByFullName(String firstName, String lastName)
-  //  {
-  //    for (int i = 0; i < memberList.size(); i++)
-  //    {
-  //      if (memberList.get(i).getFirstName().equals(firstName) && memberList.get(i).getLastName().equals(lastName))
-  //      {
-  //        return memberList.get(i);
-  //      }
-  //    }
-  //
-  //  }
+    public Member getMemberByFullName(String firstName, String lastName)
+    {
+      for (int i = 0; i < memberList.size(); i++)
+      {
+        if (memberList.get(i).getFirstName().equals(firstName) && memberList.get(i).getLastName().equals(lastName))
+        {
+          return memberList.get(i);
+        }
+      }
+      throw new IllegalStateException("No one matches in the list");
+    }
 
-  //  public Member getMemberByEmail(String email)
-  //    {
-  //      for (int i = 0; i < memberList.size(); i++)
-  //      {
-  //        if (memberList.get(i).getEmail().equals(email))
-  //        {
-  //          return memberList.get(i);
-  //        }
-  //      }
-  //
-  //    }
+    public Member getMemberByEmail(String email)
+      {
+        for (int i = 0; i < memberList.size(); i++)
+        {
+          if (memberList.get(i).getEmail().equals(email))
+          {
+            return memberList.get(i);
+          }
+        }
+        throw new IllegalStateException("No one matches in the list");
+
+      }
 
   public boolean hireMember(String firstName, String lastName, MyDate birthday,
       String email, long telephoneNumber)

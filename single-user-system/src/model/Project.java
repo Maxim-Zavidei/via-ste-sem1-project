@@ -70,14 +70,15 @@ public class Project
 
   public boolean addRequirement(Requirement requirement)
   {
-    for (Requirement temp : requirementList)
+    for (Requirement temp : requirementList.getAllApprovedRequirements())
     {
       if (temp.equals(requirement))
       {
         return false;
       }
     }
-    requirementList.add(requirement);
+
+    requirementList.addRequirement(requirement);
     return true;
   }
 
@@ -138,7 +139,7 @@ public class Project
 
   public ArrayList<Requirement> getRequirementList()
   {
-    return requirementList;
+    return requirementList.getAllRequirements();
   }
 
   public String getId()
@@ -148,11 +149,11 @@ public class Project
 
   public boolean removeRequirement(Requirement requirement)
   {
-    for (Requirement temp : requirementList)
+    for (Requirement temp : requirementList.getAllRequirements())
     {
       if (temp.equals(requirement))
       {
-        requirementList.remove(requirement);
+        requirementList.removeRequirement(requirement);
         return true;
       }
     }
@@ -161,12 +162,12 @@ public class Project
 
   public ArrayList<Requirement> getAllRequirements()
   {
-    return requirementList;
+    return requirementList.getAllRequirements();
   }
 
   public ArrayList<Member> getMemberList()
   {
-    return memberList;
+    return memberList.getAllMembers();
   }
 
   public ArrayList<Task> getTaskList()
@@ -176,7 +177,7 @@ public class Project
 
   public int getNumberOfRequirements()
   {
-    return requirementList.size();
+    return requirementList.getAllRequirements().size();
   }
 
   public int getNumberOfTasks()
@@ -207,27 +208,27 @@ public class Project
 
   public ArrayList<Requirement> getRequirementsWithGivenStatus(String status)
   {
-    return requirementList.getRequirementsWithGivenStatus(status);
+    return requirementList.getAllRequirementsWithStatus(status);
   }
 
   public ArrayList<Requirement> getRequirementsBeforeDeadline(MyDate deadline)
   {
-    return requirementList.getRequirementsWithGivernStatus(deadline);
+    return requirementList.getAllRequirementsBeforeDeadline(deadline);
   }
 
   public ArrayList<Requirement> getRequierementsByPriority(String priority)
   {
-    return requirementList.getRequirementsByPriority(priority);
+    return requirementList.getAllRequirementsByPriority(priority);
   }
 
   public ArrayList<Requirement> getApprovedRequirement()
   {
-    return requirementList.getApprovedRequirements();
+    return requirementList.getAllApprovedRequirements();
   }
 
   public ArrayList<Requirement> getDisapprovedRequirements()
   {
-    return requirementList.getDisapprovedRequirements();
+    return requirementList.getAllDisapprovedRequirements();
   }
 
   public Requirement getRequirementByIndex(int ind)

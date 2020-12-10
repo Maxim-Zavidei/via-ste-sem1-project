@@ -2,8 +2,8 @@ package model;
 
 import java.time.LocalDate;
 
-public class MyDate
-{
+public class MyDate {
+
   private int day;
   private int month;
   private int year;

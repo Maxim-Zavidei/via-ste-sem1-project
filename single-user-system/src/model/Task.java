@@ -1,8 +1,8 @@
 package model;
 
-public class Task
-{
-    public class Task {
+import java.util.ArrayList;
+
+public class Task {
 
         private String id;
         private String title;
@@ -179,9 +179,10 @@ public class Task
             totalWorkedHours += hrs;
         }
 
-        public boolean equals(Object obj){
+        public boolean equals(Object obj)
+        {
 
-            if(!(obj instanceof Task))
+            if (!(obj instanceof Task))
             {
                 return false;
             }

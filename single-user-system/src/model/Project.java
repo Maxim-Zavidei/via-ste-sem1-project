@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * A class to create and store and process projects and its elements.
@@ -200,70 +201,145 @@ public class Project {
 
   // ------------------------------ Getters for Requirements Linked to Project ------------------------------
 
+  /**
+   * Getter for the number of requirements linked to the project.
+   * @return The number of requirements linked to the project.
+   */
   public int getNumberOfRequirements() {
     return requirementList.getNumberOfRequirements();
   }
 
+  /**
+   * Getter for all the requirements linked to the project.
+   * @return All the requirements linked to the project or null if no requirements are linked.
+   */
   public ArrayList<Requirement> getAllRequirements() {
     return requirementList.getAllRequirements();
   }
 
+  /**
+   * Getter for all the requirements linked to the project before a specific deadline.
+   * @param deadline A date that will be compared with each deadline of the linked requirements.
+   * @return All linked requirements that have a deadline before the given argument date or null if no matching requirements were found.
+   */
   public ArrayList<Requirement> getAllRequirementsBeforeDeadline(MyDate deadline) {
     return requirementList.getAllRequirementsBeforeDeadline(deadline);
   }
 
+  /**
+   * Getter for all the requirements linked to the project completed over a certain percentage.
+   * @param status A percentage that will be compared with each status of the linked requirements.
+   * @return All linked requirements that have a status greater or equal to the given percentage as argument or null if no matching requirements were found.
+   * @throws IllegalArgumentException if the status argument is invalid.
+   */
   public ArrayList<Requirement> getAllRequirementsWithStatusOver(float status) {
     return requirementList.getAllRequirementsWithStatusOver(status);
   }
 
+  /**
+   * Getter for all the requirements linked to the project that have a specific priority.
+   * @param priority A value of either ["Critical", "High", "Low"] that will be compared with each priority group of the linked requirements.
+   * @return All linked requirements that have a matching the argument or null if no matching requirements were found.
+   */
   public ArrayList<Requirement> getAllRequirementsWithPriority(String priority) {
     return requirementList.getAllRequirementsWithPriority(priority);
   }
 
+  /**
+   * Getter for all the requirements linked to the project that are marked as approved.
+   * @return All linked requirements that are approved or null if no approved requirements were found.
+   */
   public ArrayList<Requirement> getAllApprovedRequirements() {
     return requirementList.getAllApprovedRequirements();
   }
 
+  /**
+   * Getter for all the requirements linked to the project that are marked as disapproved.
+   * @return All linked requirements that are disapproved or null if no disapproved requirements were found.
+   */
   public ArrayList<Requirement> getAllDisapprovedRequirements() {
     return requirementList.getAllDisapprovedRequirements();
   }
 
+  /**
+   * Getter for requirement linked to the project by index.
+   * @param index The position in the list of the requirement to be returned.
+   * @return The requirement at the position of the index.
+   * @throws IllegalArgumentException if the index argument is invalid.
+   * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array.
+   */
   public Requirement getRequirementByIndex(int index) {
     return requirementList.getRequirementByIndex(index);
   }
 
+  /**
+   * Getter for requirement linked to the project by id.
+   * @param id The id of the requirement to be returned.
+   * @return The requirement with the equal id.
+   * @throws NoSuchElementException if a requirement with matching id could not be found.
+   */
   public Requirement getRequirementById(String id) {
     return requirementList.getRequirementById(id);
   }
 
   // ------------------------------ Getters for Tasks Linked to Project ------------------------------
 
+  /**
+   * Getter for the number of tasks linked to the project.
+   * @return The number of tasks linked to the project.
+   */
   public int getNumberOfTasks() {
     return taskList.getNumberOfTasks();
   }
 
+  /**
+   * Getter for all the tasks linked to the project.
+   * @return All the tasks linked to the project or null if no tasks are linked.
+   */
   public ArrayList<Task> getAllTasks() {
     return taskList.getAllTasks();
   }
 
+  /**
+   * Getter for all the tasks linked to the project before a specific deadline.
+   * @param deadline A date that will be compare with each deadline of the linked task.
+   * @return All linked tasks that have a deadline before the given argument date.
+   */
   public ArrayList<Task> getAllTaskBeforeDeadline(MyDate deadline) {
     return taskList.getAllTaskBeforeDeadLine(deadline);
   }
 
+  /**
+   * Getter for all the tasks linked to the project that have a matching status.
+   * @param status A value of either ["Started", "Finished"] that will be compared with each status of the linked tasks.
+   * @return All linked tasks that have a status matching the argument or null if no matching requirements were found.
+   */
   public ArrayList<Task> getAllTaskWithStatus(String status) {
     return taskList.getAllTaskWithStatus(status);
   }
 
+  /**
+   * Getter for task linked to the project by index.
+   * @param index The position in the list of the task to be returned.
+   * @return The task at the position of the index.
+   * @throws IllegalArgumentException if the index argument is invalid.
+   * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array.
+   */
   public Task getTaskByIndex(int index) {
     return taskList.getTaskByIndex(index);
   }
 
+  /**
+   * Getter for task linked to the project by id.
+   * @param id The id of the task to be returned.
+   * @return The task with the equal id.
+   * @throws NoSuchElementException if a task with matching id could not be found.
+   */
   public Task getTaskById(String id) {
     return taskList.getTaskById(id);
   }
 
   // ------------------------------ Other Methods ------------------------------
-
 
   public boolean addTask(String id, String title, String description, int day, int month, int year) {
 
@@ -305,8 +381,6 @@ public class Project {
     }
     return false;
   }
-
-
 
   public boolean removeRequirement(Requirement requirement)
   {

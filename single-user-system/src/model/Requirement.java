@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- *  A class to create and store and process the requirements
+ *  A class to store and process the requirements
  */
 public class Requirement
 {

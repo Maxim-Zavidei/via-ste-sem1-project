@@ -211,7 +211,7 @@ public class Project {
 
   /**
    * Getter for all the requirements linked to the project.
-   * @return All the requirements linked to the project or null if no requirements are linked.
+   * @return All the requirements linked to the project or empty array list if no requirements are linked.
    */
   public ArrayList<Requirement> getAllRequirements() {
     return requirementList.getAllRequirements();
@@ -220,7 +220,7 @@ public class Project {
   /**
    * Getter for all the requirements linked to the project before a specific deadline.
    * @param deadline A date that will be compared with each deadline of the linked requirements.
-   * @return All linked requirements that have a deadline before the given argument date or null if no matching requirements were found.
+   * @return All linked requirements that have a deadline before the given argument date or empty array list if no matching requirements were found.
    */
   public ArrayList<Requirement> getAllRequirementsBeforeDeadline(MyDate deadline) {
     return requirementList.getAllRequirementsBeforeDeadline(deadline);
@@ -229,7 +229,7 @@ public class Project {
   /**
    * Getter for all the requirements linked to the project completed over a certain percentage.
    * @param status A percentage that will be compared with each status of the linked requirements.
-   * @return All linked requirements that have a status greater or equal to the given percentage as argument or null if no matching requirements were found.
+   * @return All linked requirements that have a status greater or equal to the given percentage as argument or empty array list if no matching requirements were found.
    * @throws IllegalArgumentException if the status argument is invalid.
    */
   public ArrayList<Requirement> getAllRequirementsWithStatusOver(float status) {
@@ -239,7 +239,7 @@ public class Project {
   /**
    * Getter for all the requirements linked to the project that have a specific priority.
    * @param priority A value of either ["Critical", "High", "Low"] that will be compared with each priority group of the linked requirements.
-   * @return All linked requirements that have a matching the argument or null if no matching requirements were found.
+   * @return All linked requirements that have a matching the argument or empty array list if no matching requirements were found.
    */
   public ArrayList<Requirement> getAllRequirementsWithPriority(String priority) {
     return requirementList.getAllRequirementsWithPriority(priority);
@@ -247,7 +247,7 @@ public class Project {
 
   /**
    * Getter for all the requirements linked to the project that are marked as approved.
-   * @return All linked requirements that are approved or null if no approved requirements were found.
+   * @return All linked requirements that are approved or empty array list if no approved requirements were found.
    */
   public ArrayList<Requirement> getAllApprovedRequirements() {
     return requirementList.getAllApprovedRequirements();
@@ -255,7 +255,7 @@ public class Project {
 
   /**
    * Getter for all the requirements linked to the project that are marked as disapproved.
-   * @return All linked requirements that are disapproved or null if no disapproved requirements were found.
+   * @return All linked requirements that are disapproved or empty array list if no disapproved requirements were found.
    */
   public ArrayList<Requirement> getAllDisapprovedRequirements() {
     return requirementList.getAllDisapprovedRequirements();
@@ -294,7 +294,7 @@ public class Project {
 
   /**
    * Getter for all the tasks linked to the project.
-   * @return All the tasks linked to the project or null if no tasks are linked.
+   * @return All the tasks linked to the project or empty array list if no tasks are linked.
    */
   public ArrayList<Task> getAllTasks() {
     return taskList.getAllTasks();
@@ -303,7 +303,7 @@ public class Project {
   /**
    * Getter for all the tasks linked to the project before a specific deadline.
    * @param deadline A date that will be compare with each deadline of the linked task.
-   * @return All linked tasks that have a deadline before the given argument date.
+   * @return All linked tasks that have a deadline before the given argument date or empty array list if no matching tasks were found.
    */
   public ArrayList<Task> getAllTaskBeforeDeadline(MyDate deadline) {
     return taskList.getAllTaskBeforeDeadLine(deadline);
@@ -312,7 +312,7 @@ public class Project {
   /**
    * Getter for all the tasks linked to the project that have a matching status.
    * @param status A value of either ["Started", "Finished"] that will be compared with each status of the linked tasks.
-   * @return All linked tasks that have a status matching the argument or null if no matching requirements were found.
+   * @return All linked tasks that have a status matching the argument or empty array list if no matching tasks were found.
    */
   public ArrayList<Task> getAllTaskWithStatus(String status) {
     return taskList.getAllTaskWithStatus(status);

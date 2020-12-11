@@ -8,6 +8,7 @@ public class Project {
   private String title;
   private String description;
   private float status;
+  private float estimatedWorkHours;
   private MyDate deadline;
   private MemberList memberList;
   private RequirementList requirementList;
@@ -21,21 +22,21 @@ public class Project {
    * @param id Id value of the project.
    * @param title Title for the project.
    * @param description Description of the project.
-   * @param day The day of the project's deadline.
-   * @param month The month of the project's deadline.
-   * @param year The year of the project's deadline.
-   * @throws IllegalArgumentException If date arguments are invalid.
-   * @throws IllegalArgumentException If deadline is in the past.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
+   * @param day Value between [1; 31] representing deadline's day.
+   * @param month Value between [1; 12] representing deadline's month.
+   * @param year Value between [1; +inf] representing deadline's year.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
+   * @throws IllegalArgumentException if date arguments are invalid.
+   * @throws IllegalArgumentException if deadline is in the past.
    */
-  public Project(String id, String title, String description, int day, int month, int year) {
-    MyDate deadline = new MyDate(day, month, year);
-    if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
-
+  public Project(String id, String title, String description, float estimatedWorkHours, int day, int month, int year) {
     this.id = id;
     this.title = title;
-    this.description = description;
+    setDescription(description);
     status = 0;
-    this.deadline = deadline;
+    setEstimatedWorkHours(estimatedWorkHours);
+    setDeadline(day, month, year);
     memberList = new MemberList();
     requirementList = new RequirementList();
     taskList = new TaskList();
@@ -48,14 +49,69 @@ public class Project {
    * Constructor with minimal number of defined values.
    * @param id Id value of the project.
    * @param title Title for the project.
-   * @param day The day of the project's deadline.
-   * @param month The month of the project's deadline.
-   * @param year The year of the project's deadline.
-   * @throws IllegalArgumentException If date arguments are invalid.
-   * @throws IllegalArgumentException If deadline is in the past.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
+   * @param day Value between [1; 31] representing deadline's day.
+   * @param month Value between [1; 12] representing deadline's month.
+   * @param year Value between [1; +inf] representing deadline's year.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
+   * @throws IllegalArgumentException if date arguments are invalid.
+   * @throws IllegalArgumentException if deadline is in the past.
    */
-  public Project(String id, String title, int day, int month, int year) {
-    this(id, title, "", day, month, year);
+  public Project(String id, String title, float estimatedWorkHours, int day, int month, int year) {
+    this(id, title, "", estimatedWorkHours, day, month, year);
+  }
+
+  /**
+   * Setter for the description instance variable.
+   * @param description Description of the project.
+   * @return Whether description was set successfully.
+   */
+  public boolean setDescription(String description) {
+    this.description = description;
+    return true;
+  }
+
+  /**
+   * Setter for the estimatedWorkHours instance variable.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
+   * @return Whether the estimated work hours were set successfully.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
+   */
+  public boolean setEstimatedWorkHours(float estimatedWorkHours) {
+    if (estimatedWorkHours < 1) throw new IllegalArgumentException("Estimated work time can not be less then or equal to 0.");
+    this.estimatedWorkHours = estimatedWorkHours;
+    return true;
+  }
+
+  /**
+   * Setter for the deadline instance variable.
+   * @param day Value between [1; 31] representing deadline's day.
+   * @param month Value between [1; 12] representing deadline's month.
+   * @param year Value between [1; +inf] representing deadline's year.
+   * @return Whether deadline was set successfully.
+   * @throws IllegalArgumentException if the arguments are invalid.
+   * @throws IllegalArgumentException if deadline is in the past.
+   */
+  public boolean setDeadline(int day, int month, int year) {
+    MyDate deadline = new MyDate(day, month, year);
+    if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
+    this.deadline = deadline;
+    return true;
+  }
+
+  // To Do
+  public boolean setProjectCreator() {
+    return true;
+  }
+
+  // To do
+  public boolean setProjectOwner() {
+    return true;
+  }
+
+  // To do
+  public boolean setScrumMaster() {
+    return true;
   }
 
 
@@ -110,49 +166,14 @@ public class Project {
     return description;
   }
 
-  public String getStatus()
+  public float getStatus()
   {
     return status;
   }
 
-  public void setId(String id)
-  {
-    this.id = id;
-  }
-
-  public void setTitle(String title)
-  {
-    this.title = title;
-  }
-
-  public void setDescription(String description)
-  {
-    this.description = description;
-  }
-
-  public void setStatus(String status)
+  public void setStatus(float status)
   {
     this.status = status;
-  }
-
-  public void setDate(MyDate date)
-  {
-    this.date = date;
-  }
-
-  public void setRole(String role)
-  {
-    this.role = role;
-  }
-
-  public MyDate getDate()
-  {
-    return date;
-  }
-
-  public String getRole()
-  {
-    return role;
   }
 
   public ArrayList<Requirement> getRequirementList()

@@ -99,18 +99,33 @@ public class Project {
     return true;
   }
 
-  // To Do
-  public boolean setProjectCreator() {
+  /**
+   * Setter for the projectCreator instance variable.
+   * @param projectCreator Object of type member representing the project creator.
+   * @return Whether project creator was set successfully.
+   */
+  public boolean setProjectCreator(Member projectCreator) {
+    this.projectCreator = projectCreator;
     return true;
   }
 
-  // To do
-  public boolean setProjectOwner() {
+  /**
+   * Setter for the productOwner instance variable.
+   * @param productOwner Object of type member representing the project owner.
+   * @return Whether product owner was set successfully.
+   */
+  public boolean setProductOwner(Member productOwner) {
+    this.productOwner = productOwner;
     return true;
   }
 
-  // To do
-  public boolean setScrumMaster() {
+  /**
+   * Setter for the scrumMaster instance variable.
+   * @param scrumMaster Object of type member representing the project scrum master.
+   * @return Whether scrum master was set successfully.
+   */
+  public boolean setScrumMaster(Member scrumMaster) {
+    this.scrumMaster = scrumMaster;
     return true;
   }
 

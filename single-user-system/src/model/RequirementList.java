@@ -1,26 +1,46 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
+/**
+ * A class to process and store a number of requirements
+ */
 public class RequirementList
 {
   private ArrayList<Requirement> requirementList;
 
+  /**
+   * Constructor to initialise the requirementList
+   */
   public RequirementList()
   {
     requirementList = new ArrayList<>();
   }
 
+  /**
+   * Getting  the number of requirements
+   * @return number of requirements
+   */
   public int getNumberOfRequirements()
   {
     return requirementList.size();
   }
 
+  /**
+   * Getter for requirementList
+   * @return requirementList
+   */
   public ArrayList<Requirement> getAllRequirements()
   {
     return requirementList;
   }
 
+  /**
+   * Getting all the requirements before a specific deadline
+   * @param deadline
+   * @return requirements that are before the deadline
+   */
   public ArrayList<Requirement> getAllRequirementsBeforeDeadline(
       MyDate deadline)
   {
@@ -37,6 +57,10 @@ public class RequirementList
     return requirements;
   }
 
+  /**
+   * Getting the requirements that are not approved
+   * @return requirements that are not approved
+   */
   public ArrayList<Requirement> getAllDisapprovedRequirements()
   {
     ArrayList<Requirement> requirements = new ArrayList<>();
@@ -51,7 +75,10 @@ public class RequirementList
     }
     return requirements;
   }
-
+  /**
+   * Getting the requirements that are approved
+   * @return requirements that are approved
+   */
   public ArrayList<Requirement> getAllApprovedRequirements()
   {
     ArrayList<Requirement> requirements = new ArrayList<>();
@@ -67,6 +94,11 @@ public class RequirementList
     return requirements;
   }
 
+  /**
+   * Getting the requirements with a specific status
+   * @param status
+   * @return all requirements with that status
+   */
   public ArrayList<Requirement> getAllRequirementsWithStatus(String status)
   {
     ArrayList<Requirement> requirements = new ArrayList<>();
@@ -83,6 +115,11 @@ public class RequirementList
 
   }
 
+  /**
+   * Getting the requirements with a specific priority
+   * @param priority
+   * @return all requirements with that priority
+   */
   public ArrayList<Requirement> getAllRequirementsByPriority(String priority)
   {
     ArrayList<Requirement> requirements = new ArrayList<>();
@@ -99,77 +136,109 @@ public class RequirementList
 
   }
 
-  public Requirement getRequirementByIndex(int index)
+  /**
+   * Get the requirement by index
+   * @param index
+   * @return the requirement at that index
+   * @throws IndexOutOfBoundsException may trigger if the requirementList does not have that index;
+   */
+  public Requirement getRequirementByIndex(int index) throws IndexOutOfBoundsException
   {
     return requirementList.get(index);
   }
 
-
-  public Requirement getRequirementById(String ID)
+  /**
+   * Getting the requirements by an id
+   * @param id
+   * @return the requirements with that id
+   * @throws NoSuchElementException triggers if there are no requirements by that id
+   */
+  public Requirement getRequirementById(String id)
   {
     for (int i = 0; i < requirementList.size(); i++)
     {
-      if (requirementList.get(i).getId().equals(ID))
+      if (requirementList.get(i).getId().equals(id))
       {
         return requirementList.get(i);
       }
 
     }
-     throw new IllegalStateException("No requirement by this ID");
+     throw new NoSuchElementException("No requirement by this id");
   }
 
+  /**
+   * Adding a new requirement to the requirementList, by accepting the same parameters as a requirement constructor
+   * @param ID
+   * @param title
+   * @param description
+   * @param deadline
+   * @param priorityGroup
+   * @return true if the requirement was added, false if it is already in the requirementList
+   */
   public boolean addRequirement(String ID, String title, String description, MyDate deadline, String priorityGroup)
   {
     Requirement requirement = new Requirement(ID, title, description, deadline, priorityGroup);
 
-    for (int i = 0; i < requirementList.size(); i++)
-    {
       if (!requirementList.contains(requirement))
       {
         requirementList.add(requirement);
         return true;
       }
-    }
-return false;
-  }
 
+     return false;
+  }
+  /**
+   * Adding a new requirement to the requirementList, by accepting the same parameters as a requirement constructor,
+   * without the description parameter only
+   * @param ID
+   * @param title
+   * @param deadline
+   * @param priorityGroup
+   * @return true if the requirement was added, false if it is already in the requirementList
+   */
   public boolean addRequirement(String ID, String title, MyDate deadline, String priorityGroup)
    {
      Requirement requirement = new Requirement(ID, title, deadline, priorityGroup);
 
-     for (int i = 0; i < requirementList.size(); i++)
-     {
+
        if (!requirementList.contains(requirement))
        {
          requirementList.add(requirement);
          return true;
        }
-     }
+
      return false;
 
     }
+
+  /**
+   * Adding a new requirement with to the requirementList
+   * @param requirement
+   * @return true if the requirement was added, false if it is already in the requirementList
+   */
   public boolean addRequirement(Requirement requirement)
   {
 
-
-    for (int i = 0; i < requirementList.size(); i++)
-    {
       if (!requirementList.contains(requirement))
       {
         requirementList.add(requirement);
         return true;
       }
-    }
+
     return false;
 
   }
 
-
-  public boolean  removeRequirement(String ID)
+  /**
+   * Remove a requirement from the requirementList by id
+   * @param id
+   * @return true if the requirement was removed,  false if there was no such requirement to remove in the first place
+   */
+  public boolean  removeRequirement(String id)
   {
     for (int i = 0; i < requirementList.size(); i++)
     {
-      if (requirementList.get(i).getId().equals(ID))
+      if (requirementList.get(i).getId().equals(id))
       {
         requirementList.remove(i);
         return true;
@@ -178,6 +247,11 @@ return false;
     return false;
   }
 
+  /**
+   * Remove a requirement from the requirementList
+   * @param requirement
+   * @return true if the requirement was removed,  false if there was no such requirement to remove in the first place
+   */
   public boolean  removeRequirement(Requirement requirement)
   {
     for (int i = 0; i < requirementList.size(); i++)
@@ -191,7 +265,12 @@ return false;
     return false;
   }
 
-public boolean equals(Object obj)
+  /**
+   * Compares 2 objects of type if they are equal
+   * @param obj
+   * @return true if equal, false otherwise
+   */
+  public boolean equals(Object obj)
 {
   if (!(obj instanceof RequirementList))
   {

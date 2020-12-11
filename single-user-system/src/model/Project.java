@@ -2,20 +2,23 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * A class to create and store and process projects and its elements.
+ */
 public class Project {
 
   private String id;
   private String title;
   private String description;
-  private float status;
   private float estimatedWorkHours;
   private MyDate deadline;
-  private MemberList memberList;
-  private RequirementList requirementList;
-  private TaskList taskList;
   private Member projectCreator;
   private Member productOwner;
   private Member scrumMaster;
+  private RequirementList requirementList;
+  private TaskList taskList;
+
+  // ------------------------------ Constructors ------------------------------
 
   /**
    * Constructor with extended number of defined values.
@@ -34,15 +37,13 @@ public class Project {
     this.id = id;
     this.title = title;
     setDescription(description);
-    status = 0;
     setEstimatedWorkHours(estimatedWorkHours);
     setDeadline(day, month, year);
-    memberList = new MemberList();
-    requirementList = new RequirementList();
-    taskList = new TaskList();
     projectCreator = null;
     productOwner = null;
     scrumMaster = null;
+    requirementList = new RequirementList();
+    taskList = new TaskList();
   }
 
   /**
@@ -60,6 +61,8 @@ public class Project {
   public Project(String id, String title, float estimatedWorkHours, int day, int month, int year) {
     this(id, title, "", estimatedWorkHours, day, month, year);
   }
+
+  // ------------------------------ Setters ------------------------------
 
   /**
    * Setter for the description instance variable.
@@ -129,6 +132,138 @@ public class Project {
     return true;
   }
 
+  // ------------------------------ Getters for Instance Variables ------------------------------
+
+  /**
+   * Getter for Id instance variable.
+   * @return Value of project's id.
+   */
+  public String getId() {
+    return id;
+  }
+
+  /**
+   * Getter for title instance variable.
+   * @return Value of project's title.
+   */
+  public String getTitle() {
+    return title;
+  }
+
+  /**
+   * Getter for description instance variable.
+   * @return Value of project's description.
+   */
+  public String getDescription() {
+    return description;
+  }
+
+  /**
+   * Getter for estimatedWorkHours instance variable.
+   * @return Value of project's estimated work hours.
+   */
+  public float getEstimatedWorkHours() {
+    return estimatedWorkHours;
+  }
+
+  /**
+   * Getter for deadline instance variable.
+   * @return MyDate object representing project's deadline.
+   */
+  public MyDate getDeadline() {
+    return deadline;
+  }
+
+  /**
+   * Getter for project creator instance variable.
+   * @return Member object representing the project creator.
+   */
+  public Member getProjectCreator() {
+    return projectCreator;
+  }
+
+  /**
+   * Getter for product owner instance variable.
+   * @return Member object representing the product owner.
+   */
+  public Member getProductOwner() {
+    return productOwner;
+  }
+
+  /**
+   * Getter for scrum master instance variable.
+   * @return Member object representing the scrum master.
+   */
+  public Member getScrumMaster() {
+    return scrumMaster;
+  }
+
+  // ------------------------------ Getters for Requirements Linked to Project ------------------------------
+
+  public int getNumberOfRequirements() {
+    return requirementList.getNumberOfRequirements();
+  }
+
+  public ArrayList<Requirement> getAllRequirements() {
+    return requirementList.getAllRequirements();
+  }
+
+  public ArrayList<Requirement> getAllRequirementsBeforeDeadline(MyDate deadline) {
+    return requirementList.getAllRequirementsBeforeDeadline(deadline);
+  }
+
+  public ArrayList<Requirement> getAllRequirementsWithStatusOver(float status) {
+    return requirementList.getAllRequirementsWithStatusOver(status);
+  }
+
+  public ArrayList<Requirement> getAllRequirementsWithPriority(String priority) {
+    return requirementList.getAllRequirementsWithPriority(priority);
+  }
+
+  public ArrayList<Requirement> getAllApprovedRequirements() {
+    return requirementList.getAllApprovedRequirements();
+  }
+
+  public ArrayList<Requirement> getAllDisapprovedRequirements() {
+    return requirementList.getAllDisapprovedRequirements();
+  }
+
+  public Requirement getRequirementByIndex(int index) {
+    return requirementList.getRequirementByIndex(index);
+  }
+
+  public Requirement getRequirementById(String id) {
+    return requirementList.getRequirementById(id);
+  }
+
+  // ------------------------------ Getters for Tasks Linked to Project ------------------------------
+
+  public int getNumberOfTasks() {
+    return taskList.getNumberOfTasks();
+  }
+
+  public ArrayList<Task> getAllTasks() {
+    return taskList.getAllTasks();
+  }
+
+  public ArrayList<Task> getAllTaskBeforeDeadline(MyDate deadline) {
+    return taskList.getAllTaskBeforeDeadLine(deadline);
+  }
+
+  public ArrayList<Task> getAllTaskWithStatus(String status) {
+    return taskList.getAllTaskWithStatus(status);
+  }
+
+  public Task getTaskByIndex(int index) {
+    return taskList.getTaskByIndex(index);
+  }
+
+  public Task getTaskById(String id) {
+    return taskList.getTaskById(id);
+  }
+
+  // ------------------------------ Other Methods ------------------------------
+
 
   public boolean addTask(String id, String title, String description, int day, int month, int year) {
 
@@ -171,35 +306,7 @@ public class Project {
     return false;
   }
 
-  public String getTitle()
-  {
-    return title;
-  }
 
-  public String getDescription()
-  {
-    return description;
-  }
-
-  public float getStatus()
-  {
-    return status;
-  }
-
-  public void setStatus(float status)
-  {
-    this.status = status;
-  }
-
-  public ArrayList<Requirement> getRequirementList()
-  {
-    return requirementList.getAllRequirements();
-  }
-
-  public String getId()
-  {
-    return id;
-  }
 
   public boolean removeRequirement(Requirement requirement)
   {
@@ -214,31 +321,6 @@ public class Project {
     return false;
   }
 
-  public ArrayList<Requirement> getAllRequirements()
-  {
-    return requirementList.getAllRequirements();
-  }
-
-  public ArrayList<Member> getMemberList()
-  {
-    return memberList.getAllMembers();
-  }
-
-  public ArrayList<Task> getTaskList()
-  {
-    return taskList.getAllTask();
-  }
-
-  public int getNumberOfRequirements()
-  {
-    return requirementList.getAllRequirements().size();
-  }
-
-  public int getNumberOfTasks()
-  {
-    return taskList.getNumberOfTasks();
-  }
-
   public int getEstimatedTimeSpent()
   {
     int tempNum = 0;
@@ -249,104 +331,4 @@ public class Project {
     }
     return tempNum;
   }
-
-  public ArrayList<Task> getAllTaskWithGivenStatus(String status)
-  {
-    return taskList.getAllTasksWithFGivenStatus(status);
-  }
-
-  public ArrayList<Task> getAllTaskBeforeDeadline(MyDate deadline)
-  {
-    return taskList.getTaskBeforeDeadLine(deadline);
-  }
-
-  public ArrayList<Requirement> getRequirementsWithGivenStatus(String status)
-  {
-    return requirementList.getAllRequirementsWithStatus(status);
-  }
-
-  public ArrayList<Requirement> getRequirementsBeforeDeadline(MyDate deadline)
-  {
-    return requirementList.getAllRequirementsBeforeDeadline(deadline);
-  }
-
-  public ArrayList<Requirement> getRequierementsByPriority(String priority)
-  {
-    return requirementList.getAllRequirementsByPriority(priority);
-  }
-
-  public ArrayList<Requirement> getApprovedRequirement()
-  {
-    return requirementList.getAllApprovedRequirements();
-  }
-
-  public ArrayList<Requirement> getDisapprovedRequirements()
-  {
-    return requirementList.getAllDisapprovedRequirements();
-  }
-
-  public Requirement getRequirementByIndex(int ind)
-  {
-    return requirementList.getRequirementByIndex(ind);
-  }
-
-  public Requirement getRequirementById(String id)
-  {
-    return requirementList.getRequirementById(id);
-  }
-
-  public Task getTaskByIndex(int ind)
-  {
-    return taskList.getTaskByIndex(ind);
-  }
-
-  public Task getTaskById(String id)
-  {
-    return taskList.getTaskById(id);
-  }
-
-  // these 3 next methods should call an InputMismatchException
-
-  public void assignScrumMaster(Member scrumMaster)
-  {
-    this.scrumMaster = scrumMaster;
-  }
-
-  public void assignProductOwner(Member productOwner)
-  {
-    this.productOwner = productOwner;
-  }
-
-  public void assignProjectCreator(Member projectCreator)
-  {
-    this.projectCreator = projectCreator;
-  }
-
-  public Member getProjectCreator()
-  {
-    return projectCreator;
-  }
-
-  public Member getProductOwner()
-  {
-    return productOwner;
-  }
-
-  public Member getScrumMaster()
-  {
-    return scrumMaster;
-  }
-
-  public boolean equals(Object obj)
-  {
-    if (!(obj instanceof Project))
-    {
-      return false;
-    }
-
-    Project other = (Project) obj;
-
-    return this.id == other.id;
-  }
-
 }

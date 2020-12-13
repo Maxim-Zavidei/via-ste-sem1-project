@@ -1,6 +1,8 @@
 package model;
 
+import java.lang.StringBuilder;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.NoSuchElementException;
 
 /**
@@ -241,7 +243,112 @@ public class ProjectList {
     throw new NoSuchElementException("Could not find a task with given id.");
   }
 
-  // ------------------------------ Other methods ------------------------------
+  // ------------------------------ Other Methods ------------------------------
 
+  /**
+   * Checks whether a project with a given id already exists.
+   * @param id Id to check for.
+   * @return Whether a project matching the id already exists.
+   */
+  public boolean isIdTaken(String id) {
+    for (Project project : projectList) if (project.getId().equals(id)) {
+      return true;
+    }
+    return false;
+  }
 
+  /**
+   * Generates a unique id that does not match any of the existing ids of all projects.
+   * @return The unique id.
+   */
+  private String generateId() {
+    Random randomizer = new Random();
+    StringBuilder generatedId;
+    char randomChar;
+
+    do {
+      generatedId = new StringBuilder("P");
+      for (int i = 0; i < 31; i++) {
+        do randomChar = (char) (randomizer.nextInt(75) + 48); while (!(
+            '0' <= randomChar && randomChar <= '9' ||
+            'A' <= randomChar && randomChar <= 'Z' && randomChar != 'P' && randomChar != 'R' && randomChar != 'T' ||
+            'a' <= randomChar && randomChar <= 'z'
+        ));
+        generatedId.append(randomChar);
+      }
+    } while (isIdTaken(generatedId.toString()));
+    return generatedId.toString();
+  }
+
+  /**
+   * Add method with extended number of defined values which creates a new project.
+   * @param title Title for the project.
+   * @param description Description of the project.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
+   * @param day Value between [1; 31] representing deadline's day.
+   * @param month Value between [1; 12] representing deadline's month.
+   * @param year Value between [1; +inf] representing deadline's year.
+   * @return Whether the project was created successfully.
+   * @throws IllegalArgumentException if a project with the same title already exists.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
+   * @throws IllegalArgumentException if the arguments are invalid.
+   * @throws IllegalArgumentException if deadline is in the past.
+   */
+  public boolean addProject(String title, String description, float estimatedWorkHours, int day, int month, int year) {
+    for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
+    projectList.add(new Project(generateId(), title, description, estimatedWorkHours, day, month, year));
+    return true;
+  }
+
+  /**
+   * Add method with minimal number of defined values which creates a new project.
+   * @param title Title for the project.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
+   * @param day Value between [1; 31] representing deadline's day.
+   * @param month Value between [1; 12] representing deadline's month.
+   * @param year Value between [1; +inf] representing deadline's year.
+   * @return Whether the project was created successfully.
+   * @throws IllegalArgumentException if a project with the same title already exists.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
+   * @throws IllegalArgumentException if the arguments are invalid.
+   * @throws IllegalArgumentException if deadline is in the past.
+   */
+  public boolean addProject(String title, float estimatedWorkHours, int day, int month, int year) {
+    for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
+    projectList.add(new Project(generateId(), title, estimatedWorkHours, day, month, year));
+    return true;
+  }
+
+  /**
+   * Removes the project.
+   * @param project The project which should be removed.
+   * @return Whether the project was removed successfully.
+   * @throws IllegalArgumentException if the project argument is null.
+   * @throws UnsupportedOperationException if the project has any linked requirements.
+   * @throws UnsupportedOperationException if the project has any linked tasks.
+   */
+  public boolean removeProject(Project project) {
+    if (project == null) throw new IllegalArgumentException("Project argument is null.");
+    if (project.getNumberOfRequirements() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked requirements.");
+    if (project.getNumberOfTasks() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked tasks.");
+    projectList.remove(project);
+    return true;
+  }
+
+  /**
+   * Removes the project by id.
+   * @param id The id of the project which should be removed.
+   * @return Whether the project was removed successfully.
+   * @throws NoSuchElementException if a project with matching id could not be found.
+   * @throws IllegalArgumentException if the project argument is null.
+   * @throws UnsupportedOperationException if the project has any linked requirements.
+   * @throws UnsupportedOperationException if the project has any linked tasks.
+   */
+  public boolean removeProject(String id) {
+    Project project = getProjectById(id);
+    if (project.getNumberOfRequirements() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked requirements.");
+    if (project.getNumberOfTasks() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked tasks.");
+    projectList.remove(project);
+    return true;
+  }
 }

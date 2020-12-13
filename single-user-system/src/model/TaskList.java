@@ -1,100 +1,118 @@
 package model;
 
+import java.lang.StringBuilder;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Random;
 
-public class TaskList
-{
-    ArrayList<Task> taskList;
+public class TaskList {
 
-    public TaskList()
-    {
-        taskList = new ArrayList<Task>();
+  ArrayList<Task> taskList;
+
+  // ------------------------------ Constructors ------------------------------
+
+  public TaskList() {
+    taskList = new ArrayList<>();
+  }
+
+  // ------------------------------ Getters ------------------------------
+
+  public int getNumberOfTasks() {
+    return taskList.size();
+  }
+
+  public ArrayList<Task> getAllTasks() {
+    return taskList;
+  }
+
+  public ArrayList<Task> getAllTasksBeforeDeadLine(MyDate deadline) {
+    ArrayList<Task> toReturnTasks = new ArrayList<>();
+    for (Task task : taskList) if (task.getDeadline().isBefore(deadline)) toReturnTasks.add(task);
+    return toReturnTasks;
+  }
+
+  public ArrayList<Task> getAllTasksWithStatus(String status) {
+    ArrayList<Task> toReturnTasks = new ArrayList<>();
+    for (Task task : taskList) if (task.getStatus().equals(status)) toReturnTasks.add(task);
+    return toReturnTasks;
+  }
+
+  public Task getTaskByIndex(int index) {
+    if (index < 0) throw new IllegalArgumentException("Attempt to access array list with negative index.");
+    return taskList.get(index);
+  }
+
+  public Task getTaskById(String id) {
+    for (Task task : taskList) if (task.getId().equals(id)) {
+        return task;
     }
+    throw new NoSuchElementException("Could not find a task with given id.");
+  }
 
-    public int getNumberOfTasks()
-    {
-        return taskList.size();
+  // ------------------------------ Other Methods ------------------------------
+
+  /**
+   * Checks whether a task with a given id already exists.
+   * @param id Id to check for.
+   * @return Whether a task matching the id already exists.
+   */
+  public boolean isIdTaken(String id) {
+    for (Task task : taskList) if (task.getId().equals(id)) {
+      return true;
     }
+    return false;
+  }
 
-    public ArrayList<Task> getAllTasksBeforeDeadLine(MyDate date){
-        ArrayList<Task> listReturn = new ArrayList<>();
+  /**
+   * Generates a unique id that does not match any of the existing ids of all tasks.
+   * @return The unique id.
+   */
+  private String generateId(String projectId) {
+    Random randomizer = new Random();
+    StringBuilder generatedId;
+    char randomChar;
 
-        for(Task temp : taskList){
-            if(temp.getDeadline().isBefore(date)){
-                listReturn.add(temp);
-            }
-        }
-        return listReturn;
+    do {
+      generatedId = new StringBuilder(projectId + "T");
+      for (int i = 0; i < 31; i++) {
+        do randomChar = (char) (randomizer.nextInt(75) + 48); while (!(
+            '0' <= randomChar && randomChar <= '9' ||
+                'A' <= randomChar && randomChar <= 'Z' && randomChar != 'P' && randomChar != 'R' && randomChar != 'T' ||
+                'a' <= randomChar && randomChar <= 'z'
+        ));
+        generatedId.append(randomChar);
+      }
+    } while (isIdTaken(generatedId.toString()));
+    return generatedId.toString();
+  }
+
+  // To comment
+  public void addTask(String projectId, String title, String description, float estimatedWorkHours, MyDate deadline) {
+    taskList.add(new Task(generateId(projectId), title, description, estimatedWorkHours, deadline));
+  }
+
+  // To comment
+  public void addTask(String projectId, String title, float estimatedWorkHours, MyDate deadline) {
+    taskList.add(new Task(generateId(projectId), title, estimatedWorkHours, deadline));
+  }
+
+  // To comment
+  public void removeTask(String id) {
+    for (Task task : taskList) if (task.getId().equals(id)) {
+      taskList.remove(task);
+      break;
     }
+  }
 
-    public ArrayList<Task> getAllTasksWithStatus(String status)
-    {
-        ArrayList<Task> returnList = new ArrayList<>();
-        for(Task task : taskList)
-        {
-            if(task.getStatus().equals(status)){
-                returnList.add(task);
-            }
-        }
-        return returnList;
-    }
+  // To comment
+  public void removeTask(Task task) {
+    removeTask(task.getId());
+  }
 
-    public Task getTaskByIndex(int ind)
-    {
-        return taskList.get(ind);
-    }
-
-    public Task getTaskById(String id){
-        for(Task task : taskList)
-        {
-            if(task.getId().equals(id))
-            {
-                return task;
-            }
-        }
-        return null;
-    }
-
-    public boolean addTask(Task task){
-        for(Task temp : taskList){
-            if(task.equals(temp))
-            {
-                return false;
-            }
-        }
-        taskList.add(task);
-
-        return true;
-    }
-
-    public boolean removeTask(String id){
-        for(Task task: taskList)
-        {
-            if(task.getId().equals(id))
-            {
-                taskList.remove(task);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean removeTask(Task task)
-    {
-        for(Task temp : taskList)
-        {
-            if(temp.equals(task))
-            {
-                taskList.remove(task);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public ArrayList<Task> getAllTasks()
-    {
-        return taskList;
-    }
-
+  // To comment
+  public float getTotalWorkedHours() {
+    float totalWorkedHours = 0;
+    for (Task task : taskList) totalWorkedHours += task.getTotalWorkedHours();
+    return totalWorkedHours;
+  }
 }

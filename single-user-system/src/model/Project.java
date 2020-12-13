@@ -370,31 +370,35 @@ public class Project {
    * Add method with extended number of defined values which creates and links a new task to the project.
    * @param title Title of the task.
    * @param description Description for the task.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
    * @param day Value between [1; 31] representing deadline's day of the task.
    * @param month Value between [1; 12] representing deadline's month of the task.
    * @param year Value between [1; +inf] representing deadline's year of the task.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if the date arguments are invalid.
    * @throws IllegalArgumentException if the task's deadline is after project's deadline.
    */
-  public void addTask(String title, String description, int day, int month, int year) {
+  public void addTask(String title, String description, float estimatedWorkHours, int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the task must be set before the deadline of the project.");
-    taskList.addTask(title, description, deadline);
+    taskList.addTask(id, title, description, estimatedWorkHours, deadline);
   }
 
   /**
    * Add method with minimal number of defined values which creates and links a new task to the project.
    * @param title Title of the task.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
    * @param day Value between [1; 31] representing deadline's day of the task.
    * @param month Value between [1; 12] representing deadline's month of the task.
    * @param year Value between [1; +inf] representing deadline's year of the task.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if the date arguments are invalid.
    * @throws IllegalArgumentException if the task's deadline is after project's deadline.
    */
-  public void addTask(String title, int day, int month, int year) {
+  public void addTask(String title, float estimatedWorkHours, int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the task must be set before the deadline of the project.");
-    taskList.addTask(title, deadline);
+    taskList.addTask(id, title, estimatedWorkHours, deadline);
   }
 
   /**

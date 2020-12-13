@@ -1,222 +1,247 @@
 package model;
 
-
-import javax.crypto.NullCipher;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
+/**
+ * A class store and process project objects.
+ */
 public class ProjectList {
 
-    ArrayList<Project> projectList;
+  ArrayList<Project> projectList;
 
-    public ProjectList()
-    {
-        projectList = new ArrayList<Project>();
+  // ------------------------------ Constructors ------------------------------
+
+  /**
+   * Constructor to initialise all instance variables.
+   */
+  public ProjectList() {
+    projectList = new ArrayList<>();
+  }
+
+  // ------------------------------ Getters for Projects ------------------------------
+
+  /**
+   * Getter for the number of projects created so far.
+   * @return The number of projects created so far.
+   */
+  public int getNumberOfProjects() {
+    return projectList.size();
+  }
+
+  /**
+   * Getter for all the projects created so far.
+   * @return All the projects created so far or empty array list if no projects exist.
+   */
+  public ArrayList<Project> getAllProjects() {
+    return projectList;
+  }
+
+  /**
+   * Getter for all projects before a specific deadline.
+   * @param deadline A date that will be compare with each project's deadline.
+   * @return All projects that have a deadline before the given argument date or empty array list if no matching projects were found or no projects exist.
+   */
+  public ArrayList<Project> getAllProjectsBeforeDeadline(MyDate deadline) {
+    ArrayList<Project> toReturnProjects = new ArrayList<>();
+    for (Project project : projectList) if (project.getDeadline().isBefore(deadline)) toReturnProjects.add(project);
+    return toReturnProjects;
+  }
+
+  /**
+   * Getter for all the projects completed over a certain percentage.
+   * @param status A percentage that will be compared with status of each project.
+   * @return All projects that have a status greater or equal to the given percentage as argument or empty array list if no matching projects were found or no projects exist.
+   * @throws IllegalArgumentException if the status argument is invalid.
+   */
+  public ArrayList<Project> getAllProjectsWithStatusOver(float status) {
+    if (status < 0 || 1 < status) throw new IllegalArgumentException("Status argument must be between [0; 1].");
+    ArrayList<Project> toReturnProjects = new ArrayList<>();
+    int projectTasksNumber;
+    float projectStatus;
+
+    for (Project project : projectList) {
+      projectTasksNumber = project.getNumberOfTasks();
+      projectStatus = projectTasksNumber == 0 ? 0 : (float) project.getAllTasksWithStatus("Completed").size() / projectTasksNumber;
+      if (projectStatus >= status) toReturnProjects.add(project);
     }
+    return toReturnProjects;
+  }
 
-    public int getNumberOfProjects()
-    {
-        return projectList.size();
+  /**
+   * Getter for any project by index.
+   * @param index Value between [0; +inf] representing the position of the project in the list of the projects to be returned.
+   * @return The project at the position of the index.
+   * @throws IllegalArgumentException if the index argument is invalid.
+   * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array list.
+   */
+  public Project getProjectByIndex(int index) {
+    if (index < 0) throw new IllegalArgumentException("Attempt to access array list with negative index.");
+    return projectList.get(index);
+  }
+
+  /**
+   * Getter for any project by id.
+   * @param id The id of the project to be returned.
+   * @return The project with the equal id.
+   * @throws NoSuchElementException if a project with matching id could not be found.
+   */
+  public Project getProjectById(String id) {
+    for (Project project : projectList) if (project.getId().equals(id)) {
+      return project;
     }
+    throw new NoSuchElementException("Could not find a project with given id.");
+  }
 
-    public int getNumberOfTask()
-    {
-        int taskNum = 0;
-        for(Project temp : projectList)
-        {
-            taskNum += temp.getNumberOfTasks();
-        }
-        return taskNum;
+  // ------------------------------ Getters for Requirements ------------------------------
+
+  /**
+   * Getter for the number of requirements created so far.
+   * @return The number of requirements created so far.
+   */
+  public int getTotalNumberOfRequirements() {
+    int totalNumberOfRequirements = 0;
+    for (Project project : projectList) totalNumberOfRequirements += project.getNumberOfRequirements();
+    return totalNumberOfRequirements;
+  }
+
+  /**
+   * Getter for all the requirements created so far.
+   * @return All the requirements created so far or empty array list if no requirements exist.
+   */
+  public ArrayList<Requirement> getAllRequirements() {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Project project : projectList) toReturnRequirements.addAll(project.getAllRequirements());
+    return toReturnRequirements;
+  }
+
+  /**
+   * Getter for all requirements before a specific deadline.
+   * @param deadline A date that will be compare with each requirement's deadline.
+   * @return All requirements that have a deadline before the given argument date or empty array list if no matching requirements were found or no requirements exist.
+   */
+  public ArrayList<Requirement> getAllRequirementsBeforeDeadline(MyDate deadline) {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Project project : projectList) toReturnRequirements.addAll(project.getAllRequirementsBeforeDeadline(deadline));
+    return toReturnRequirements;
+  }
+
+  /**
+   * Getter for all the requirements completed over a certain percentage.
+   * @param status A percentage that will be compared with each status of all requirements.
+   * @return All requirements that have a status greater or equal to the given percentage as argument or empty array list if no matching requirements were found or no requirements exist.
+   * @throws IllegalArgumentException if the status argument is invalid.
+   */
+  public ArrayList<Requirement> getAllRequirementsWithStatusOver(float status) {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Project project : projectList) toReturnRequirements.addAll(project.getAllRequirementsWithStatusOver(status));
+    return toReturnRequirements;
+  }
+
+  /**
+   * Getter for all requirements that have a specific priority.
+   * @param priority A value of either ["Critical", "High", "Low"] that will be compared with each priority group of all requirements.
+   * @return All requirements that have a matching the argument or empty array list if no matching requirements were found or no requirements exist.
+   * @throws IllegalArgumentException if the priority argument is invalid.
+   */
+  public ArrayList<Requirement> getAllRequirementsWithPriority(String priority) {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Project project : projectList) toReturnRequirements.addAll(project.getAllRequirementsWithPriority(priority));
+    return toReturnRequirements;
+  }
+
+  /**
+   * Getter for all requirements that are marked as approved.
+   * @return All requirements that are approved or empty array list if no approved requirements were found or no requirements exist.
+   */
+  public ArrayList<Requirement> getAllApprovedRequirements() {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Project project : projectList) toReturnRequirements.addAll(project.getAllApprovedRequirements());
+    return toReturnRequirements;
+  }
+
+  /**
+   * Getter for all requirements that are marked as disapproved.
+   * @return All requirements that are disapproved or empty array list if no disapproved requirements were found or no requirements exist.
+   */
+  public ArrayList<Requirement> getAllDisapprovedRequirements() {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Project project : projectList) toReturnRequirements.addAll(project.getAllDisapprovedRequirements());
+    return toReturnRequirements;
+  }
+
+  /**
+   * Getter for any requirement by id.
+   * @param id The id of the requirement to be returned.
+   * @return The requirement with the equal id.
+   * @throws NoSuchElementException if a requirement with matching id could not be found.
+   */
+  public Requirement getRequirementById(String id) {
+    for (Requirement requirement : getAllRequirements()) if (requirement.getId().equals(id)) {
+      return requirement;
     }
+    throw new NoSuchElementException("Could not find a requirement with given id.");
+  }
 
-    public Project getProjectById(String id)
-    {
-        for(Project project : projectList)
-        {
-            if(project.getId()==id)
-            {
-                return project;
-            }
-        }
-        throw new NoSuchElementException("Element was not found");
+  // ------------------------------ Getters for Tasks ------------------------------
+
+  /**
+   * Getter for the number of tasks created so far.
+   * @return The number of tasks created so far.
+   */
+  public int getTotalNumberOfTasks() {
+    int totalNumberOfTasks = 0;
+    for (Project project : projectList) totalNumberOfTasks += project.getNumberOfTasks();
+    return totalNumberOfTasks;
+  }
+
+  /**
+   * Getter for all the tasks created so far.
+   * @return All the tasks created so far or empty array list if no tasks exist.
+   */
+  public ArrayList<Task> getAllTasks() {
+    ArrayList<Task> toReturnTasks = new ArrayList<>();
+    for (Project project : projectList) toReturnTasks.addAll(project.getAllTasks());
+    return toReturnTasks;
+  }
+
+  /**
+   * Getter for all tasks before a specific deadline.
+   * @param deadline A date that will be compare with each task's deadline.
+   * @return All tasks that have a deadline before the given argument date or empty array list if no matching tasks were found or no tasks exist.
+   */
+  public ArrayList<Task> getAllTasksBeforeDeadline(MyDate deadline) {
+    ArrayList<Task> toReturnTasks = new ArrayList<>();
+    for (Project project : projectList) toReturnTasks.addAll(project.getAllTasksBeforeDeadline(deadline));
+    return toReturnTasks;
+  }
+
+  /**
+   * Getter for all tasks that have a matching status.
+   * @param status A value of either ["Started", "Finished"] that will be compared with each status of all tasks.
+   * @return All tasks that have a status matching the argument or empty array list if no matching tasks were found or no tasks are exist.
+   * @throws IllegalArgumentException if the status argument is invalid.
+   */
+  public ArrayList<Task> getAllTasksWithStatus(String status) {
+    ArrayList<Task> toReturnTasks = new ArrayList<>();
+    for (Project project : projectList) toReturnTasks.addAll(project.getAllTasksWithStatus(status));
+    return toReturnTasks;
+  }
+
+  /**
+   * Getter for any task linked by id.
+   * @param id The id of the task to be returned.
+   * @return The task with the equal id.
+   * @throws NoSuchElementException if a task with matching id could not be found.
+   */
+  public Task getTaskById(String id) {
+    for (Task task : getAllTasks()) if (task.getId().equals(id)) {
+        return task;
     }
+    throw new NoSuchElementException("Could not find a task with given id.");
+  }
 
-    public Project getProjectByIndex(int ind)
-    {
-        return projectList.get(ind);
-    }
-
-    public ArrayList<Project> getAllProjects()
-    {
-        return projectList;
-    }
-
-    public ArrayList<Task> getAllTask()
-    {
-        ArrayList<Task> temp  = new ArrayList<>();
-
-        for(Project project: projectList)
-        {
-            for(Task task : project.getAllTasks())
-            {
-                temp.add(task);
-            }
-        }
-        return temp;
-    }
-
-    public ArrayList<Requirement> getAllRequirements()
-    {
-        ArrayList<Requirement> requirements = new ArrayList<>();
-
-        for(Project project: projectList)
-        {
-            for(Requirement requirement : project.getAllRequirements())
-            {
-                requirements.add(requirement);
-            }
-        }
-        return requirements;
-    }
-
-    public ArrayList<Project> getProjectsByStatus(String status)
-    {
-        ArrayList<Project> temp = new ArrayList<>();
-        for(Project project : projectList)
-        {
-            if(project.getStatus().equals(status))
-            {
-                temp.add(project);
-            }
-        }
-        return temp;
-    }
-
-    public ArrayList<Project> getProjectsBeforeDeadline(MyDate deadline)
-    {
-        ArrayList<Project> temp = new ArrayList<>();
-
-        for(Project project : projectList)
-        {
-            if(project.getDate().isBefore(deadline))
-            {
-                temp.add(project);
-            }
-        }
-        return temp;
-    }
-
-    public ArrayList<Requirement> getRequirementsByStatus(String status)
-    {
-        ArrayList<Requirement> temp = new ArrayList<>();
-
-        for(Requirement requirement : getAllRequirements())
-        {
-            if(requirement.getStatus().equals(status))
-            {
-                temp.add(requirement);
-            }
-        }
-        return temp;
-    }
-
-    public ArrayList<Requirement> getRequirementsBeforeDeadline(MyDate deadline)
-    {
-        ArrayList<Requirement> temp = new ArrayList<>();
-
-        for(Requirement requirement : getAllRequirements())
-        {
-            //Same than in the previous method
-            if(requirement.getDeadline().equals(deadline)){
-                temp.add(requirement);
-            }
-        }
-        return temp;
-    }
-
-    //these type of methods should throw a nullpointer exception
-
-    public ArrayList<Requirement> getRequirementsByPriority(String priority)
-    {
-        ArrayList<Requirement> temp = new ArrayList<>();
-
-        for(Requirement  requirement: getAllRequirements())
-        {
-            //Yet again same thing than in the previous 2 methods
-            if(requirement.getPriority().equals(priority));
-            {
-                temp.add(requirement);
-            }
-        }
-        return temp;
-    }
-
-    public ArrayList<Task> getTasksBeforeDeadline(MyDate deadline)
-    {
-        ArrayList<Task> temp = new ArrayList<>();
-
-        for(Task task : getAllTask())
-        {
-            //Same than in the previous method
-            if(task.getDeadline().equals(deadline))
-            {
-                temp.add(task);
-            }
-        }
-        return temp;
-    }
-
-    public ArrayList<Task> getTasksByStatus(String status)
-    {
-        ArrayList<Task> temp = new ArrayList<>();
-
-        for(Task task : getAllTask())
-        {
-            //If it doesnt work well put an if statement checking if the Arraylist
-            // of requirements with a given status is empty or not and the
-            // run the code
-            if(task.getStatus().equals(status))
-            {
-                temp.add(task);
-            }
-
-        }
-        return temp;
-    }
-    //We might need to include null pointer exceptions for these type of getters that might return a null object
-    public Requirement getRequirementById(String id)
-    {
-        for(Requirement requirement : getAllRequirements())
-        {
-            if(requirement.getId().equals(id))
-            {
-                return requirement;
-            }
-        }
-        throw new NoSuchElementException("The element was not found");
-    }
-    public Task getTaskById(String id)
-    {
-        for(Task task : getAllTask())
-        {
-            if(task.getId().equals(id))
-            {
-                return task;
-            }
-        }
-        throw  new NoSuchElementException("The element was not found");
-
-
-    }
-
-
-
-
-
-
-
-
-
+  // ------------------------------ Other methods ------------------------------
 
 
 }

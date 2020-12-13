@@ -2,20 +2,35 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * A class to store and process a number of members
+ */
 public class MemberList
 {
   private ArrayList<Member> memberList;
 
+  /**
+   * Constructor to initialise memberList instance variable
+   */
   public MemberList()
   {
     memberList = new ArrayList<>();
   }
 
+  /**
+   * Getter for memberList instance variable
+   * @return memberList
+   */
   public ArrayList<Member> getAllMembers()
   {
     return memberList;
   }
 
+  /**
+   * Method to get members with a specific birthday
+   * @param birthday
+   * @return members with that birthday
+   */
   public ArrayList<Member> getMembersByBirthday(MyDate birthday)
   {
     ArrayList<Member> members = new ArrayList<>();
@@ -30,6 +45,12 @@ public class MemberList
     return members;
   }
 
+  /**
+   * Method to get a member by it's full name
+   * @param firstName
+   * @param lastName
+   * @return member by that specific name
+   */
     public Member getMemberByFullName(String firstName, String lastName)
     {
       for (int i = 0; i < memberList.size(); i++)
@@ -42,6 +63,11 @@ public class MemberList
       throw new IllegalStateException("No one matches in the list");
     }
 
+  /**
+   * Method to get a member by it's email
+   * @param email
+   * @return member by that specific email
+   */
     public Member getMemberByEmail(String email)
       {
         for (int i = 0; i < memberList.size(); i++)
@@ -55,6 +81,16 @@ public class MemberList
 
       }
 
+  /**
+   * Method that takes values for creating a new member object
+   * and adding it to the memberList
+   * @param firstName
+   * @param lastName
+   * @param birthday
+   * @param email
+   * @param telephoneNumber
+   * @return true if member was added, false otherwise
+   */
   public boolean hireMember(String firstName, String lastName, MyDate birthday,
       String email, long telephoneNumber)
   {
@@ -73,6 +109,15 @@ public class MemberList
 
   }
 
+  /**
+   * Method that takes values for creating a new member object,
+   * excluding telephone number, and adding it to the memberList
+   * @param firstName
+   * @param lastName
+   * @param birthday
+   * @param email
+   * @return true if member was added, false otherwise
+   */
   public boolean hireMember(String firstName, String lastName, MyDate birthday,
       String email)
   {
@@ -90,6 +135,11 @@ public class MemberList
 
   }
 
+  /**
+   * Method to remove a member from memberList
+   * @param member
+   * @return true if removed, false otherwise
+   */
   public boolean fireMember(Member member)
   {
     for (int i = 0; i < memberList.size(); i++)
@@ -103,6 +153,12 @@ public class MemberList
     return false;
   }
 
+  /**
+   * Method to remove a member from memberList by it's first name and last name
+   * @param firstName
+   * @param lastName
+   * @return true if removed, false otherwise
+   */
   public boolean fireMember(String firstName, String lastName)
   {
     for (int i = 0; i < memberList.size(); i++)

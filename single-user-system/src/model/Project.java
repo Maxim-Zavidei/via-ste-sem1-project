@@ -418,13 +418,13 @@ public class Project {
   }
 
   /**
-   * Removes any requirement that matches the argument requirement's id.
-   * @param requirement The requirement which id will be searched for to be removed.
+   * Removes any requirement matching the argument.
+   * @param requirement The requirement which should be removed.
    * @return Whether the requirement was successfully removed.
-   * @throws NoSuchElementException if a requirement matching argument's requirement id could not be found.
+   * @throws NoSuchElementException if a requirement matching argument could not be found..
    */
   public boolean removeRequirement(Requirement requirement) {
-    return removeRequirement(requirement.getId());
+    return removeRequirement(requirement);
   }
 
   /**
@@ -438,13 +438,13 @@ public class Project {
   }
 
   /**
-   * Removes any task that matches the argument task's id.
-   * @param task The task which id will be searched for to be removed.
+   * Removes any task matching the argument.
+   * @param task The requirement which should be removed.
    * @return Whether the task was successfully removed.
-   * @throws NoSuchElementException if a task matching argument's task id could not be found.
+   * @throws NoSuchElementException if a task matching argument could not be found..
    */
   public boolean removeTask(Task task) {
-    return removeTask(task.getId());
+    return removeTask(task);
   }
 
   /**

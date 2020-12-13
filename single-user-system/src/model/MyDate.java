@@ -11,6 +11,8 @@ public class MyDate {
   private int month;
   private int year;
 
+  // ------------------------------ Constructors ------------------------------
+
   /**
    * Constructor with defined date values.
    * @param day Value between [1; 31] representing the day.
@@ -32,6 +34,8 @@ public class MyDate {
     year = today.getYear();
   }
 
+  // ------------------------------ Setters ------------------------------
+
   /**
    * Setter for all instance variables of the class.
    * @param day Value between [1; 31] representing the day.
@@ -48,6 +52,8 @@ public class MyDate {
     this.month = month;
     this.day = day;
   }
+
+  // ------------------------------ Getters ------------------------------
 
   /**
    * Getter for day instance variable.
@@ -93,6 +99,8 @@ public class MyDate {
         "December"
     }[month - 1];
   }
+
+  // ------------------------------ Other Methods ------------------------------
 
   /**
    * Checks if the year is a leap year.

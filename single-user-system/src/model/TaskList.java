@@ -98,14 +98,12 @@ public class TaskList {
 
   // To comment
   public void removeTask(String id) {
-    for (Task task : taskList) if (task.getId().equals(id)) {
-      taskList.remove(task);
-      break;
-    }
+    taskList.remove(getTaskById(id));
   }
 
   // To comment
   public void removeTask(Task task) {
+    if (task == null) throw new IllegalArgumentException("Task argument is null.");
     removeTask(task.getId());
   }
 

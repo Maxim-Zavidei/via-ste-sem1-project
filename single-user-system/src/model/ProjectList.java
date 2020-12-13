@@ -288,16 +288,14 @@ public class ProjectList {
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
-   * @return Whether the project was created successfully.
    * @throws IllegalArgumentException if a project with the same title already exists.
    * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if the arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public boolean addProject(String title, String description, float estimatedWorkHours, int day, int month, int year) {
+  public void addProject(String title, String description, float estimatedWorkHours, int day, int month, int year) {
     for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
     projectList.add(new Project(generateId(), title, description, estimatedWorkHours, day, month, year));
-    return true;
   }
 
   /**
@@ -307,48 +305,42 @@ public class ProjectList {
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
-   * @return Whether the project was created successfully.
    * @throws IllegalArgumentException if a project with the same title already exists.
    * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if the arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public boolean addProject(String title, float estimatedWorkHours, int day, int month, int year) {
+  public void addProject(String title, float estimatedWorkHours, int day, int month, int year) {
     for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
     projectList.add(new Project(generateId(), title, estimatedWorkHours, day, month, year));
-    return true;
   }
 
   /**
    * Removes the project.
    * @param project The project which should be removed.
-   * @return Whether the project was removed successfully.
    * @throws IllegalArgumentException if the project argument is null.
    * @throws UnsupportedOperationException if the project has any linked requirements.
    * @throws UnsupportedOperationException if the project has any linked tasks.
    */
-  public boolean removeProject(Project project) {
+  public void removeProject(Project project) {
     if (project == null) throw new IllegalArgumentException("Project argument is null.");
     if (project.getNumberOfRequirements() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked requirements.");
     if (project.getNumberOfTasks() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked tasks.");
     projectList.remove(project);
-    return true;
   }
 
   /**
    * Removes the project by id.
    * @param id The id of the project which should be removed.
-   * @return Whether the project was removed successfully.
    * @throws NoSuchElementException if a project with matching id could not be found.
    * @throws IllegalArgumentException if the project argument is null.
    * @throws UnsupportedOperationException if the project has any linked requirements.
    * @throws UnsupportedOperationException if the project has any linked tasks.
    */
-  public boolean removeProject(String id) {
+  public void removeProject(String id) {
     Project project = getProjectById(id);
     if (project.getNumberOfRequirements() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked requirements.");
     if (project.getNumberOfTasks() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked tasks.");
     projectList.remove(project);
-    return true;
   }
 }

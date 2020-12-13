@@ -6,20 +6,19 @@ import java.util.NoSuchElementException;
 /**
  * A class to process and store a number of requirements
  */
-public class RequirementList
-{
+public class RequirementList {
+
   private ArrayList<Requirement> requirementList;
 
   /**
-   * Constructor to initialise the requirementList
+   * Constructor to initialise the instance variables.
    */
-  public RequirementList()
-  {
+  public RequirementList() {
     requirementList = new ArrayList<>();
   }
 
   /**
-   * Getting  the number of requirements
+   * Getter for the number of requirements
    * @return number of requirements
    */
   public int getNumberOfRequirements()
@@ -99,7 +98,7 @@ public class RequirementList
    * @param status
    * @return all requirements with that status
    */
-  public ArrayList<Requirement> getAllRequirementsWithStatus(String status)
+  public ArrayList<Requirement> getAllRequirementsWithStatusOver(float status)
   {
     ArrayList<Requirement> requirements = new ArrayList<>();
 
@@ -120,7 +119,7 @@ public class RequirementList
    * @param priority
    * @return all requirements with that priority
    */
-  public ArrayList<Requirement> getAllRequirementsByPriority(String priority)
+  public ArrayList<Requirement> getAllRequirementsWithPriority(String priority)
   {
     ArrayList<Requirement> requirements = new ArrayList<>();
 

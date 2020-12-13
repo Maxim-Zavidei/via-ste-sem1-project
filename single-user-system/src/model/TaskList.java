@@ -16,7 +16,7 @@ public class TaskList
         return taskList.size();
     }
 
-    public ArrayList<Task> getTaskBeforeDeadLine(MyDate date){
+    public ArrayList<Task> getAllTasksBeforeDeadLine(MyDate date){
         ArrayList<Task> listReturn = new ArrayList<>();
 
         for(Task temp : taskList){
@@ -27,7 +27,7 @@ public class TaskList
         return listReturn;
     }
 
-    public ArrayList<Task> getAllTasksWithFGivenStatus(String status)
+    public ArrayList<Task> getAllTasksWithStatus(String status)
     {
         ArrayList<Task> returnList = new ArrayList<>();
         for(Task task : taskList)
@@ -92,7 +92,7 @@ public class TaskList
         return false;
     }
 
-    public ArrayList<Task> getAllTask()
+    public ArrayList<Task> getAllTasks()
     {
         return taskList;
     }

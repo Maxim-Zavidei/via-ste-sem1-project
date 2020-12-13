@@ -3,10 +3,10 @@ package model;
 import java.util.ArrayList;
 
 /**
- *  A class to store and process the requirements
+ *  A class to create, store and process requirements.
  */
-public class Requirement
-{
+public class Requirement {
+
   private String id;
   private String title;
   private String description;

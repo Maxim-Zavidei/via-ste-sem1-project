@@ -1,210 +1,256 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
+/**
+ * A class to create, store and process tasks.
+ */
 public class Task {
 
   private String id;
   private String title;
   private String description;
   private String status;
-  private int estimatedWorkHours;
-  private int totalWorkedHours;
+  private float estimatedWorkHours;
+  private float totalWorkedHours;
   private MyDate deadline;
-  private ArrayList<Requirement> requirementList;
-  private ArrayList<Member> memberList;
+  private ArrayList<Requirement> assignedRequirements;
+  private ArrayList<Member> assignedMembers;
 
-  public Task(String id, String title, String description, MyDate deadline) {
+  // ------------------------------ Constructors ------------------------------
+
+  /**
+   * Constructor with extended number of defined values.
+   * @param id Id value of the task.
+   * @param title Title for the task
+   * @param description Description of the project
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
+   * @param deadline MyDate object representing the deadline.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
+   * @throws IllegalArgumentException if deadline is in the past.
+   */
+  public Task(String id, String title, String description, float estimatedWorkHours, MyDate deadline) {
     this.id = id;
-    this.title = title;
-    this.description = description;
-    this.deadline = deadline;
-    requirementList = new ArrayList<Requirement>();
-    memberList = new ArrayList<Member>();
+    setTitle(title);
+    setDescription(description);
+    setStatus("Started");
+    setEstimatedWorkHours(estimatedWorkHours);
+    setTotalWorkedHours(0);
+    setDeadline(deadline);
+    assignedRequirements = new ArrayList<>();
+    assignedMembers = new ArrayList<>();
   }
 
-  public Task(String id, String title, MyDate deadline) {
-    this.id = id;
-    this.title = title;
-    this.deadline = deadline;
-    requirementList = new ArrayList<Requirement>();
-    memberList = new ArrayList<Member>();
+  /**
+   * Constructor with minimal number of defined values.
+   * @param id Id value of the task.
+   * @param title Title for the task
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
+   * @param deadline MyDate object representing the deadline.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
+   * @throws IllegalArgumentException if deadline is in the past.
+   */
+  public Task(String id, String title, float estimatedWorkHours, MyDate deadline) {
+    this(id, title, "", estimatedWorkHours, deadline);
   }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+  // ------------------------------ Setters ------------------------------
 
+  /**
+   * Setter for the title instance variable.
+   * @param title Title of the task.
+   */
   public void setTitle(String title) {
     this.title = title;
   }
 
+  /**
+   * Setter for the description instance variable.
+   * @param description Description of the task.
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
+  /**
+   * Setter for the status instance variable.
+   * @param status A value of either ["Started", "Finished"] representing the status.
+   * @throws IllegalArgumentException if the status argument is invalid.
+   */
   public void setStatus(String status) {
+    if (status.equals("Started") || status.equals("Completed")) throw new IllegalArgumentException("Attempt to set and invalid status to task.");
     this.status = status;
   }
 
-  public void setEstimatedWorkHours(int estimatedWorkHours) {
+  /**
+   * Setter for the estimatedWorkHours instance variable.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
+   */
+  public void setEstimatedWorkHours(float estimatedWorkHours) {
+    if (estimatedWorkHours < 1) throw new IllegalArgumentException("Estimated work time can not be less then or equal to 0.");
     this.estimatedWorkHours = estimatedWorkHours;
   }
 
+  /**
+   * Setter for the totalWorkedHours instance variable.
+   * @param totalWorkedHours Value between [0; +inf] representing the number of worked hours on the task.
+   * @throws IllegalArgumentException if the total worked hours argument is invalid.
+   */
   public void setTotalWorkedHours(int totalWorkedHours) {
+    if (estimatedWorkHours < 0) throw new IllegalArgumentException("Estimated work time can not be less then or equal to 0.");
     this.totalWorkedHours = totalWorkedHours;
   }
 
+  /**
+   * Setter for the deadline instance variable.
+   * @param deadline MyDate object representing the deadline.
+   * @throws IllegalArgumentException if deadline is in the past.
+   */
   public void setDeadline(MyDate deadline) {
+    if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
     this.deadline = deadline;
   }
 
+  // ------------------------------ Getters for Instance Variables ------------------------------
+
+  /**
+   * Getter for id instance variable.
+   * @return Value of task's id.
+   */
   public String getId() {
     return id;
   }
 
+  /**
+   * Getter for title instance variable.
+   * @return Value of task's title.
+   */
   public String getTitle() {
     return title;
   }
 
+  /**
+   * Getter for description instance variable.
+   * @return Value of task's description.
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * Getter for status instance variable.
+   * @return Value of task's status.
+   */
   public String getStatus() {
     return status;
   }
 
-  public int getEstimatedWorkHours() {
+  /**
+   * Getter for estimated work hours instance variable.
+   * @return Value of task's estimated work hours.
+   */
+  public float getEstimatedWorkHours() {
     return estimatedWorkHours;
   }
 
-  public int getTotalWorkedHours() {
+  /**
+   * Getter for total worked total instance variable.
+   * @return Value of task's total worked total.
+   */
+  public float getTotalWorkedHours() {
     return totalWorkedHours;
   }
 
+  /**
+   * Getter for deadline instance variable.
+   * @return Value of task's deadline.
+   */
   public MyDate getDeadline() {
     return deadline;
   }
 
-  public int getNumberOfRequirements()
-  {
-    return requirementList.size();
+  // ------------------------------ Getters for Assigned Requirements ------------------------------
+
+  /**
+   * Getter for the number of requirements assigned to the task.
+   * @return The number of requirements assigned to the task.
+   */
+  public int getNumberOfAssignedRequirements() {
+    return assignedRequirements.size();
   }
 
-  public int getNumberOfAssignedMembers()
-  {
-    return memberList.size();
+  /**
+   * Getter for all the requirements assigned to the task.
+   * @return All the requirements assigned to the task or empty array list if no tasks are assigned.
+   */
+  public ArrayList<Requirement> getAllAssignedRequirements() {
+    return assignedRequirements;
   }
 
-  public ArrayList<Member> getAllAssignedMembers()
-  {
-    return memberList;
+  // ------------------------------ Getters for Assigned Members ------------------------------
+
+  /**
+   * Getter for the number of members assigned to the task.
+   * @return The number of members assigned to the task.
+   */
+  public int getNumberOfAssignedMembers() {
+    return assignedMembers.size();
   }
 
-  public ArrayList<Requirement> getRequirements()
-  {
-    return requirementList;
+  /**
+   * Getter for all the members assigned to the task.
+   * @return All the members assigned to the task or empty array list if no members are assigned.
+   */
+  public ArrayList<Member> getAllAssignedMembers() {
+    return assignedMembers;
   }
 
-  public boolean assignRequirement(Requirement requirement)
-      throws NullPointerException
-  {
-    for (Requirement requirementTemp : requirementList)
-    {
-      if (requirementTemp.equals(requirement))
-      {
-        return false;
-      }
+  // ------------------------------ Other Methods ------------------------------
+
+  // To comment
+  public void assignRequirement(Requirement requirementToAssign) {
+    for (Requirement requirement : assignedRequirements) if (requirement.getId().equals(requirementToAssign.getId())) throw new UnsupportedOperationException("This requirement is already assigned to the task.");
+    assignedRequirements.add(requirementToAssign);
+  }
+
+  // To comment
+  public void unassignRequirement(Requirement requirementToUnassign) {
+    for (int i = 0; i < assignedRequirements.size(); i++) if (assignedRequirements.get(i).getId().equals(requirementToUnassign.getId())) {
+      assignedRequirements.remove(i);
+      break;
     }
-    requirementList.add(requirement);
-    return true;
+    throw new NoSuchElementException("This requirement is not a assigned to the task.");
   }
 
-  public boolean unAssignRequirement(Requirement requirement) throws NullPointerException {
-    for (Requirement requirement1 : requirementList)
-    {
-      if (requirement1.equals(requirement))
-      {
-        requirementList.remove(requirement);
-        return true;
-      }
+  // To comment
+  public void unassignFromEveryRequirement() {
+    assignedRequirements.clear();
+  }
+
+  // To comment
+  public void assignMember(Member memberToAssign) {
+    for (Member member : assignedMembers) if (member.equals(memberToAssign)) throw new UnsupportedOperationException("This member is already assigned to the task.");
+    assignedMembers.add(memberToAssign);
+  }
+
+  // To comment
+  public void unassignMember(Member memberToUnassign) {
+    for (int i = 0; i < assignedMembers.size(); i++) if (assignedMembers.get(i).equals(memberToUnassign)) {
+      assignedMembers.remove(i);
+      break;
     }
-    return false;
+    throw new NoSuchElementException("This member is not a assigned to the task.");
   }
 
-  public boolean unAssignFromEveryReq()
-  {
-
-    if (requirementList.isEmpty())
-    {
-      return false;
-    }
-    requirementList.clear();
-    return true;
+  // To comment
+  public void unassignEveryMember() {
+    assignedMembers.clear();
   }
 
-  public int getNumberOfMembers()
-  {
-    return memberList.size();
-  }
-
-  public ArrayList<Member> getMemberList() {
-    return memberList;
-  }
-
-  public boolean assignMember(Member member) throws NullPointerException
-  {
-
-    for (Member memberTemp : memberList)
-    {
-      if (memberTemp.equals(member))
-      {
-        return false;
-      }
-    }
-    memberList.add(member);
-    return true;
-  }
-
-  public boolean unAssignMember(Member member)
-  {
-    for (Member memberTemp : memberList)
-    {
-      if (memberTemp.equals(member))
-      {
-        memberList.remove(member);
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public boolean unAssignEveryMember()
-  {
-    if (memberList.isEmpty())
-    {
-      return false;
-    }
-
-    memberList.clear();
-    return true;
-  }
-
-  public void addWorkedTime(int hrs)
-  {
+  // To comment
+  public void addWorkedTime(int hrs) {
     totalWorkedHours += hrs;
-  }
-
-  public boolean equals(Object obj)
-  {
-
-    if (!(obj instanceof Task))
-    {
-      return false;
-    }
-
-    Task other = (Task) obj;
-    return other.id.equals(id);
   }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 /**
- * A class to create and store and process projects and its elements.
+ * A class to create, store and process projects and its elements.
  */
 public class Project {
 
@@ -68,23 +68,19 @@ public class Project {
   /**
    * Setter for the description instance variable.
    * @param description Description of the project.
-   * @return Whether description was set successfully.
    */
-  public boolean setDescription(String description) {
+  public void setDescription(String description) {
     this.description = description;
-    return true;
   }
 
   /**
    * Setter for the estimatedWorkHours instance variable.
    * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
-   * @return Whether the estimated work hours were set successfully.
    * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    */
-  public boolean setEstimatedWorkHours(float estimatedWorkHours) {
+  public void setEstimatedWorkHours(float estimatedWorkHours) {
     if (estimatedWorkHours < 1) throw new IllegalArgumentException("Estimated work time can not be less then or equal to 0.");
     this.estimatedWorkHours = estimatedWorkHours;
-    return true;
   }
 
   /**
@@ -92,45 +88,37 @@ public class Project {
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
-   * @return Whether deadline was set successfully.
    * @throws IllegalArgumentException if the arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public boolean setDeadline(int day, int month, int year) {
+  public void setDeadline(int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
     this.deadline = deadline;
-    return true;
   }
 
   /**
    * Setter for the projectCreator instance variable.
    * @param projectCreator Object of type member representing the project creator.
-   * @return Whether project creator was set successfully.
    */
-  public boolean setProjectCreator(Member projectCreator) {
+  public void setProjectCreator(Member projectCreator) {
     this.projectCreator = projectCreator;
-    return true;
   }
 
   /**
    * Setter for the productOwner instance variable.
    * @param productOwner Object of type member representing the project owner.
-   * @return Whether product owner was set successfully.
    */
-  public boolean setProductOwner(Member productOwner) {
+  public void setProductOwner(Member productOwner) {
     this.productOwner = productOwner;
-    return true;
   }
 
   /**
    * Setter for the scrumMaster instance variable.
    * @param scrumMaster Object of type member representing the project scrum master.
-   * @return Whether scrum master was set successfully.
    */
-  public boolean setScrumMaster(Member scrumMaster) {
+  public void setScrumMaster(Member scrumMaster) {
     this.scrumMaster = scrumMaster;
-    return true;
   }
 
   // ------------------------------ Getters for Instance Variables ------------------------------
@@ -351,16 +339,14 @@ public class Project {
    * @param month Value between [1; 12] representing deadline's month of the requirement.
    * @param year Value between [1; +inf] representing deadline's year of the requirement.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing requirement's priority group.
-   * @return Whether the new requirement was added successfully.
    * @throws IllegalArgumentException if the date arguments are invalid.
    * @throws IllegalArgumentException if the requirement's deadline is after project's deadline.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
-  public boolean addRequirement(String title, String description, int day, int month, int year, String priorityGroup) {
+  public void addRequirement(String title, String description, int day, int month, int year, String priorityGroup) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the requirement must be set before the deadline of the project.");
     requirementList.addRequirement(title, description, deadline, priorityGroup);
-    return true;
   }
 
   /**
@@ -370,91 +356,85 @@ public class Project {
    * @param month Value between [1; 12] representing deadline's month of the requirement.
    * @param year Value between [1; +inf] representing deadline's year of the requirement.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing requirement's priority group.
-   * @return Whether the new requirement was added successfully.
    * @throws IllegalArgumentException if the date arguments are invalid.
    * @throws IllegalArgumentException if the requirement's deadline is after project's deadline.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
-  public boolean addRequirement(String title, int day, int month, int year, String priorityGroup) {
+  public void addRequirement(String title, int day, int month, int year, String priorityGroup) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the requirement must be set before the deadline of the project.");
     requirementList.addRequirement(title, deadline, priorityGroup);
-    return true;
   }
 
   /**
    * Add method with extended number of defined values which creates and links a new task to the project.
    * @param title Title of the task.
    * @param description Description for the task.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
    * @param day Value between [1; 31] representing deadline's day of the task.
    * @param month Value between [1; 12] representing deadline's month of the task.
    * @param year Value between [1; +inf] representing deadline's year of the task.
-   * @return Whether the new task was added successfully.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if the date arguments are invalid.
    * @throws IllegalArgumentException if the task's deadline is after project's deadline.
    */
-  public boolean addTask(String title, String description, int day, int month, int year) {
+  public void addTask(String title, String description, float estimatedWorkHours, int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the task must be set before the deadline of the project.");
-    taskList.addTask(title, description, deadline);
-    return false;
+    taskList.addTask(id, title, description, estimatedWorkHours, deadline);
   }
 
   /**
    * Add method with minimal number of defined values which creates and links a new task to the project.
    * @param title Title of the task.
+   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
    * @param day Value between [1; 31] representing deadline's day of the task.
    * @param month Value between [1; 12] representing deadline's month of the task.
    * @param year Value between [1; +inf] representing deadline's year of the task.
-   * @return Whether the new task was added successfully.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if the date arguments are invalid.
    * @throws IllegalArgumentException if the task's deadline is after project's deadline.
    */
-  public boolean addTask(String title, int day, int month, int year) {
+  public void addTask(String title, float estimatedWorkHours, int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the task must be set before the deadline of the project.");
-    taskList.addTask(title, deadline);
-    return false;
+    taskList.addTask(id, title, estimatedWorkHours, deadline);
   }
 
   /**
    * Removes any requirement matching the argument.
    * @param requirement The requirement which should be removed.
-   * @return Whether the requirement was successfully removed.
    * @throws NoSuchElementException if a requirement matching argument could not be found..
    */
-  public boolean removeRequirement(Requirement requirement) {
-    return removeRequirement(requirement);
+  public void removeRequirement(Requirement requirement) {
+    requirementList.removeRequirement(requirement);
   }
 
   /**
    * Removes any requirement that matches the argument id.
    * @param id The id of the requirement to be removed.
-   * @return Whether the requirement was successfully removed.
    * @throws NoSuchElementException if a requirement with matching id could not be found.
    */
-  public boolean removeRequirement(String id) {
-    return requirementList.removeRequirement(id);
+  public void removeRequirement(String id) {
+    requirementList.removeRequirement(id);
   }
 
   /**
    * Removes any task matching the argument.
    * @param task The requirement which should be removed.
-   * @return Whether the task was successfully removed.
    * @throws NoSuchElementException if a task matching argument could not be found..
    */
-  public boolean removeTask(Task task) {
-    return removeTask(task);
+  public void removeTask(Task task) {
+    taskList.removeTask(task);
   }
 
   /**
    * Removes any task that matches the argument id.
    * @param id The id of the task to be removed.
-   * @return Whether the task was successfully removed.
    * @throws NoSuchElementException if a task with matching id could not be found.
    */
-  public boolean removeTask(String id) {
-    return taskList.removeTask(id);
+  public void removeTask(String id) {
+    taskList.removeTask(id);
   }
 
   /**

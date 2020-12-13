@@ -136,7 +136,7 @@ public class Project {
   // ------------------------------ Getters for Instance Variables ------------------------------
 
   /**
-   * Getter for Id instance variable.
+   * Getter for id instance variable.
    * @return Value of project's id.
    */
   public String getId() {
@@ -220,7 +220,7 @@ public class Project {
   /**
    * Getter for all the requirements linked to the project before a specific deadline.
    * @param deadline A date that will be compared with each deadline of the linked requirements.
-   * @return All linked requirements that have a deadline before the given argument date or empty array list if no matching requirements were found.
+   * @return All linked requirements that have a deadline before the given argument date or empty array list if no matching requirements were found or no requirements are linked.
    */
   public ArrayList<Requirement> getAllRequirementsBeforeDeadline(MyDate deadline) {
     return requirementList.getAllRequirementsBeforeDeadline(deadline);
@@ -229,7 +229,7 @@ public class Project {
   /**
    * Getter for all the requirements linked to the project completed over a certain percentage.
    * @param status A percentage that will be compared with each status of the linked requirements.
-   * @return All linked requirements that have a status greater or equal to the given percentage as argument or empty array list if no matching requirements were found.
+   * @return All linked requirements that have a status greater or equal to the given percentage as argument or empty array list if no matching requirements were found or no requirements are linked.
    * @throws IllegalArgumentException if the status argument is invalid.
    */
   public ArrayList<Requirement> getAllRequirementsWithStatusOver(float status) {
@@ -239,7 +239,8 @@ public class Project {
   /**
    * Getter for all the requirements linked to the project that have a specific priority.
    * @param priority A value of either ["Critical", "High", "Low"] that will be compared with each priority group of the linked requirements.
-   * @return All linked requirements that have a matching the argument or empty array list if no matching requirements were found.
+   * @return All linked requirements that have a matching the argument or empty array list if no matching requirements were found or no requirements are linked.
+   * @throws IllegalArgumentException if the priority argument is invalid.
    */
   public ArrayList<Requirement> getAllRequirementsWithPriority(String priority) {
     return requirementList.getAllRequirementsWithPriority(priority);
@@ -247,7 +248,7 @@ public class Project {
 
   /**
    * Getter for all the requirements linked to the project that are marked as approved.
-   * @return All linked requirements that are approved or empty array list if no approved requirements were found.
+   * @return All linked requirements that are approved or empty array list if no approved requirements were found or no requirements are linked.
    */
   public ArrayList<Requirement> getAllApprovedRequirements() {
     return requirementList.getAllApprovedRequirements();
@@ -255,7 +256,7 @@ public class Project {
 
   /**
    * Getter for all the requirements linked to the project that are marked as disapproved.
-   * @return All linked requirements that are disapproved or empty array list if no disapproved requirements were found.
+   * @return All linked requirements that are disapproved or empty array list if no disapproved requirements were found or no requirements are linked.
    */
   public ArrayList<Requirement> getAllDisapprovedRequirements() {
     return requirementList.getAllDisapprovedRequirements();
@@ -263,10 +264,10 @@ public class Project {
 
   /**
    * Getter for requirement linked to the project by index.
-   * @param index The position in the list of the requirement to be returned.
+   * @param index Value between [0; +inf] representing the position of the requirement in the list of the requirements to be returned.
    * @return The requirement at the position of the index.
    * @throws IllegalArgumentException if the index argument is invalid.
-   * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array.
+   * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array list.
    */
   public Requirement getRequirementByIndex(int index) {
     return requirementList.getRequirementByIndex(index);
@@ -303,27 +304,28 @@ public class Project {
   /**
    * Getter for all the tasks linked to the project before a specific deadline.
    * @param deadline A date that will be compare with each deadline of the linked task.
-   * @return All linked tasks that have a deadline before the given argument date or empty array list if no matching tasks were found.
+   * @return All linked tasks that have a deadline before the given argument date or empty array list if no matching tasks were found or no tasks are linked.
    */
-  public ArrayList<Task> getAllTaskBeforeDeadline(MyDate deadline) {
-    return taskList.getAllTaskBeforeDeadLine(deadline);
+  public ArrayList<Task> getAllTasksBeforeDeadline(MyDate deadline) {
+    return taskList.getAllTasksBeforeDeadLine(deadline);
   }
 
   /**
    * Getter for all the tasks linked to the project that have a matching status.
    * @param status A value of either ["Started", "Finished"] that will be compared with each status of the linked tasks.
-   * @return All linked tasks that have a status matching the argument or empty array list if no matching tasks were found.
+   * @return All linked tasks that have a status matching the argument or empty array list if no matching tasks were found or no tasks are linked.
+   * @throws IllegalArgumentException if the status argument is invalid.
    */
-  public ArrayList<Task> getAllTaskWithStatus(String status) {
-    return taskList.getAllTaskWithStatus(status);
+  public ArrayList<Task> getAllTasksWithStatus(String status) {
+    return taskList.getAllTasksWithStatus(status);
   }
 
   /**
    * Getter for task linked to the project by index.
-   * @param index The position in the list of the task to be returned.
+   * @param index Value between [0; +inf] representing the position of the task in the list of the tasks to be returned.
    * @return The task at the position of the index.
    * @throws IllegalArgumentException if the index argument is invalid.
-   * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array.
+   * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array list.
    */
   public Task getTaskByIndex(int index) {
     return taskList.getTaskByIndex(index);

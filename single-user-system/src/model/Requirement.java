@@ -245,7 +245,7 @@ public class Requirement {
    * @return true, if the task was added successfully
    * @throws NoSuchFieldException triggers if the task already exists in  the assignedTask list
    */
-  public boolean assignTask(Task task) throws NoSuchFieldException
+  public boolean assignTask(Task task)
   {
     for (int i = 0; i < assignedTask.size(); i++)
     {
@@ -264,7 +264,7 @@ public class Requirement {
    * @return true, if the task was removed successfully
    * @throws NoSuchFieldException triggers if the task already exists in  the assignedTask list
    */
-  public boolean unassignTask(Task task) throws NoSuchFieldException
+  public boolean unassignTask(Task task)
   {
     for (int i = 0; i < assignedTask.size(); i++)
     {

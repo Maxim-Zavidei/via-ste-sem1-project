@@ -209,48 +209,83 @@ public class Task {
 
   // ------------------------------ Other Methods ------------------------------
 
-  // To comment
+  /**
+   * Assigns requirement to this task.
+   * @param requirementToAssign The requirement object to be assigned.
+   * @throws UnsupportedOperationException if the requirement belong to another project.
+   * @throws UnsupportedOperationException if the requirement is already assigned to the task.
+   */
   public void assignRequirement(Requirement requirementToAssign) {
+    if (!requirementToAssign.getId().substring(0, 32).equals(getId().substring(0, 32))) throw new UnsupportedOperationException("Could not assign requirement because it belong to another project.");
     for (Requirement requirement : assignedRequirements) if (requirement.getId().equals(requirementToAssign.getId())) throw new UnsupportedOperationException("This requirement is already assigned to the task.");
+    requirementToAssign.assignTask(this);
     assignedRequirements.add(requirementToAssign);
   }
 
-  // To comment
+  /**
+   * Unassigns requirement argument from this task.
+   * @param requirementToUnassign The requirement needed to be unassigned.
+   * @throws NoSuchElementException if the requirement is not linked to the task.
+   */
   public void unassignRequirement(Requirement requirementToUnassign) {
     for (int i = 0; i < assignedRequirements.size(); i++) if (assignedRequirements.get(i).getId().equals(requirementToUnassign.getId())) {
+      assignedRequirements.get(i).unassignTask(this);
       assignedRequirements.remove(i);
-      break;
+      return;
     }
     throw new NoSuchElementException("This requirement is not a assigned to the task.");
   }
 
-  // To comment
+  /**
+   * Unassigns every requirement argument from this task.
+   */
   public void unassignFromEveryRequirement() {
+    for (Requirement requirement : assignedRequirements) {
+      requirement.unassignTask(this);
+    }
     assignedRequirements.clear();
   }
 
-  // To comment
+  /**
+   * Assigns member to this task.
+   * @param memberToAssign The member object to be assigned.
+   * @throws UnsupportedOperationException if the member is already assigned to the task.
+   */
   public void assignMember(Member memberToAssign) {
     for (Member member : assignedMembers) if (member.equals(memberToAssign)) throw new UnsupportedOperationException("This member is already assigned to the task.");
+    memberToAssign.assignTask(this);
     assignedMembers.add(memberToAssign);
   }
 
-  // To comment
+  /**
+   * Unassigns membert argument from this task.
+   * @param memberToUnassign The member needed to be unassigned.
+   * @throws NoSuchElementException if the member is not linked to the task.
+   */
   public void unassignMember(Member memberToUnassign) {
     for (int i = 0; i < assignedMembers.size(); i++) if (assignedMembers.get(i).equals(memberToUnassign)) {
+      assignedMembers.get(i).unassignFromTask(this);
       assignedMembers.remove(i);
-      break;
+      return;
     }
     throw new NoSuchElementException("This member is not a assigned to the task.");
   }
 
-  // To comment
+  /**
+   * Unassigns every member argument from this task.
+   */
   public void unassignEveryMember() {
+    for (Member member : assignedMembers) {
+      member.unassignFromTask(this);
+    }
     assignedMembers.clear();
   }
 
-  // To comment
-  public void addWorkedTime(int hrs) {
+  /**
+   * Adds work hours to the instance variable.
+   * @param hrs Number of hours to add.
+   */
+  public void addWorkedTime(float hrs) {
     totalWorkedHours += hrs;
   }
 }

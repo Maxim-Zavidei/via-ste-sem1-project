@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public interface ProjectManagementModel
 {
   public ArrayList<Project> getAllProjects();
-  public ArrayList<Project> getProjectsByStatus(String status);
+  public ArrayList<Project> getProjectsWithStatusOver(float status);
   public ArrayList<Project> getProjectsBeforeDeadline(MyDate deadline);
   public Project getProjectById(String Id);
   public ArrayList<Requirement> getAllRequirements();
-  public ArrayList<Requirement> getAllRequirementsByPriority(String priorityGroup);
+  public ArrayList<Requirement> getAllRequirementsWithPriority(String priorityGroup);
   public ArrayList<Requirement> getRequirementsLinkedTo(Project project);
   public ArrayList<Requirement> getRequirementsLinkedTo(Task task);
   public ArrayList<Requirement> getRequirementsLinkedTo(Member member);
-  public ArrayList<Requirement> getRequirementsByStatus(String status);
+  public ArrayList<Requirement> getRequirementsWithStatusOver(float status);
   public ArrayList<Requirement> getRequirementsBeforeDeadline(MyDate deadline);
   public Requirement getRequirementById(String Id);
   public ArrayList<Task> getAllTasks();
@@ -30,8 +30,13 @@ public interface ProjectManagementModel
   public Member getMemberByFullName(String firstName, String lastName);
   public Member getMemberByEmail(String email);
 
-  public void createProject(String title, String description, float estimatedWorkHours, int day, int month, int year);
-  public void createProject(String title, float estimatedWorkHours, int day, int month, int year);
+  public void createProject(String title, String description, int day, int month, int year);
+  public void createProject(String title, int day, int month, int year);
+  public void removeProject(Project project);
+  public void removeProject(String Id);
+  public void addMember(String firstName, String lastName, MyDate birthday,String email);
+  public void addMember(String firstName, String lastName, MyDate birthday,String email, long telephoneNumber);
+  public void removeMember(String firstName, String lastName);
 
 
 

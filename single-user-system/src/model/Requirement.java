@@ -25,6 +25,7 @@ public class Requirement {
    * @param description Description of the requirement.
    * @param deadline MyDate object representing the deadline.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing the importance of the requirement.
+   * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public Requirement(String id, String title, String description, MyDate deadline, String priorityGroup) {
     this.id = id;
@@ -42,6 +43,7 @@ public class Requirement {
    * @param title Title for the requirement.
    * @param deadline MyDate object representing the deadline.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing the importance of the requirement.
+   * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public Requirement(String id, String title, MyDate deadline, String priorityGroup) {
     this(id, title, "", deadline, priorityGroup);

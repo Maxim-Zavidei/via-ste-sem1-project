@@ -187,7 +187,7 @@ public class Project {
    * @return All linked requirements that have a deadline before the given argument date or empty array list if no matching requirements were found or no requirements are linked.
    */
   public ArrayList<Requirement> getAllRequirementsBeforeDeadline(MyDate deadline) {
-    return requirementList.getAllRequirementsBeforeDeadline(deadline);
+    return requirementList.getAllRequirementsBeforeDeadLine(deadline);
   }
 
   /**
@@ -322,7 +322,7 @@ public class Project {
   public void addRequirement(String title, String description, int day, int month, int year, String priorityGroup) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the requirement must be set before the deadline of the project.");
-    requirementList.addRequirement(title, description, deadline, priorityGroup);
+    requirementList.addRequirement(id, title, description, deadline, priorityGroup);
   }
 
   /**
@@ -339,7 +339,7 @@ public class Project {
   public void addRequirement(String title, int day, int month, int year, String priorityGroup) {
     MyDate deadline = new MyDate(day, month, year);
     if (deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the requirement must be set before the deadline of the project.");
-    requirementList.addRequirement(title, deadline, priorityGroup);
+    requirementList.addRequirement(id, title, deadline, priorityGroup);
   }
 
   /**
@@ -421,7 +421,9 @@ public class Project {
    * @return Value of project's estimated work hours.
    */
   public float getEstimatedWorkHours() {
-    return 0;
+    float estimatedWorkHours = 0;
+    for (Task task : getAllTasks()) estimatedWorkHours += task.getEstimatedWorkHours();
+    return estimatedWorkHours;
   }
 
   /**

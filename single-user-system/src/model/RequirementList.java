@@ -2,11 +2,14 @@ package model;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 /**
- * A class to process and store a number of requirements
+ * A class to process and store a requirements.
  */
 public class RequirementList {
+
+  // ------------------------------ Constructors ------------------------------
 
   private ArrayList<Requirement> requirementList;
 
@@ -17,275 +20,184 @@ public class RequirementList {
     requirementList = new ArrayList<>();
   }
 
+  // ------------------------------ Getters ------------------------------
+
   /**
-   * Getter for the number of requirements
-   * @return number of requirements
+   * Getter for the number of requirements linked to the project.
+   * @return The number of tasks requirements to the project.
    */
-  public int getNumberOfRequirements()
-  {
+  public int getNumberOfRequirements() {
     return requirementList.size();
   }
 
   /**
-   * Getter for requirementList
-   * @return requirementList
+   * Getter for all the requirements linked to the project.
+   * @return All the requirements linked to the project or empty array list if no requirements are linked.
    */
-  public ArrayList<Requirement> getAllRequirements()
-  {
+  public ArrayList<Requirement> getAllRequirements() {
     return requirementList;
   }
 
   /**
-   * Getting all the requirements before a specific deadline
-   * @param deadline
-   * @return requirements that are before the deadline
+   * Getter for all the requirements linked to the project before a specific deadline.
+   * @param deadline A date that will be compare with each deadline of the linked requirement.
+   * @return All linked requirements that have a deadline before the given argument date or empty array list if no matching requirements were found or no requirements are linked.
    */
-  public ArrayList<Requirement> getAllRequirementsBeforeDeadline(
-      MyDate deadline)
-  {
-    ArrayList<Requirement> requirements = new ArrayList<>();
-
-    for (int i = 0; i < requirementList.size(); i++)
-    {
-      if (requirementList.get(i).getDeadline().isBefore(deadline))
-      {
-        requirements.add(requirementList.get(i));
-      }
-    }
-
-    return requirements;
+  public ArrayList<Requirement> getAllRequirementsBeforeDeadLine(MyDate deadline) {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Requirement requirement : requirementList) if (requirement.getDeadline().isBefore(deadline)) toReturnRequirements.add(requirement);
+    return toReturnRequirements;
   }
 
   /**
-   * Getting the requirements that are not approved
-   * @return requirements that are not approved
+   * Getter for all the requirements linked to the project completed over a certain percentage.
+   * @param status A percentage that will be compared with each status of the linked requirements.
+   * @return All linked requirements that have a status greater or equal to the given percentage as argument or empty array list if no matching requirements were found or no requirements are linked.
+   * @throws IllegalArgumentException if the status argument is invalid.
    */
-  public ArrayList<Requirement> getAllDisapprovedRequirements()
-  {
-    ArrayList<Requirement> requirements = new ArrayList<>();
-
-    for (int i = 0; i < requirementList.size(); i++)
-    {
-      if (!requirementList.get(i).isApproved())
-      {
-        requirements.add(requirementList.get(i));
-      }
-
-    }
-    return requirements;
-  }
-  /**
-   * Getting the requirements that are approved
-   * @return requirements that are approved
-   */
-  public ArrayList<Requirement> getAllApprovedRequirements()
-  {
-    ArrayList<Requirement> requirements = new ArrayList<>();
-
-    for (int i = 0; i < requirementList.size(); i++)
-    {
-      if (requirementList.get(i).isApproved())
-      {
-        requirements.add(requirementList.get(i));
-      }
-
-    }
-    return requirements;
+  public ArrayList<Requirement> getAllRequirementsWithStatusOver(float status) {
+    if (status < 0 || 1 < status) throw new IllegalArgumentException("Status argument must be between [0; 1].");
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Requirement requirement : requirementList) if (requirement.getStatus() >= status) toReturnRequirements.add(requirement);
+    return toReturnRequirements;
   }
 
   /**
-   * Getting the requirements with a specific status
-   * @param status
-   * @return all requirements with that status
+   * Getter for all the requirements linked to the project that have a specific priority.
+   * @param priority A value of either ["Critical", "High", "Low"] that will be compared with each priority group of the linked requirements.
+   * @return All linked requirements that have a matching the argument or empty array list if no matching requirements were found or no requirements are linked.
+   * @throws IllegalArgumentException if the priority argument is invalid.
    */
-  public ArrayList<Requirement> getAllRequirementsWithStatusOver(float status)
-  {
-    ArrayList<Requirement> requirements = new ArrayList<>();
-
-    for (int i = 0; i < requirementList.size(); i++)
-    {
-      if (requirementList.get(i).getStatus().equals(status))
-      {
-        requirements.add(requirementList.get(i));
-      }
-
-    }
-    return requirements;
-
+  public ArrayList<Requirement> getAllRequirementsWithPriority(String priority) {
+    if (priority.equals("Low") || priority.equals("Critical") || priority.equals("High")) throw new IllegalArgumentException("Priority group must be a value of either [\"Critical\", \"High\", \"Low\"].");
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Requirement requirement : requirementList) if (requirement.getPriorityGroup().equals(priority)) toReturnRequirements.add(requirement);
+    return toReturnRequirements;
   }
 
   /**
-   * Getting the requirements with a specific priority
-   * @param priority
-   * @return all requirements with that priority
+   * Getter for all the requirements linked to the project that are marked as approved.
+   * @return All linked requirements that are approved or empty array list if no approved requirements were found or no requirements are linked.
    */
-  public ArrayList<Requirement> getAllRequirementsWithPriority(String priority)
-  {
-    ArrayList<Requirement> requirements = new ArrayList<>();
-
-    for (int i = 0; i < requirementList.size(); i++)
-    {
-      if (requirementList.get(i).getPriorityGroup().equals(priority))
-      {
-        requirements.add(requirementList.get(i));
-      }
-
-    }
-    return requirements;
-
+  public ArrayList<Requirement> getAllApprovedRequirements() {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Requirement requirement : requirementList) if (requirement.isApproved()) toReturnRequirements.add(requirement);
+    return toReturnRequirements;
   }
 
   /**
-   * Get the requirement by index
-   * @param index
-   * @return the requirement at that index
-   * @throws IndexOutOfBoundsException may trigger if the requirementList does not have that index;
+   * Getter for all the requirements linked to the project that are marked as disapproved.
+   * @return All linked requirements that are disapproved or empty array list if no disapproved requirements were found or no requirements are linked.
    */
-  public Requirement getRequirementByIndex(int index) throws IndexOutOfBoundsException
-  {
+  public ArrayList<Requirement> getAllDisapprovedRequirements() {
+    ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
+    for (Requirement requirement : requirementList) if (!requirement.isApproved()) toReturnRequirements.add(requirement);
+    return toReturnRequirements;
+  }
+
+  /**
+   * Getter for requirement linked to the project by index.
+   * @param index Value between [0; +inf] representing the position of the requirement in the list of the requirements to be returned.
+   * @return The requirement at the position of the index.
+   * @throws IllegalArgumentException if the index argument is invalid.
+   * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array list.
+   */
+  public Requirement getRequirementByIndex(int index) {
     return requirementList.get(index);
   }
 
   /**
-   * Getting the requirements by an id
-   * @param id
-   * @return the requirements with that id
-   * @throws NoSuchElementException triggers if there are no requirements by that id
+   * Getter for requirement linked to the project by id.
+   * @param id The id of the requirement to be returned.
+   * @return The requirement with the equal id.
+   * @throws NoSuchElementException if a requirement with matching id could not be found.
    */
-  public Requirement getRequirementById(String id)
-  {
-    for (int i = 0; i < requirementList.size(); i++)
-    {
-      if (requirementList.get(i).getId().equals(id))
-      {
-        return requirementList.get(i);
-      }
-
+  public Requirement getRequirementById(String id) {
+    for (Requirement requirement : requirementList) if (requirement.getId().equals(id)) {
+      return requirement;
     }
-     throw new NoSuchElementException("No requirement by this id");
+    throw new NoSuchElementException("Could not find a requirement with given id.");
   }
 
   /**
-   * Adding a new requirement to the requirementList, by accepting the same parameters as a requirement constructor
-   * @param ID
-   * @param title
-   * @param description
-   * @param deadline
-   * @param priorityGroup
-   * @return true if the requirement was added, false if it is already in the requirementList
+   * Checks whether a requirement with a given id already exists.
+   * @param id Id to check for.
+   * @return Whether a requirement matching the id already exists.
    */
-  public boolean addRequirement(String ID, String title, String description, MyDate deadline, String priorityGroup)
-  {
-    Requirement requirement = new Requirement(ID, title, description, deadline, priorityGroup);
-
-      if (!requirementList.contains(requirement))
-      {
-        requirementList.add(requirement);
-        return true;
-      }
-
-     return false;
-  }
-  /**
-   * Adding a new requirement to the requirementList, by accepting the same parameters as a requirement constructor,
-   * without the description parameter only
-   * @param ID
-   * @param title
-   * @param deadline
-   * @param priorityGroup
-   * @return true if the requirement was added, false if it is already in the requirementList
-   */
-  public boolean addRequirement(String ID, String title, MyDate deadline, String priorityGroup)
-   {
-     Requirement requirement = new Requirement(ID, title, deadline, priorityGroup);
-
-
-       if (!requirementList.contains(requirement))
-       {
-         requirementList.add(requirement);
-         return true;
-       }
-
-     return false;
-
-    }
-
-  /**
-   * Adding a new requirement with to the requirementList
-   * @param requirement
-   * @return true if the requirement was added, false if it is already in the requirementList
-   */
-  public boolean addRequirement(Requirement requirement)
-  {
-
-      if (!requirementList.contains(requirement))
-      {
-        requirementList.add(requirement);
-        return true;
-      }
-
-    return false;
-
-  }
-
-  /**
-   * Remove a requirement from the requirementList by id
-   * @param id
-   * @return true if the requirement was removed,  false if there was no such requirement to remove in the first place
-   */
-  public boolean  removeRequirement(String id)
-  {
-    for (int i = 0; i < requirementList.size(); i++)
-    {
-      if (requirementList.get(i).getId().equals(id))
-      {
-        requirementList.remove(i);
-        return true;
-      }
+  public boolean isIdTaken(String id) {
+    for (Requirement requirement : requirementList) if (requirement.getId().equals(id)) {
+      return true;
     }
     return false;
   }
 
   /**
-   * Remove a requirement from the requirementList
-   * @param requirement
-   * @return true if the requirement was removed,  false if there was no such requirement to remove in the first place
+   * Generates a unique id that does not match any of the existing ids of all tasks.
+   * @return The unique id.
    */
-  public boolean  removeRequirement(Requirement requirement)
-  {
-    for (int i = 0; i < requirementList.size(); i++)
-    {
-      if (requirementList.contains(requirement))
-      {
-        requirementList.remove(requirement);
-        return true;
+  private String generateId(String projectId) {
+    Random randomizer = new Random();
+    StringBuilder generatedId;
+    char randomChar;
+
+    do {
+      generatedId = new StringBuilder(projectId + "R");
+      for (int i = 0; i < 31; i++) {
+        do randomChar = (char) (randomizer.nextInt(75) + 48); while (!(
+            '0' <= randomChar && randomChar <= '9' ||
+                'A' <= randomChar && randomChar <= 'Z' && randomChar != 'P' && randomChar != 'R' && randomChar != 'T' ||
+                'a' <= randomChar && randomChar <= 'z'
+        ));
+        generatedId.append(randomChar);
       }
-    }
-    return false;
+    } while (isIdTaken(generatedId.toString()));
+    return generatedId.toString();
+  }
+
+
+  /**
+   * Add method with extended number of defined values which creates and links a new requirement to the project.
+   * @param title Title of the requirement.
+   * @param description Description for the requirement.
+   * @param priorityGroup A value of either ["Critical", "High", "Low"] representing requirement's priority group.
+   * @throws IllegalArgumentException if the priority group argument is invalid.
+   */
+  public void addRequirement(String projectId, String title, String description, MyDate deadline, String priorityGroup) {
+    requirementList.add(new Requirement(generateId(projectId), title, description, deadline, priorityGroup));
   }
 
   /**
-   * Compares 2 objects of type if they are equal
-   * @param obj
-   * @return true if equal, false otherwise
+   * Add method with minimal number of defined values which creates and links a new requirement to the project.
+   * @param title Title of the requirement.
+   * @param deadline MyDate object representing the deadline.
+   * @param priorityGroup A value of either ["Critical", "High", "Low"] representing requirement's priority group.
+   * @throws IllegalArgumentException if the priority group argument is invalid.
    */
-  public boolean equals(Object obj)
-{
-  if (!(obj instanceof RequirementList))
-  {
-    return false;
+  public void addRequirement(String projectId, String title, MyDate deadline, String priorityGroup) {
+    requirementList.add(new Requirement(generateId(projectId), title, deadline, priorityGroup));
   }
-  RequirementList other = (RequirementList)obj;
 
-  for (int i = 0; i < requirementList.size(); i++)
-  {
-    if (!requirementList.get(i).equals(other.requirementList.get(i)))
-    {
-      return false;
-    }
+  /**
+   * Removes any requirement that matches the argument id.
+   * @param id The id of the requirement to be removed.
+   * @throws NoSuchElementException if a requirement with matching id could not be found.
+   * @throws UnsupportedOperationException if the requirement is assigned to any tasks.
+   */
+  public void  removeRequirement(String id) {
+    Requirement requirement = getRequirementById(id);
+    if (requirement.getNumberOfAssignedTasks() != 0) throw new UnsupportedOperationException("Could not remove requirement because it is assigned to some tasks.");
+    requirementList.remove(requirement);
   }
-  return true;
 
-}
-
+  /**
+   * Removes any requirement that matches the argument's requirement id.
+   * @param requirement The requirement object of which id will be looked for to remove.
+   * @throws IllegalArgumentException if the requirement argument is null.
+   * @throws NoSuchElementException if a requirement with matching id could not be found.
+   * @throws UnsupportedOperationException if the requirement is assigned to any tasks.
+   */
+  public void removeRequirement(Requirement requirement) {
+    if (requirement == null) throw new IllegalArgumentException("Requirement argument is null.");
+    removeRequirement(requirement.getId());
+  }
 }

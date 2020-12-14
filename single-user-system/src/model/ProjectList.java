@@ -339,4 +339,17 @@ public class ProjectList {
     if (project.getNumberOfTasks() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked tasks.");
     projectList.remove(project);
   }
+
+  public Project getProjectWithTitle(String title)
+  {
+    for (int i = 0; i < projectList.size(); i++)
+    {
+      if (projectList.get(i).getTitle().equals(title))
+      {
+        return projectList.get(i);
+      }
+    }
+
+    throw new NoSuchElementException("No project with that title.");
+  }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;

@@ -284,35 +284,31 @@ public class ProjectList {
    * Add method with extended number of defined values which creates a new project.
    * @param title Title for the project.
    * @param description Description of the project.
-   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
    * @throws IllegalArgumentException if a project with the same title already exists.
-   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if the arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public void addProject(String title, String description, float estimatedWorkHours, int day, int month, int year) {
+  public void addProject(String title, String description, int day, int month, int year) {
     for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
-    projectList.add(new Project(generateId(), title, description, estimatedWorkHours, day, month, year));
+    projectList.add(new Project(generateId(), title, description, day, month, year));
   }
 
   /**
    * Add method with minimal number of defined values which creates a new project.
    * @param title Title for the project.
-   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
    * @throws IllegalArgumentException if a project with the same title already exists.
-   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if the arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public void addProject(String title, float estimatedWorkHours, int day, int month, int year) {
+  public void addProject(String title, int day, int month, int year) {
     for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
-    projectList.add(new Project(generateId(), title, estimatedWorkHours, day, month, year));
+    projectList.add(new Project(generateId(), title, day, month, year));
   }
 
   /**

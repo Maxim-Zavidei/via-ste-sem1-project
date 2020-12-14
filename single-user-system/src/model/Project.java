@@ -11,7 +11,6 @@ public class Project {
   private String id;
   private String title;
   private String description;
-  private float estimatedWorkHours;
   private MyDate deadline;
   private Member projectCreator;
   private Member productOwner;
@@ -26,19 +25,16 @@ public class Project {
    * @param id Id value of the project.
    * @param title Title for the project.
    * @param description Description of the project.
-   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
-   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if date arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public Project(String id, String title, String description, float estimatedWorkHours, int day, int month, int year) {
+  public Project(String id, String title, String description, int day, int month, int year) {
     this.id = id;
     this.title = title;
     setDescription(description);
-    setEstimatedWorkHours(estimatedWorkHours);
     setDeadline(day, month, year);
     projectCreator = null;
     productOwner = null;
@@ -51,16 +47,14 @@ public class Project {
    * Constructor with minimal number of defined values.
    * @param id Id value of the project.
    * @param title Title for the project.
-   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
-   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if date arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public Project(String id, String title, float estimatedWorkHours, int day, int month, int year) {
-    this(id, title, "", estimatedWorkHours, day, month, year);
+  public Project(String id, String title, int day, int month, int year) {
+    this(id, title, "", day, month, year);
   }
 
   // ------------------------------ Setters ------------------------------
@@ -71,16 +65,6 @@ public class Project {
    */
   public void setDescription(String description) {
     this.description = description;
-  }
-
-  /**
-   * Setter for the estimatedWorkHours instance variable.
-   * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the project.
-   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
-   */
-  public void setEstimatedWorkHours(float estimatedWorkHours) {
-    if (estimatedWorkHours < 1) throw new IllegalArgumentException("Estimated work time can not be less then or equal to 0.");
-    this.estimatedWorkHours = estimatedWorkHours;
   }
 
   /**
@@ -145,14 +129,6 @@ public class Project {
    */
   public String getDescription() {
     return description;
-  }
-
-  /**
-   * Getter for estimatedWorkHours instance variable.
-   * @return Value of project's estimated work hours.
-   */
-  public float getEstimatedWorkHours() {
-    return estimatedWorkHours;
   }
 
   /**
@@ -438,6 +414,14 @@ public class Project {
    */
   public void removeTask(String id) {
     taskList.removeTask(id);
+  }
+
+  /**
+   * Getter for estimatedWorkHours instance variable.
+   * @return Value of project's estimated work hours.
+   */
+  public float getEstimatedWorkHours() {
+    return 0;
   }
 
   /**

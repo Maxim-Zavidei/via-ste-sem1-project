@@ -183,7 +183,7 @@ public class Task {
 
   /**
    * Getter for all the requirements assigned to the task.
-   * @return All the requirements assigned to the task or empty array list if no tasks are assigned.
+   * @return All the requirements assigned to the task or empty array list if no requirements are assigned.
    */
   public ArrayList<Requirement> getAllAssignedRequirements() {
     return assignedRequirements;
@@ -212,7 +212,7 @@ public class Task {
   /**
    * Assigns requirement to this task.
    * @param requirementToAssign The requirement object to be assigned.
-   * @throws UnsupportedOperationException if the requirement belong to another project.
+   * @throws UnsupportedOperationException if the requirement belongs to another project.
    * @throws UnsupportedOperationException if the requirement is already assigned to the task.
    */
   public void assignRequirement(Requirement requirementToAssign) {
@@ -283,9 +283,9 @@ public class Task {
 
   /**
    * Adds work hours to the instance variable.
-   * @param hrs Number of hours to add.
+   * @param hours Number of hours to add.
    */
-  public void addWorkedTime(float hrs) {
-    totalWorkedHours += hrs;
+  public void addWorkedTime(float hours) {
+    totalWorkedHours += hours;
   }
 }

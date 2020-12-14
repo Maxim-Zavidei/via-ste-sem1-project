@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 /**
- * A class store and process task objects.
+ * A class to store and process task objects.
  */
 public class TaskList {
 

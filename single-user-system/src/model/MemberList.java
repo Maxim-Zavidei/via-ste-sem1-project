@@ -172,7 +172,4 @@ public class MemberList
     }
     return false;
   }
-
-
-
 }

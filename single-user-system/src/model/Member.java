@@ -1,12 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * A class to store and process the members
  */
-public class Member
-{
+public class Member {
+
   private String firstName;
   private String lastName;
   private String email;
@@ -22,9 +23,7 @@ public class Member
    * @param email email of the member
    * @param telephoneNumber telephone number of the member
    */
-  public Member(String firstName, String lastName, MyDate birthday,
-      String email, long telephoneNumber)
-  {
+  public Member(String firstName, String lastName, MyDate birthday, String email, long telephoneNumber) {
     setFirstName(firstName);
     setLastName(lastName);
     this.birthday = birthday.copy();
@@ -32,6 +31,7 @@ public class Member
     setTelephoneNumber(telephoneNumber);
     assignedTasks = new ArrayList<>();
   }
+
   /**
    * Constructor with member type values, telephone number is initialised as 0
    * @param firstName first name of the member
@@ -39,9 +39,7 @@ public class Member
    * @param birthday birthday of the member
    * @param email email of the member
    */
-  public Member(String firstName, String lastName, MyDate birthday,
-      String email)
-  {
+  public Member(String firstName, String lastName, MyDate birthday, String email) {
     setFirstName(firstName);
     setLastName(lastName);
     this.birthday = birthday.copy();
@@ -54,8 +52,7 @@ public class Member
    * Getter for firstName instance variable
    * @return firstName
    */
-  public String getFirstName()
-  {
+  public String getFirstName() {
     return firstName;
   }
 
@@ -63,8 +60,7 @@ public class Member
    * Setter for firstName instance variable
    * @param firstName
    */
-  public void setFirstName(String firstName)
-  {
+  public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
@@ -72,8 +68,7 @@ public class Member
    * Getter for lastName instance variable
    * @return lastName
    */
-  public String getLastName()
-  {
+  public String getLastName() {
     return lastName;
   }
 
@@ -81,8 +76,7 @@ public class Member
    * Getting the full name of the member
    * @return full name
    */
-  public String getFullName()
-  {
+  public String getFullName() {
     return firstName + " " + lastName;
   }
 
@@ -90,8 +84,7 @@ public class Member
    * Setter for lastName instance variable
    * @param lastName
    */
-  public void setLastName(String lastName)
-  {
+  public void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
@@ -99,8 +92,7 @@ public class Member
    * Getter for email instance variable
    * @return email
    */
-  public String getEmail()
-  {
+  public String getEmail() {
     return email;
   }
 
@@ -108,8 +100,7 @@ public class Member
    * Setter for email instance variable
    * @param email
    */
-  public void setEmail(String email)
-  {
+  public void setEmail(String email) {
     this.email = email;
   }
 
@@ -117,8 +108,7 @@ public class Member
    * Getter for telephoneNumber instance variable
    * @return telephoneNumber
    */
-  public long getTelephoneNumber()
-  {
+  public long getTelephoneNumber() {
     return telephoneNumber;
   }
 
@@ -126,8 +116,7 @@ public class Member
    * Setter for telephoneNumber instance variable
    * @param telephoneNumber
    */
-  public void setTelephoneNumber(long telephoneNumber)
-  {
+  public void setTelephoneNumber(long telephoneNumber) {
     this.telephoneNumber = telephoneNumber;
   }
 
@@ -135,8 +124,7 @@ public class Member
    * Getter for birthday instance variable
    * @return birthday
    */
-  public MyDate getBirthday()
-  {
+  public MyDate getBirthday() {
     return birthday;
   }
 
@@ -144,8 +132,7 @@ public class Member
    * Getter for assignedTasks instance variable
    * @return assignedTasks
    */
-  public ArrayList<Task> getAllAssignedTasks()
-  {
+  public ArrayList<Task> getAllAssignedTasks() {
     return assignedTasks;
   }
 
@@ -154,8 +141,7 @@ public class Member
    * @param task
    * @return true if assigned, false otherwise
    */
-  public boolean isAssignedToTask(Task task)
-  {
+  public boolean isAssignedToTask(Task task) {
 
     for (int i = 0; i < assignedTasks.size(); i++)
     {
@@ -169,56 +155,36 @@ public class Member
   }
 
   /**
-   * Method to assign a task to assignedTasks
-   * @param task
-   * @return true if assigned, false otherwise
+   * Assigns task to this member.
+   * @param taskToAssign The task object to be assigned.
+   * @throws UnsupportedOperationException if the task is already assigned to the member.
    */
-  public boolean assignTask(Task task)
-  {
-    int v = 0;
-
-    for (int i = 0; i < assignedTasks.size(); i++)
-    {
-      if (assignedTasks.get(i).equals(task))
-      {
-        v++;
-      }
-    }
-    if (v == 0)
-    {
-      assignedTasks.add(task);
-      return true;
-    }
-    return false;
+  public void assignTask(Task taskToAssign) {
+    for (Task task : assignedTasks) if (task.getId().equals(taskToAssign.getId())) throw new UnsupportedOperationException("This task is already assigned to the member.");
+    taskToAssign.assignMember(this);
+    assignedTasks.add(taskToAssign);
   }
 
   /**
-   * Method to unassign a task from assignedTasks
-   * @param task
-   * @return true if task was removed, false otherwise
+   * Unassigns member argument from this task.
+   * @param task The task needed to be unassigned.
+   * @throws NoSuchElementException if the task is not linked to the member.
    */
-  public boolean unassignFromTask(Task task)
-  {
-    if (isAssignedToTask(task))
-    {
-      assignedTasks.remove(task);
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Method to clear the assignedTasks
-   * @return true
-   */
-  public boolean unassignFromEveryTask()
-  {
-
-    for (int i = 0; i < assignedTasks.size(); i++)
-    {
+  public void unassignFromTask(Task task) {
+    for (int i = 0; i < assignedTasks.size(); i++) if (assignedTasks.get(i).equals(task.getId())) {
+      assignedTasks.get(i).unassignMember(this);
       assignedTasks.remove(i);
+      return;
     }
-    return true;
+    throw new NoSuchElementException("This task is not a assigned to the member.");
+  }
+
+  /**
+   * Unassigns every task argument from this member.
+   */
+  public void unassignFromEveryTask() {
+    for (int i = 0; i < assignedTasks.size(); i++) assignedTasks.get(i).unassignMember(this);
+    assignedTasks.clear();
   }
 
   /**

@@ -126,7 +126,7 @@ public class MyDate {
    */
   public boolean isBefore(MyDate other) {
     if (other == null) throw new IllegalArgumentException("Null date argument.");
-    return 366 * (other.year - year) + 31 * (other.month - month) + other.day - day > 0;
+    return 366 * (other.year - year) + 31 * (other.month - month) + other.day - day >= 0;
   }
 
   /**

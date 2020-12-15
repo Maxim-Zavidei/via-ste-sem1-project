@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
  * A class to create, store and process tasks.

@@ -163,6 +163,7 @@ public class RequirementList {
    * @return The newly created requirement.
    * @throws IllegalArgumentException if there is another requirement with the same title in the project.
    * @throws IllegalArgumentException if the requirement's title is longer then 14 chars.
+   * @throws IllegalArgumentException if deadline is in the past.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public Requirement addRequirement(String projectId, String title, String description, MyDate deadline, String priorityGroup) {
@@ -180,6 +181,7 @@ public class RequirementList {
    * @return The newly created requirement.
    * @throws IllegalArgumentException if there is another requirement with the same title in the project.
    * @throws IllegalArgumentException if the requirement's title is longer then 14 chars.
+   * @throws IllegalArgumentException if deadline is in the past.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public Requirement addRequirement(String projectId, String title, MyDate deadline, String priorityGroup) {

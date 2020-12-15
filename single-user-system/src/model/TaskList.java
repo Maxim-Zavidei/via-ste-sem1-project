@@ -113,7 +113,7 @@ public class TaskList {
 
     do {
       generatedId = new StringBuilder(projectId + "T");
-      for (int i = 0; i < 31; i++) {
+      for (int i = 0; i < 3; i++) {
         do randomChar = (char) (randomizer.nextInt(75) + 48); while (!(
             '0' <= randomChar && randomChar <= '9' ||
                 'A' <= randomChar && randomChar <= 'Z' && randomChar != 'P' && randomChar != 'R' && randomChar != 'T' ||
@@ -132,11 +132,15 @@ public class TaskList {
    * @param description Description of the project.
    * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
    * @param deadline MyDate object representing the deadline.
-   * @throws IllegalArgumentException if the total worked hours argument is invalid.
+   * @return The newly created task.
+   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public void addTask(String projectId, String title, String description, float estimatedWorkHours, MyDate deadline) {
-    taskList.add(new Task(generateId(projectId), title, description, estimatedWorkHours, deadline));
+  public Task addTask(String projectId, String title, String description, float estimatedWorkHours, MyDate deadline) {
+    Task toReturn = new Task(generateId(projectId), title, description, estimatedWorkHours, deadline);
+    taskList.add(toReturn);
+    return toReturn;
   }
 
   /**
@@ -145,11 +149,15 @@ public class TaskList {
    * @param title Title for the task.
    * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
    * @param deadline MyDate object representing the deadline.
-   * @throws IllegalArgumentException if the total worked hours argument is invalid.
+   * @return The newly created task.
+   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
+   * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public void addTask(String projectId, String title, float estimatedWorkHours, MyDate deadline) {
-    taskList.add(new Task(generateId(projectId), title, estimatedWorkHours, deadline));
+  public Task addTask(String projectId, String title, float estimatedWorkHours, MyDate deadline) {
+    Task toReturn = new Task(generateId(projectId), title, estimatedWorkHours, deadline);
+    taskList.add(toReturn);
+    return toReturn;
   }
 
   /**

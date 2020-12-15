@@ -24,7 +24,7 @@ public class Requirement {
    * @param description Description of the requirement.
    * @param deadline MyDate object representing the deadline.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing the importance of the requirement.
-   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
+   * @throws IllegalArgumentException if the requirement's title is longer then 14 chars.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public Requirement(String id, String title, String description, MyDate deadline, String priorityGroup) {
@@ -43,7 +43,7 @@ public class Requirement {
    * @param title Title for the requirement.
    * @param deadline MyDate object representing the deadline.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing the importance of the requirement.
-   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
+   * @throws IllegalArgumentException if the requirement's title is longer then 14 chars.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public Requirement(String id, String title, MyDate deadline, String priorityGroup) {
@@ -55,7 +55,7 @@ public class Requirement {
   /**
    * Setter for the title instance variable.
    * @param title Title of the task.
-   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
+   * @throws IllegalArgumentException if the requirement's title is longer then 14 chars.
    */
   public void setTitle(String title) {
     if (title.length() > 14) throw new IllegalArgumentException("The task name can not be longer then 14 characters.");

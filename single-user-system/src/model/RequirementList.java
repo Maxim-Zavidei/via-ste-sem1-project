@@ -70,7 +70,7 @@ public class RequirementList {
    * @throws IllegalArgumentException if the priority argument is invalid.
    */
   public ArrayList<Requirement> getAllRequirementsWithPriority(String priority) {
-    if (priority.equals("Low") || priority.equals("Critical") || priority.equals("High")) throw new IllegalArgumentException("Priority group must be a value of either [\"Critical\", \"High\", \"Low\"].");
+    if (!(priority.equals("Low") || priority.equals("Critical") || priority.equals("High"))) throw new IllegalArgumentException("Priority group must be a value of either [\"Critical\", \"High\", \"Low\"].");
     ArrayList<Requirement> toReturnRequirements = new ArrayList<>();
     for (Requirement requirement : requirementList) if (requirement.getPriorityGroup().equals(priority)) toReturnRequirements.add(requirement);
     return toReturnRequirements;
@@ -143,7 +143,7 @@ public class RequirementList {
 
     do {
       generatedId = new StringBuilder(projectId + "R");
-      for (int i = 0; i < 31; i++) {
+      for (int i = 0; i < 3; i++) {
         do randomChar = (char) (randomizer.nextInt(75) + 48); while (!(
             '0' <= randomChar && randomChar <= '9' ||
                 'A' <= randomChar && randomChar <= 'Z' && randomChar != 'P' && randomChar != 'R' && randomChar != 'T' ||
@@ -155,16 +155,21 @@ public class RequirementList {
     return generatedId.toString();
   }
 
-
   /**
    * Add method with extended number of defined values which creates and links a new requirement to the project.
    * @param title Title of the requirement.
    * @param description Description for the requirement.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing requirement's priority group.
+   * @return The newly created requirement.
+   * @throws IllegalArgumentException if there is another requirement with the same title in the project.
+   * @throws IllegalArgumentException if the requirement's title is longer then 14 chars.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
-  public void addRequirement(String projectId, String title, String description, MyDate deadline, String priorityGroup) {
-    requirementList.add(new Requirement(generateId(projectId), title, description, deadline, priorityGroup));
+  public Requirement addRequirement(String projectId, String title, String description, MyDate deadline, String priorityGroup) {
+    for (Requirement requirement : requirementList) if (requirement.getTitle().equals(title)) throw new IllegalArgumentException("A requirement with this title already exists in the project.");
+    Requirement toReturn = new Requirement(generateId(projectId), title, description, deadline, priorityGroup);
+    requirementList.add(toReturn);
+    return toReturn;
   }
 
   /**
@@ -172,10 +177,16 @@ public class RequirementList {
    * @param title Title of the requirement.
    * @param deadline MyDate object representing the deadline.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing requirement's priority group.
+   * @return The newly created requirement.
+   * @throws IllegalArgumentException if there is another requirement with the same title in the project.
+   * @throws IllegalArgumentException if the requirement's title is longer then 14 chars.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
-  public void addRequirement(String projectId, String title, MyDate deadline, String priorityGroup) {
-    requirementList.add(new Requirement(generateId(projectId), title, deadline, priorityGroup));
+  public Requirement addRequirement(String projectId, String title, MyDate deadline, String priorityGroup) {
+    for (Requirement requirement : requirementList) if (requirement.getTitle().equals(title)) throw new IllegalArgumentException("A requirement with this title already exists in the project.");
+    Requirement toReturn = new Requirement(generateId(projectId), title, deadline, priorityGroup);
+    requirementList.add(toReturn);
+    return toReturn;
   }
 
   /**
@@ -184,7 +195,7 @@ public class RequirementList {
    * @throws NoSuchElementException if a requirement with matching id could not be found.
    * @throws UnsupportedOperationException if the requirement is assigned to any tasks.
    */
-  public void  removeRequirement(String id) {
+  public void removeRequirement(String id) {
     Requirement requirement = getRequirementById(id);
     if (requirement.getNumberOfAssignedTasks() != 0) throw new UnsupportedOperationException("Could not remove requirement because it is assigned to some tasks.");
     requirementList.remove(requirement);

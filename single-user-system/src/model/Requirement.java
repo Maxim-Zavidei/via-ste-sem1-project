@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
  *  A class to create, store and process requirements.
@@ -25,6 +24,7 @@ public class Requirement {
    * @param description Description of the requirement.
    * @param deadline MyDate object representing the deadline.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing the importance of the requirement.
+   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public Requirement(String id, String title, String description, MyDate deadline, String priorityGroup) {
@@ -43,6 +43,7 @@ public class Requirement {
    * @param title Title for the requirement.
    * @param deadline MyDate object representing the deadline.
    * @param priorityGroup A value of either ["Critical", "High", "Low"] representing the importance of the requirement.
+   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public Requirement(String id, String title, MyDate deadline, String priorityGroup) {
@@ -54,8 +55,10 @@ public class Requirement {
   /**
    * Setter for the title instance variable.
    * @param title Title of the task.
+   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
    */
   public void setTitle(String title) {
+    if (title.length() > 14) throw new IllegalArgumentException("The task name can not be longer then 14 characters.");
     this.title = title;
   }
 
@@ -73,7 +76,7 @@ public class Requirement {
    * @throws IllegalArgumentException if deadline is in the past.
    */
   public void setDeadline(MyDate deadline) {
-    if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
+    if (!deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
     this.deadline = deadline;
   }
 
@@ -83,7 +86,7 @@ public class Requirement {
    * @throws IllegalArgumentException if the priority group argument is invalid.
    */
   public void setPriorityGroup(String priorityGroup) {
-    if (priorityGroup.equals("Low") || priorityGroup.equals("Critical") || priorityGroup.equals("High")) throw new IllegalArgumentException("Attempt to set an invalid priority group to the requirement.");
+    if (!(priorityGroup.equals("Low") || priorityGroup.equals("Critical") || priorityGroup.equals("High"))) throw new IllegalArgumentException("Attempt to set an invalid priority group to the requirement.");
     this.priorityGroup = priorityGroup;
   }
 
@@ -191,27 +194,24 @@ public class Requirement {
    * Assigns task to this requirement.
    * @param taskToAssign The task object to be assigned.
    * @throws UnsupportedOperationException if the task belongs to another project.
-   * @throws UnsupportedOperationException if the task is already assigned to the requirement.
    */
   public void assignTask(Task taskToAssign) {
-    if (!taskToAssign.getId().substring(0, 32).equals(getId().substring(0, 32))) throw new UnsupportedOperationException("Could not assign task because it belong to another project.");
-    for (Task task : assignedTasks) if (task.getId().equals(taskToAssign.getId())) throw new UnsupportedOperationException("This task is already assigned to the requirement.");
-    taskToAssign.assignRequirement(this);
+    if (!taskToAssign.getId().substring(0, 8).equals(getId().substring(0, 8))) throw new UnsupportedOperationException("Could not assign task because it belong to another project.");
+    for (Task task : assignedTasks) if (task.getId().equals(taskToAssign.getId())) return;
     assignedTasks.add(taskToAssign);
+    taskToAssign.assignRequirement(this);
   }
 
   /**
    * Unassigns task argument from this requirement.
    * @param taskToUnassign The task needed to be unassigned.
-   * @throws NoSuchElementException if the task is not linked to the requirement.
    */
   public void unassignTask(Task taskToUnassign) {
     for (int i = 0; i < assignedTasks.size(); i++) if (assignedTasks.get(i).getId().equals(taskToUnassign.getId())) {
-      assignedTasks.get(i).unassignRequirement(this);
       assignedTasks.remove(i);
+      taskToUnassign.unassignRequirement(this);
       return;
     }
-    throw new NoSuchElementException("This task is not a assigned to the requirement.");
   }
 
   /**
@@ -219,9 +219,8 @@ public class Requirement {
    */
   public void unassignFromEveryRequirement() {
     for (Task task : assignedTasks) {
-      task.unassignRequirement(this);
+      unassignTask(task);
     }
-    assignedTasks.clear();
   }
 
   /**

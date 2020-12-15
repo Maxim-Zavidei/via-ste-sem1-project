@@ -256,4 +256,3 @@ public class Requirement {
     return (float) numberOfCompletedTasks / numberOfTasks;
   }
 }
-

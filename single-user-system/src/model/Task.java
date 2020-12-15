@@ -27,6 +27,7 @@ public class Task {
    * @param description Description of the project
    * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
    * @param deadline MyDate object representing the deadline.
+   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
    * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
@@ -48,6 +49,7 @@ public class Task {
    * @param title Title for the task
    * @param estimatedWorkHours Value between [1; +inf] representing the number of expected work hours that need to be spent on the task.
    * @param deadline MyDate object representing the deadline.
+   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
    * @throws IllegalArgumentException if the estimated work hours argument is invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
@@ -60,8 +62,10 @@ public class Task {
   /**
    * Setter for the title instance variable.
    * @param title Title of the task.
+   * @throws IllegalArgumentException if the task's title is longer then 14 chars.
    */
   public void setTitle(String title) {
+    if (title.length() > 14) throw new IllegalArgumentException("The task name can not be longer then 14 characters.");
     this.title = title;
   }
 
@@ -79,7 +83,7 @@ public class Task {
    * @throws IllegalArgumentException if the status argument is invalid.
    */
   public void setStatus(String status) {
-    if (status.equals("Started") || status.equals("Completed")) throw new IllegalArgumentException("Attempt to set and invalid status to task.");
+    if (!(status.equals("Started") || status.equals("Completed"))) throw new IllegalArgumentException("Attempt to set and invalid status to task.");
     this.status = status;
   }
 
@@ -99,7 +103,7 @@ public class Task {
    * @throws IllegalArgumentException if the total worked hours argument is invalid.
    */
   public void setTotalWorkedHours(int totalWorkedHours) {
-    if (estimatedWorkHours < 0) throw new IllegalArgumentException("Estimated work time can not be less then or equal to 0.");
+    if (estimatedWorkHours < 0) throw new IllegalArgumentException("Estimated work time can not be less then 0.");
     this.totalWorkedHours = totalWorkedHours;
   }
 
@@ -109,7 +113,7 @@ public class Task {
    * @throws IllegalArgumentException if deadline is in the past.
    */
   public void setDeadline(MyDate deadline) {
-    if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
+    if (!deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
     this.deadline = deadline;
   }
 
@@ -213,27 +217,24 @@ public class Task {
    * Assigns requirement to this task.
    * @param requirementToAssign The requirement object to be assigned.
    * @throws UnsupportedOperationException if the requirement belongs to another project.
-   * @throws UnsupportedOperationException if the requirement is already assigned to the task.
    */
   public void assignRequirement(Requirement requirementToAssign) {
-    if (!requirementToAssign.getId().substring(0, 32).equals(getId().substring(0, 32))) throw new UnsupportedOperationException("Could not assign requirement because it belong to another project.");
-    for (Requirement requirement : assignedRequirements) if (requirement.getId().equals(requirementToAssign.getId())) throw new UnsupportedOperationException("This requirement is already assigned to the task.");
-    requirementToAssign.assignTask(this);
+    if (!requirementToAssign.getId().substring(0, 8).equals(getId().substring(0, 8))) throw new UnsupportedOperationException("Could not assign requirement because it belong to another project.");
+    for (Requirement requirement : assignedRequirements) if (requirement.getId().equals(requirementToAssign.getId())) return;
     assignedRequirements.add(requirementToAssign);
+    requirementToAssign.assignTask(this);
   }
 
   /**
    * Unassigns requirement argument from this task.
    * @param requirementToUnassign The requirement needed to be unassigned.
-   * @throws NoSuchElementException if the requirement is not linked to the task.
    */
   public void unassignRequirement(Requirement requirementToUnassign) {
     for (int i = 0; i < assignedRequirements.size(); i++) if (assignedRequirements.get(i).getId().equals(requirementToUnassign.getId())) {
-      assignedRequirements.get(i).unassignTask(this);
       assignedRequirements.remove(i);
+      requirementToUnassign.unassignTask(this);
       return;
     }
-    throw new NoSuchElementException("This requirement is not a assigned to the task.");
   }
 
   /**
@@ -241,34 +242,30 @@ public class Task {
    */
   public void unassignFromEveryRequirement() {
     for (Requirement requirement : assignedRequirements) {
-      requirement.unassignTask(this);
+      unassignRequirement(requirement);
     }
-    assignedRequirements.clear();
   }
 
   /**
    * Assigns member to this task.
    * @param memberToAssign The member object to be assigned.
-   * @throws UnsupportedOperationException if the member is already assigned to the task.
    */
   public void assignMember(Member memberToAssign) {
-    for (Member member : assignedMembers) if (member.equals(memberToAssign)) throw new UnsupportedOperationException("This member is already assigned to the task.");
-    memberToAssign.assignTask(this);
+    for (Member member : assignedMembers) if (member.equals(memberToAssign)) return;
     assignedMembers.add(memberToAssign);
+    memberToAssign.assignTask(this);
   }
 
   /**
-   * Unassigns membert argument from this task.
+   * Unassigns member argument from this task.
    * @param memberToUnassign The member needed to be unassigned.
-   * @throws NoSuchElementException if the member is not linked to the task.
    */
   public void unassignMember(Member memberToUnassign) {
     for (int i = 0; i < assignedMembers.size(); i++) if (assignedMembers.get(i).equals(memberToUnassign)) {
-      assignedMembers.get(i).unassignFromTask(this);
       assignedMembers.remove(i);
+      memberToUnassign.unassignFromTask(this);
       return;
     }
-    throw new NoSuchElementException("This member is not a assigned to the task.");
   }
 
   /**
@@ -276,9 +273,8 @@ public class Task {
    */
   public void unassignEveryMember() {
     for (Member member : assignedMembers) {
-      member.unassignFromTask(this);
+      unassignMember(member);
     }
-    assignedMembers.clear();
   }
 
   /**

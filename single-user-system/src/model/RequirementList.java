@@ -104,6 +104,7 @@ public class RequirementList {
    * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array list.
    */
   public Requirement getRequirementByIndex(int index) {
+    if (index < 0) throw new IllegalArgumentException("Attempt to access array list with negative index.");
     return requirementList.get(index);
   }
 

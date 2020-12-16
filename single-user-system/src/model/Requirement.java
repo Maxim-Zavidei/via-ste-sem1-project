@@ -76,7 +76,7 @@ public class Requirement {
    * @throws IllegalArgumentException if deadline is in the past.
    */
   public void setDeadline(MyDate deadline) {
-    if (!deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
+    if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
     this.deadline = deadline;
   }
 

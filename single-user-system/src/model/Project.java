@@ -77,7 +77,7 @@ public class Project {
    */
   public void setDeadline(int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
-    if (!deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
+    if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
     this.deadline = deadline;
   }
 

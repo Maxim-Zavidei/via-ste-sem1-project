@@ -1,16 +1,24 @@
 package mediator;
 
-import model.Task;
-import model.Requirement;
-import model.Member;
-import model.Project;
-import model.ProjectList;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import model.*;
+import java.io.*;
 
 public class ProjectManagementPersistence {
 
-  public static void save(ProjectList projectList) {
+  public static void save(ProjectManagementModelManager projectManager) {
+
+    // Saves the project manager to a bin file.
+    try {
+      ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("single-user-system/output/projects.bin"));
+      out.writeObject(projectManager);
+      out.close();
+    } catch (IOException e) {
+      throw new UnsupportedOperationException("Could not save the projects to the bin file. Make sure single-user-system/output/ path exists.");
+    }
+
+    ProjectList projectList = projectManager.getProjectList();
+
+    // Saves all the project list to a xml file.
     try (PrintWriter out = new PrintWriter("single-user-system/output/projects.xml")) {
 
       out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
@@ -137,7 +145,20 @@ public class ProjectManagementPersistence {
 
       out.println("</projectlist>");
     } catch (FileNotFoundException e) {
-      throw new UnsupportedOperationException("Could not save the projects.");
+      throw new UnsupportedOperationException("Could not save the projects to the xml file. Make sure single-user-system/output/ path exists.");
     }
+  }
+
+  public static ProjectManagementModelManager load() {
+    // Loads the project maanger from the bin file.
+    ProjectManagementModelManager toReturn;
+    try {
+      ObjectInputStream in = new ObjectInputStream(new FileInputStream("single-user-system/output/projects.bin"));
+      toReturn = (ProjectManagementModelManager) in.readObject();
+      in.close();
+    } catch (IOException | ClassNotFoundException e) {
+      throw new UnsupportedOperationException("Could not read the projects from the bin file. Make sure single-user-system/output/projects.bin file exists.");
+    }
+    return toReturn == null ? new ProjectManagementModelManager() : toReturn;
   }
 }

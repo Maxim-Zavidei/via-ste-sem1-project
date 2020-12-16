@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ProjectManagementModelManager implements ProjectManagementModel {
+public class ProjectManagementModelManager implements Serializable, ProjectManagementModel {
 
   private ProjectList projectList;
   private MemberList memberList;
@@ -12,6 +13,12 @@ public class ProjectManagementModelManager implements ProjectManagementModel {
   public ProjectManagementModelManager() {
     projectList = new ProjectList();
     memberList = new MemberList();
+  }
+
+  // ------------------------------ Getters for Instance Variables ------------------------------
+
+  public ProjectList getProjectList() {
+    return projectList;
   }
 
   // ------------------------------ Getters for Projects ------------------------------

@@ -4,11 +4,12 @@ import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.io.Serializable;
 
 /**
  * A class to store and process task objects.
  */
-public class TaskList {
+public class TaskList implements Serializable {
 
   ArrayList<Task> taskList;
 

@@ -4,11 +4,12 @@ import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.io.Serializable;
 
 /**
  * A class to process and store a requirements.
  */
-public class RequirementList {
+public class RequirementList implements Serializable {
 
   // ------------------------------ Constructors ------------------------------
 

@@ -2,11 +2,12 @@ package model;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.io.Serializable;
 
 /**
  * A class to create, store and process members.
  */
-public class MemberList {
+public class MemberList implements Serializable {
 
   private ArrayList<Member> memberList;
 

@@ -4,11 +4,12 @@ import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.NoSuchElementException;
+import java.io.Serializable;
 
 /**
  * A class store and process project objects.
  */
-public class ProjectList {
+public class ProjectList implements Serializable {
 
   ArrayList<Project> projectList;
 

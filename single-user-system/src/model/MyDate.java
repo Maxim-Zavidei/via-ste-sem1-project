@@ -1,11 +1,12 @@
 package model;
 
 import java.time.LocalDate;
+import java.io.Serializable;
 
 /**
  * A class to store and process date values.
  */
-public class MyDate {
+public class MyDate implements Serializable {
 
   private int day;
   private int month;

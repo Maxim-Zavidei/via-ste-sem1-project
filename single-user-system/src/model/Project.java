@@ -2,11 +2,12 @@ package model;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.io.Serializable;
 
 /**
  * A class to create, store and process projects and its elements.
  */
-public class Project {
+public class Project implements Serializable {
 
   private String id;
   private String title;

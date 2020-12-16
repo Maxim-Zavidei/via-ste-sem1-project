@@ -1,11 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * A class to store and process members.
  */
-public class Member {
+public class Member implements Serializable {
 
   private String firstName;
   private String lastName;

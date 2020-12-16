@@ -1,11 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * A class to create, store and process tasks.
  */
-public class Task {
+public class Task implements Serializable {
 
   private String id;
   private String title;

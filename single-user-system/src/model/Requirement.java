@@ -1,11 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  *  A class to create, store and process requirements.
  */
-public class Requirement {
+public class Requirement implements Serializable {
 
   private String id;
   private String title;

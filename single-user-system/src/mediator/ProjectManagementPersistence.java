@@ -1,14 +1,14 @@
 package mediator;
 
-import model.Project;
-import model.Requirement;
 import model.Task;
+import model.Requirement;
 import model.Member;
+import model.Project;
+import model.ProjectList;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import model.ProjectList;
 
-public class ProjectManagementPersistance {
+public class ProjectManagementPersistence {
 
   public static void save(ProjectList projectList) {
     try (PrintWriter out = new PrintWriter("single-user-system/output/projects.xml")) {

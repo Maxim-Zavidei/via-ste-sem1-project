@@ -450,4 +450,16 @@ public class Project {
   public float getTotalWorkedHours() {
     return taskList.getTotalWorkedHours();
   }
+
+  /**
+   * Getter for all the members working on the project.
+   * @return All the members assigned to the project or empty array list if no members are assigned.
+   */
+  public ArrayList<Member> getAllMembers() {
+    ArrayList<Member> toReturnMembers = new ArrayList<>();
+    for (Task task : getAllTasks()) {
+      toReturnMembers.addAll(task.getAllAssignedMembers());
+    }
+    return toReturnMembers;
+  }
 }

@@ -2,43 +2,47 @@ package model;
 
 import java.util.ArrayList;
 
-public interface ProjectManagementModel
-{
-  public ArrayList<Project> getAllProjects();
-  public ArrayList<Project> getProjectsWithStatusOver(float status);
-  public ArrayList<Project> getProjectsBeforeDeadline(MyDate deadline);
-  public Project getProjectById(String Id);
-  public ArrayList<Requirement> getAllRequirements();
-  public ArrayList<Requirement> getAllRequirementsWithPriority(String priorityGroup);
-  public ArrayList<Requirement> getRequirementsLinkedTo(Project project);
-  public ArrayList<Requirement> getRequirementsLinkedTo(Task task);
-  public ArrayList<Requirement> getRequirementsLinkedTo(Member member);
-  public ArrayList<Requirement> getRequirementsWithStatusOver(float status);
-  public ArrayList<Requirement> getRequirementsBeforeDeadline(MyDate deadline);
-  public Requirement getRequirementById(String Id);
-  public ArrayList<Task> getAllTasks();
-  public ArrayList<Task> getTasksLinkedTo(Project project);
-  public ArrayList<Task> getTasksLinkedTo(Requirement requirement);
-  public ArrayList<Task> getTasksLinkedTo(Member member);
-  public ArrayList<Task> getTasksByStatus(String status);
-  public ArrayList<Task> getTasksBeforeDeadline(MyDate deadline);
-  public Task getTaskById(String Id);
-  public ArrayList<Member> getAllMembers();
-  public ArrayList<Member> getMembersLinkedTo(Project project);
-  public ArrayList<Member> getMembersLinkedTo(Requirement requirement);
-  public ArrayList<Member> getMembersLinkedTo(Task task);
-  public Member getMemberByFullName(String firstName, String lastName);
-  public Member getMemberByEmail(String email);
+public interface ProjectManagementModel {
 
-  public void createProject(String title, String description, int day, int month, int year);
-  public void createProject(String title, int day, int month, int year);
-  public void removeProject(Project project);
-  public void removeProject(String Id);
-  public void addMember(String firstName, String lastName, MyDate birthday,String email);
-  public void addMember(String firstName, String lastName, MyDate birthday,String email, long telephoneNumber);
-  public void removeMember(String firstName, String lastName);
+  // ------------------------------ Getters for Projects ------------------------------
+  ArrayList<Project> getAllProjects();
+  ArrayList<Project> getProjectsWithStatusOver(float status);
+  ArrayList<Project> getProjectsBeforeDeadline(MyDate deadline);
+  Project getProjectById(String Id);
 
+  // ------------------------------ Getters for Requirements ------------------------------
+  ArrayList<Requirement> getAllRequirements();
+  ArrayList<Requirement> getAllRequirementsWithPriority(String priorityGroup);
+  ArrayList<Requirement> getRequirementsLinkedTo(Project project);
+  ArrayList<Requirement> getRequirementsLinkedTo(Task task);
+  ArrayList<Requirement> getRequirementsLinkedTo(Member member);
+  ArrayList<Requirement> getRequirementsWithStatusOver(float status);
+  ArrayList<Requirement> getRequirementsBeforeDeadline(MyDate deadline);
+  Requirement getRequirementById(String Id);
 
+  // ------------------------------ Getters for Tasks ------------------------------
+  ArrayList<Task> getAllTasks();
+  ArrayList<Task> getTasksLinkedTo(Project project);
+  ArrayList<Task> getTasksLinkedTo(Requirement requirement);
+  ArrayList<Task> getTasksLinkedTo(Member member);
+  ArrayList<Task> getTasksByStatus(String status);
+  ArrayList<Task> getTasksBeforeDeadline(MyDate deadline);
+  Task getTaskById(String Id);
 
+  // ------------------------------ Getters for Members ------------------------------
+  ArrayList<Member> getAllMembers();
+  ArrayList<Member> getMembersLinkedTo(Project project);
+  ArrayList<Member> getMembersLinkedTo(Requirement requirement);
+  ArrayList<Member> getMembersLinkedTo(Task task);
+  Member getMemberByFullName(String firstName, String lastName);
+  Member getMemberByEmail(String email);
 
+  // ------------------------------ Other Methods ------------------------------
+  Project addProject(String title, String description, int day, int month, int year);
+  Project addProject(String title, int day, int month, int year);
+  void removeProject(Project project);
+  void removeProject(String Id);
+  Member addMember(String firstName, String lastName, MyDate birthday,String email);
+  Member addMember(String firstName, String lastName, MyDate birthday,String email, long telephoneNumber);
+  void removeMember(String firstName, String lastName);
 }

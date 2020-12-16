@@ -143,7 +143,7 @@ public class MyDate {
    */
   public void stepForward(int days) {
     if (days < 1) throw new IllegalArgumentException("Invalid argument for days to skip.");
-    while (days-- != 0) stepForward();
+    while (days-- != -1) stepForward();
   }
 
   /**

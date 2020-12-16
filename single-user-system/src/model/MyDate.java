@@ -139,11 +139,9 @@ public class MyDate {
   /**
    * Sets the date to the date after next days argument.
    * @param days Value between [1, +inf] representing number of days to skip.
-   * @throws IllegalArgumentException if the days argument is invalid.
    */
   public void stepForward(int days) {
-    if (days < 1) throw new IllegalArgumentException("Invalid argument for days to skip.");
-    while (days-- != -1) stepForward();
+    while (days-- != 0) stepForward();
   }
 
   /**

@@ -72,13 +72,13 @@ public class ProjectList {
 
   /**
    * Getter for any project by index.
-   * @param index Value between [0; projectList.size()-1] representing the position of the project in the list of the projects to be returned.
+   * @param index Value between [0; projectList.size() - 1] representing the position of the project in the list of the projects to be returned.
    * @return The project at the position of the index.
    * @throws IllegalArgumentException if the index argument is invalid.
    * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array list.
    */
   public Project getProjectByIndex(int index) {
-    if (index < 0 || index > projectList.size()-1) throw new IllegalArgumentException("Attempt to access array list with invalid index.");
+    if (index < 0 || index > projectList.size() - 1) throw new IllegalArgumentException("Attempt to access array list with invalid index.");
     return projectList.get(index);
   }
 

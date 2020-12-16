@@ -65,13 +65,13 @@ public class TaskList {
 
   /**
    * Getter for task linked to the project by index.
-   * @param index Value between [0; taskList.size()-1] representing the position of the task in the list of the tasks to be returned.
+   * @param index Value between [0; taskList.size() - 1] representing the position of the task in the list of the tasks to be returned.
    * @return The task at the position of the index.
    * @throws IllegalArgumentException if the index argument is invalid.
    * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array list.
    */
   public Task getTaskByIndex(int index) {
-    if (index < 0 || index > taskList.size()-1) throw new IllegalArgumentException("Attempt to access array list with invalid index.");
+    if (index < 0 || index > taskList.size() - 1) throw new IllegalArgumentException("Attempt to access array list with invalid index.");
     return taskList.get(index);
   }
 

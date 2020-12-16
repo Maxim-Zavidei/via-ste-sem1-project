@@ -58,7 +58,7 @@ public class Requirement {
    * @throws IllegalArgumentException if the requirement's title is longer then 14 chars.
    */
   public void setTitle(String title) {
-    if (title.length() > 14) throw new IllegalArgumentException("The task name can not be longer then 14 characters.");
+    if (title.length() > 14) throw new IllegalArgumentException("The requirement title can not be longer then 14 characters.");
     this.title = title;
   }
 

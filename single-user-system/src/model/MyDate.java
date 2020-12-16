@@ -34,6 +34,14 @@ public class MyDate {
     year = today.getYear();
   }
 
+  /**
+   * Constructor that takes in a string of format dd/mm/yyyy.
+   * @param date String to be processed.
+   */
+  public MyDate(String date) {
+    this(Integer.parseInt(date.substring(0, 2)), Integer.parseInt(date.substring(3, 5)), Integer.parseInt(date.substring(6, 10)));
+  }
+
   // ------------------------------ Setters ------------------------------
 
   /**

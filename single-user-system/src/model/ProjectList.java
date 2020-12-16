@@ -268,7 +268,7 @@ public class ProjectList {
 
     do {
       generatedId = new StringBuilder("P");
-      for (int i = 0; i < 31; i++) {
+      for (int i = 0; i < 3; i++) {
         do randomChar = (char) (randomizer.nextInt(75) + 48); while (!(
             '0' <= randomChar && randomChar <= '9' ||
             'A' <= randomChar && randomChar <= 'Z' && randomChar != 'P' && randomChar != 'R' && randomChar != 'T' ||
@@ -287,13 +287,18 @@ public class ProjectList {
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
+   * @return The newly created project.
    * @throws IllegalArgumentException if a project with the same title already exists.
-   * @throws IllegalArgumentException if the arguments are invalid.
+   * @throws IllegalArgumentException if the project's title is longer then 14 chars.
+   * @throws IllegalArgumentException if the deadline arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public void addProject(String title, String description, int day, int month, int year) {
+  public Project addProject(String title, String description, int day, int month, int year) {
     for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
-    projectList.add(new Project(generateId(), title, description, day, month, year));
+    if (title.length() > 14) throw new IllegalArgumentException("The project title can not be longer then 14 characters.");
+    Project toReturn = new Project(generateId(), title, description, day, month, year);
+    projectList.add(toReturn);
+    return toReturn;
   }
 
   /**
@@ -302,13 +307,18 @@ public class ProjectList {
    * @param day Value between [1; 31] representing deadline's day.
    * @param month Value between [1; 12] representing deadline's month.
    * @param year Value between [1; +inf] representing deadline's year.
+   * @return The newly created project.
    * @throws IllegalArgumentException if a project with the same title already exists.
-   * @throws IllegalArgumentException if the arguments are invalid.
+   * @throws IllegalArgumentException if the project's title is longer then 14 chars.
+   * @throws IllegalArgumentException if the deadline arguments are invalid.
    * @throws IllegalArgumentException if deadline is in the past.
    */
-  public void addProject(String title, int day, int month, int year) {
+  public Project addProject(String title, int day, int month, int year) {
     for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
-    projectList.add(new Project(generateId(), title, day, month, year));
+    if (title.length() > 14) throw new IllegalArgumentException("The project title can not be longer then 14 characters.");
+    Project toReturn = new Project(generateId(), title, day, month, year);
+    projectList.add(toReturn);
+    return toReturn;
   }
 
   /**
@@ -329,7 +339,6 @@ public class ProjectList {
    * Removes the project by id.
    * @param id The id of the project which should be removed.
    * @throws NoSuchElementException if a project with matching id could not be found.
-   * @throws IllegalArgumentException if the project argument is null.
    * @throws UnsupportedOperationException if the project has any linked requirements.
    * @throws UnsupportedOperationException if the project has any linked tasks.
    */
@@ -338,18 +347,5 @@ public class ProjectList {
     if (project.getNumberOfRequirements() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked requirements.");
     if (project.getNumberOfTasks() != 0) throw new UnsupportedOperationException("Could not remove project because it has linked tasks.");
     projectList.remove(project);
-  }
-
-  public Project getProjectWithTitle(String title)
-  {
-    for (int i = 0; i < projectList.size(); i++)
-    {
-      if (projectList.get(i).getTitle().equals(title))
-      {
-        return projectList.get(i);
-      }
-    }
-
-    throw new NoSuchElementException("No project with that title.");
   }
 }

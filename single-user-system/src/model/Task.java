@@ -64,7 +64,7 @@ public class Task {
    * @throws IllegalArgumentException if the task's title is longer then 14 chars.
    */
   public void setTitle(String title) {
-    if (title.length() > 14) throw new IllegalArgumentException("The task name can not be longer then 14 characters.");
+    if (title.length() > 14) throw new IllegalArgumentException("The task title can not be longer then 14 characters.");
     this.title = title;
   }
 

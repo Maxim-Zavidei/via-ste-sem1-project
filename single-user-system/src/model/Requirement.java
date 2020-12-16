@@ -196,7 +196,7 @@ public class Requirement {
    * @throws UnsupportedOperationException if the task belongs to another project.
    */
   public void assignTask(Task taskToAssign) {
-    if (!taskToAssign.getId().substring(0, 8).equals(getId().substring(0, 8))) throw new UnsupportedOperationException("Could not assign task because it belong to another project.");
+    if (!taskToAssign.getId().substring(0, 4).equals(getId().substring(0, 4))) throw new UnsupportedOperationException("Could not assign task because it belong to another project.");
     for (Task task : assignedTasks) if (task.getId().equals(taskToAssign.getId())) return;
     assignedTasks.add(taskToAssign);
     taskToAssign.assignRequirement(this);

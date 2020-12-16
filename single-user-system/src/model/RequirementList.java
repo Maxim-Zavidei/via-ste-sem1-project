@@ -98,13 +98,13 @@ public class RequirementList {
 
   /**
    * Getter for requirement linked to the project by index.
-   * @param index Value between [0; +inf] representing the position of the requirement in the list of the requirements to be returned.
+   * @param index Value between [0; requirementList.size()-1] representing the position of the requirement in the list of the requirements to be returned.
    * @return The requirement at the position of the index.
    * @throws IllegalArgumentException if the index argument is invalid.
    * @throws ArrayIndexOutOfBoundsException if the index is out of bounds for the array list.
    */
   public Requirement getRequirementByIndex(int index) {
-    if (index < 0) throw new IllegalArgumentException("Attempt to access array list with negative index.");
+    if (index < 0 || index < requirementList.size()-1) throw new IllegalArgumentException("Attempt to access array list with invalid index.");
     return requirementList.get(index);
   }
 

@@ -179,15 +179,6 @@ public class Member {
   public boolean equals(Object obj) {
     if (!(obj instanceof Member)) return false;
     Member other = (Member) obj;
-
-    for(int i = 0; i < assignedTasks.size(); i++)
-    {
-      if (!assignedTasks.get(i).equals(other.assignedTasks.get(i)))
-      {
-        return false;
-      }
-    }
-    return firstName.equals(other.firstName) && lastName.equals(other.lastName) && email.equals(other.email)
-        && birthday.equals(other.birthday);
+    return firstName.equals(other.firstName) && lastName.equals(other.lastName) && email.equals(other.email) && birthday.equals(other.birthday);
   }
 }

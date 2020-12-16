@@ -1,113 +1,117 @@
-*{
+* {
 
 }
-/* sets the css styling for the entire listview*/
-.list-view{
 
--fx-background-insets: 0;
--fx-vertical-gap: 10;
+/* sets the css styling for the entire listview*/
+.list-view {
+
+    -fx-background-insets: 0;
+    -fx-vertical-gap: 10;
 }
 
 /* sets the css styling for the individual cells*/
-.list-cell{
--fx-pref-height: 96;
--fx-alignment: 'center';
--fx-background-color: #002140;
--fx-font-family: 'sans-serif';
--fx-text-fill: white;
--fx-font-size: 20;
--fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0.0, 0.0);
--fx-border-radius: 15px;
+.list-cell {
+    -fx-pref-height: 96;
+    -fx-alignment: 'center';
+    -fx-background-color: #002140;
+    -fx-font-family: 'sans-serif';
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0.0, 0.0);
+    -fx-border-radius: 15px;
 
 }
 
-.list-cell:filled:selected{
--fx-background-color: #044e94}
+.list-cell:filled:selected {
+    -fx-background-color: #044e94
+}
 
 .menu-button {
--fx-pref-width: 70;
+    -fx-pref-width: 70;
 }
 
-.list-cell:filled:hover{
--fx-background-color: #044e94;
+.list-cell:filled:hover {
+    -fx-background-color: #044e94;
 }
 
-.menu-bar{
--fx-background-color:white;
--fx-font-size: 17;
--fx-effect: dropshadow(gaussian, rgba(4, 78, 148, 0.1), 10, 0.5, 0.0, 0.0);
+.menu-bar {
+    -fx-background-color: white;
+    -fx-font-size: 17;
+    -fx-effect: dropshadow(gaussian, rgba(4, 78, 148, 0.1), 10, 0.5, 0.0, 0.0);
 }
 
-.menu-item{
--fx-pref-width: 100;
--fx-effect: dropshadow(gaussian, rgba(4, 78, 148, 0.1), 10, 0.5, 0.0, 0.0);
+.menu-item {
+    -fx-pref-width: 100;
+    -fx-effect: dropshadow(gaussian, rgba(4, 78, 148, 0.1), 10, 0.5, 0.0, 0.0);
 }
 
-.menu-item:hover{
--fx-pref-width: 100;
--fx-effect: dropshadow(gaussian, rgba(4, 78, 148,0.1), 10, 0.5, 0.0, 0.0);
--fx-background-color: #002140;
+.menu-item:hover {
+    -fx-pref-width: 100;
+    -fx-effect: dropshadow(gaussian, rgba(4, 78, 148, 0.1), 10, 0.5, 0.0, 0.0);
+    -fx-background-color: #002140;
 }
 
-#reqView .list-cell{
-         -fx-pref-height: 34;
-         -fx-alignment: 'center';
-         -fx-background-color: white;
-         -fx-font-family: 'sans-serif';
-         -fx-text-fill: black;
-         -fx-font-size: 20;
--fx-effect: dropshadow(gaussian, rgba(0,0,0,0.0), 10, 0.5, 0.0, 0.0);
+#reqView .list-cell {
+    -fx-pref-height: 34;
+    -fx-alignment: 'center';
+    -fx-background-color: white;
+    -fx-font-family: 'sans-serif';
+    -fx-text-fill: black;
+    -fx-font-size: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.0), 10, 0.5, 0.0, 0.0);
 
-         }
+}
 
 #reqView {
-         -fx-background-insets: 0;
-         -fx-vertical-gap: 10;
-         -fx-effect: dropshadow(gaussian, rgba(4, 78, 148,0.1), 10, 0.5, 0.0, 0.0);
+    -fx-background-insets: 0;
+    -fx-vertical-gap: 10;
+    -fx-effect: dropshadow(gaussian, rgba(4, 78, 148, 0.1), 10, 0.5, 0.0, 0.0);
 
 
-         }
-
-
-#projectText{
--fx-font-size: 20;
 }
 
-#idText{
--fx-font-size: 20;}
 
-#projectDescription{
--fx-border-color: transparent;
--fx-highlight-fill: white;
--fx-display-caret: false;
--fx-focus-color: transparent;
--fx-font-size: 15;
+#projectText {
+    -fx-font-size: 20;
 }
 
-#projectDescription: focus{
--fx-border-color: transparent;}
-
-.progress-indicator{
--fx-min-width: 150;
--fx-min-height: 150;
+#idText {
+    -fx-font-size: 20;
 }
 
-#humanListView{
-         -fx-background-insets: 0;
-         -fx-vertical-gap: 10;
-         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0.0, 0.0);
+#projectDescription {
+    -fx-border-color: transparent;
+    -fx-highlight-fill: white;
+    -fx-display-caret: false;
+    -fx-focus-color: transparent;
+    -fx-font-size: 15;
 }
 
-#humanListView .list-cell{
-         -fx-pref-height: 34;
-         -fx-alignment: 'top-left';
-         -fx-background-color: white;
-         -fx-font-family: 'sans-serif';
-         -fx-text-fill: black;
-         -fx-font-size: 15;
--fx-effect: dropshadow(gaussian, rgba(0,0,0,0.0), 10, 0.5, 0.0, 0.0);
+#projectDescription: focus {
+    -fx-border-color: transparent;
+}
 
-         }
+.progress-indicator {
+    -fx-min-width: 150;
+    -fx-min-height: 150;
+}
+
+#humanListView {
+    -fx-background-insets: 0;
+    -fx-vertical-gap: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0.0, 0.0);
+}
+
+#humanListView .list-cell {
+    -fx-pref-height: 34;
+    -fx-alignment: 'top-left';
+    -fx-background-color: white;
+    -fx-font-family: 'sans-serif';
+    -fx-text-fill: black;
+    -fx-font-size: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.0), 10, 0.5, 0.0, 0.0);
+
+}
 
 
 

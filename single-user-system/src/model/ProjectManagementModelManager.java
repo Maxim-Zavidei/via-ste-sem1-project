@@ -148,11 +148,11 @@ public class ProjectManagementModelManager implements ProjectManagementModel {
   }
 
   public Member addMember(String firstName, String lastName, MyDate birthday, String email) {
-    memberList.hireMember(firstName, lastName, birthday, email);
+    return memberList.hireMember(firstName, lastName, birthday, email);
   }
 
   public Member addMember(String firstName, String lastName, MyDate birthday,String email, long telephoneNumber) {
-    memberList.hireMember(firstName, lastName, birthday, email, telephoneNumber);
+    return memberList.hireMember(firstName, lastName, birthday, email, telephoneNumber);
   }
 
   public void removeMember(String firstName, String lastName) {

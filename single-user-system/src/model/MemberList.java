@@ -1,175 +1,128 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
- * A class to store and process a number of members
+ * A class to create, store and process members.
  */
-public class MemberList
-{
+public class MemberList {
+
   private ArrayList<Member> memberList;
 
+  // ------------------------------ Constructors ------------------------------
+
   /**
-   * Constructor to initialise memberList instance variable
+   * Constructor to initialise the instance variables.
    */
-  public MemberList()
-  {
+  public MemberList() {
     memberList = new ArrayList<>();
   }
 
+  // ------------------------------ Getters for Members ------------------------------
+
   /**
-   * Getter for memberList instance variable
-   * @return memberList
+   * Getter for all the members.
+   * @return All the members or empty array list if no members are linked.
    */
-  public ArrayList<Member> getAllMembers()
-  {
+  public ArrayList<Member> getAllMembers() {
     return memberList;
   }
 
   /**
-   * Method to get members with a specific birthday
-   * @param birthday
-   * @return members with that birthday
+   * Getter for all the members with a specific birthday.
+   * @param birthday The birthday of the members to look for.
+   * @return All the members with that birtday or empty array list if no members are linked.
    */
-  public ArrayList<Member> getMembersByBirthday(MyDate birthday)
-  {
-    ArrayList<Member> members = new ArrayList<>();
-
-    for (int i = 0; i < memberList.size(); i++)
-    {
-      if (memberList.get(i).getBirthday().equals(birthday))
-      {
-        members.add(memberList.get(i));
-      }
-    }
-    return members;
+  public ArrayList<Member> getMembersByBirthday(MyDate birthday) {
+    ArrayList<Member> membersToReturn = new ArrayList<>();
+    for (Member member : memberList) if (member.getBirthday().equals(birthday)) membersToReturn.add(member);
+    return membersToReturn;
   }
 
   /**
-   * Method to get a member by it's full name
-   * @param firstName
-   * @param lastName
-   * @return member by that specific name
+   * Getter for member by full name.
+   * @param firstName The first name of the member to look for.
+   * @param lastName The last name of the member to look for.
+   * @return The member with equal full name.
+   * @throws NoSuchElementException if a member with matching full name could not be found.
    */
-    public Member getMemberByFullName(String firstName, String lastName)
-    {
-      for (int i = 0; i < memberList.size(); i++)
-      {
-        if (memberList.get(i).getFirstName().equals(firstName) && memberList.get(i).getLastName().equals(lastName))
-        {
-          return memberList.get(i);
-        }
-      }
-      throw new IllegalStateException("No one matches in the list");
+    public Member getMemberByFullName(String firstName, String lastName) {
+      for (Member member : memberList) if (member.getFirstName().equals(firstName) && member.getLastName().equals(lastName)) return member;
+      throw new NoSuchElementException("Could not find any member with that name.");
     }
 
   /**
-   * Method to get a member by it's email
-   * @param email
-   * @return member by that specific email
+   * Getter for member by email.
+   * @param email The email of the member to look for.
+   * @return The member with equal email.
+   * @throws NoSuchElementException if a member with matching email could not be found.
    */
-    public Member getMemberByEmail(String email)
-      {
-        for (int i = 0; i < memberList.size(); i++)
-        {
-          if (memberList.get(i).getEmail().equals(email))
-          {
-            return memberList.get(i);
-          }
-        }
-        throw new IllegalStateException("No one matches in the list");
+  public Member getMemberByEmail(String email) {
+    for (Member member : memberList) if (member.getEmail().equals(email)) return member;
+    throw new NoSuchElementException("Could not find any member with that eamil.");
+  }
 
-      }
+  // ------------------------------ Other Methods ------------------------------
 
   /**
-   * Method that takes values for creating a new member object
-   * and adding it to the memberList
-   * @param firstName
-   * @param lastName
-   * @param birthday
-   * @param email
-   * @param telephoneNumber
-   * @return true if member was added, false otherwise
+   * Add method with extended number of defined values which creates a new member.
+   * @param firstName Member's first name.
+   * @param lastName Member's last name.
+   * @param birthday Member's birthday.
+   * @param email Member's email.
+   * @param telephoneNumber Member's telephone number.
+   * @return The newly created member.
+   * @throws IllegalArgumentException if the a member with the same full name already exists.
+   * @throws IllegalArgumentException if the a member with the same email already exists.
    */
-  public boolean hireMember(String firstName, String lastName, MyDate birthday,
-      String email, long telephoneNumber)
-  {
-    Member member = new Member(firstName, lastName, birthday, email,
-        telephoneNumber);
-
-    for (int i = 0; i < memberList.size(); i++)
-    {
-      if (memberList.get(i).equals(member))
-      {
-        return false;
-      }
-    }
-    memberList.add(member);
-    return true;
-
+  public Member hireMember(String firstName, String lastName, MyDate birthday, String email, long telephoneNumber) {
+    for (Member member : memberList) if (member.getFirstName().equals(firstName) && member.getLastName().equals(lastName) || member.getEmail().equals(email)) throw new IllegalArgumentException("A member with this full name or email is already registered.");
+    Member memberToReturn = new Member(firstName, lastName, birthday, email, telephoneNumber);
+    memberList.add(memberToReturn);
+    return memberToReturn;
   }
 
   /**
-   * Method that takes values for creating a new member object,
-   * excluding telephone number, and adding it to the memberList
-   * @param firstName
-   * @param lastName
-   * @param birthday
-   * @param email
-   * @return true if member was added, false otherwise
+   * Add method with minimal number of defined values which creates a new member.
+   * @param firstName Member's first name.
+   * @param lastName Member's last name.
+   * @param birthday Member's birthday.
+   * @param email Member's email.
+   * @return The newly created member.
+   * @throws IllegalArgumentException if the a member with the same full name already exists.
+   * @throws IllegalArgumentException if the a member with the same email already exists.
    */
-  public boolean hireMember(String firstName, String lastName, MyDate birthday,
-      String email)
-  {
-    Member member = new Member(firstName, lastName, birthday, email);
-
-    for (int i = 0; i < memberList.size(); i++)
-    {
-      if (memberList.get(i).equals(member))
-      {
-        return false;
-      }
-    }
-    memberList.add(member);
-    return true;
-
+  public Member hireMember(String firstName, String lastName, MyDate birthday, String email) {
+    for (Member member : memberList) if (member.getFirstName().equals(firstName) && member.getLastName().equals(lastName) || member.getEmail().equals(email)) throw new IllegalArgumentException("A member with this full name or email is already registered.");
+    Member memberToReturn = new Member(firstName, lastName, birthday, email);
+    memberList.add(memberToReturn);
+    return memberToReturn;
   }
 
   /**
-   * Method to remove a member from memberList
-   * @param member
-   * @return true if removed, false otherwise
+   * Removes any member with matcing full name.
+   * @param firstName The first name of the member to be removed.
+   * @param lastName The last name of the member to be removed.
+   * @throws UnsupportedOperationException if the member has any assigned tasks.
+   * @throws NoSuchElementException if a member with matching full name could not be found.
    */
-  public boolean fireMember(Member member)
-  {
-    for (int i = 0; i < memberList.size(); i++)
-    {
-      if (memberList.get(i).equals(member))
-      {
-        memberList.remove(member);
-        return true;
-      }
+  public void fireMember(String firstName, String lastName) {
+    for (int i = 0; i < memberList.size(); i++) if (memberList.get(i).getFirstName().equals(firstName) && memberList.get(i).getLastName().equals(lastName)) {
+      if (memberList.get(i).getAllAssignedTasks().size() != 0) throw new UnsupportedOperationException("Could not fire member because he has assigned tasks.");
+      memberList.remove(i);
+      return;
     }
-    return false;
+    throw new NoSuchElementException("Could not find the member wtih this name.");
   }
 
   /**
-   * Method to remove a member from memberList by it's first name and last name
-   * @param firstName
-   * @param lastName
-   * @return true if removed, false otherwise
+   * Removes any member with matcing full name of the argument member.
+   * @param member The member of whose name will be looked for.
+   * @throws UnsupportedOperationException if the member has any assigned tasks.
+   * @throws NoSuchElementException if a member with matching full name could not be found.
    */
-  public boolean fireMember(String firstName, String lastName)
-  {
-    for (int i = 0; i < memberList.size(); i++)
-    {
-      if (memberList.get(i).getFirstName().equals(firstName) && memberList
-          .get(i).getLastName().equals(lastName))
-      {
-        memberList.remove(memberList.get(i));
-        return true;
-      }
-    }
-    return false;
+  public void fireMember(Member member) {
+    fireMember(member.getFirstName(), member.getLastName());
   }
 }

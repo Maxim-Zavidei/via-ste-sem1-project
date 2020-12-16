@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 /**
- * A class to store and process the members
+ * A class to store and process members.
  */
 public class Member {
 
@@ -15,13 +15,15 @@ public class Member {
   private ArrayList<Task> assignedTasks;
   private MyDate birthday;
 
+  // ------------------------------ Constructors ------------------------------
+
   /**
-   * Constructor with member type values
-   * @param firstName first name of the member
-   * @param lastName last name of the member
-   * @param birthday birthday of the member
-   * @param email email of the member
-   * @param telephoneNumber telephone number of the member
+   * Constructor with extended number of defined values.
+   * @param firstName Member's first name.
+   * @param lastName Member's last name.
+   * @param birthday Member's birthday.
+   * @param email Member's email.
+   * @param telephoneNumber Member's telephone number.
    */
   public Member(String firstName, String lastName, MyDate birthday, String email, long telephoneNumber) {
     setFirstName(firstName);
@@ -33,172 +35,151 @@ public class Member {
   }
 
   /**
-   * Constructor with member type values, telephone number is initialised as 0
-   * @param firstName first name of the member
-   * @param lastName last name of the member
-   * @param birthday birthday of the member
-   * @param email email of the member
+   * Constructor with minimal number of defined values.
+   * @param firstName Member's first name.
+   * @param lastName Member's last name.
+   * @param birthday Member's birthday.
+   * @param email Member's email.
    */
   public Member(String firstName, String lastName, MyDate birthday, String email) {
-    setFirstName(firstName);
-    setLastName(lastName);
-    this.birthday = birthday.copy();
-    setEmail(email);
-    telephoneNumber = 0;
-    assignedTasks = new ArrayList<>();
+    this(firstName, lastName, birthday, email, 0);
   }
 
-  /**
-   * Getter for firstName instance variable
-   * @return firstName
-   */
-  public String getFirstName() {
-    return firstName;
-  }
+  // ------------------------------ Setters ------------------------------
 
   /**
-   * Setter for firstName instance variable
-   * @param firstName
+   * Setter for firstName instance variable.
+   * @param firstName The first name of the member.
    */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
   /**
-   * Getter for lastName instance variable
-   * @return lastName
-   */
-  public String getLastName() {
-    return lastName;
-  }
-
-  /**
-   * Getting the full name of the member
-   * @return full name
-   */
-  public String getFullName() {
-    return firstName + " " + lastName;
-  }
-
-  /**
-   * Setter for lastName instance variable
-   * @param lastName
+   * Setter for lastName instance variable.
+   * @param lastName The last name of the member.
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
   /**
-   * Getter for email instance variable
-   * @return email
-   */
-  public String getEmail() {
-    return email;
-  }
-
-  /**
-   * Setter for email instance variable
-   * @param email
+   * Setter for email instance variable.
+   * @param email The email of the member.
    */
   public void setEmail(String email) {
     this.email = email;
   }
 
   /**
-   * Getter for telephoneNumber instance variable
-   * @return telephoneNumber
+   * Setter for telephoneNumber instance variable.
+   * @param telephoneNumber The telephone number of the member.
+   */
+  public void setTelephoneNumber(long telephoneNumber) {
+    this.telephoneNumber = telephoneNumber;
+  }
+
+  // ------------------------------ Getters for Instance Variables ------------------------------
+
+  /**
+   * Getter for firstName instance variable.
+   * @return Member's first name.
+   */
+  public String getFirstName() {
+    return firstName;
+  }
+
+  /**
+   * Getter for lastName instance variable.
+   * @return Member's last name.
+   */
+  public String getLastName() {
+    return lastName;
+  }
+
+  /**
+   * Getting the full name of the member.
+   * @return Member's full name.
+   */
+  public String getFullName() {
+    return firstName + " " + lastName;
+  }
+
+  /**
+   * Getter for email instance variable.
+   * @return Member's email name.
+   */
+  public String getEmail() {
+    return email;
+  }
+
+  /**
+   * Getter for telephoneNumber instance variable.
+   * @return Member's telephone number.
    */
   public long getTelephoneNumber() {
     return telephoneNumber;
   }
 
   /**
-   * Setter for telephoneNumber instance variable
-   * @param telephoneNumber
-   */
-  public void setTelephoneNumber(long telephoneNumber) {
-    this.telephoneNumber = telephoneNumber;
-  }
-
-  /**
-   * Getter for birthday instance variable
-   * @return birthday
+   * Getter for birthday instance variable.
+   * @return Member's birthday.
    */
   public MyDate getBirthday() {
     return birthday;
   }
 
+  // ------------------------------ Getters for Assigned Tasks ------------------------------
+
   /**
-   * Getter for assignedTasks instance variable
-   * @return assignedTasks
+   * Getter for all assigned tasks to this member.
+   * @return All the assigned tasks to this member.
    */
   public ArrayList<Task> getAllAssignedTasks() {
     return assignedTasks;
   }
 
-  /**
-   * Method to check if a task is already assigned
-   * @param task
-   * @return true if assigned, false otherwise
-   */
-  public boolean isAssignedToTask(Task task) {
-
-    for (int i = 0; i < assignedTasks.size(); i++)
-    {
-      if (assignedTasks.get(i).equals(task))
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
+  // ------------------------------ Other Methods ------------------------------
 
   /**
    * Assigns task to this member.
    * @param taskToAssign The task object to be assigned.
-   * @throws UnsupportedOperationException if the task is already assigned to the member.
    */
   public void assignTask(Task taskToAssign) {
-    for (Task task : assignedTasks) if (task.getId().equals(taskToAssign.getId())) throw new UnsupportedOperationException("This task is already assigned to the member.");
-    taskToAssign.assignMember(this);
+    for (Task task : assignedTasks) if (task.getId().equals(taskToAssign.getId())) return;
     assignedTasks.add(taskToAssign);
+    taskToAssign.assignMember(this);
   }
 
   /**
    * Unassigns member argument from this task.
-   * @param task The task needed to be unassigned.
-   * @throws NoSuchElementException if the task is not linked to the member.
+   * @param taskToUnassign The task needed to be unassigned.
    */
-  public void unassignFromTask(Task task) {
-    for (int i = 0; i < assignedTasks.size(); i++) if (assignedTasks.get(i).equals(task.getId())) {
-      assignedTasks.get(i).unassignMember(this);
+  public void unassignFromTask(Task taskToUnassign) {
+    for (int i = 0; i < assignedTasks.size(); i++) if (assignedTasks.get(i).getId().equals(taskToUnassign.getId())) {
       assignedTasks.remove(i);
+      taskToUnassign.unassignMember(this);
       return;
     }
-    throw new NoSuchElementException("This task is not a assigned to the member.");
   }
 
   /**
    * Unassigns every task argument from this member.
    */
   public void unassignFromEveryTask() {
-    for (int i = 0; i < assignedTasks.size(); i++) assignedTasks.get(i).unassignMember(this);
-    assignedTasks.clear();
+    for (Task task : assignedTasks) {
+      unassignFromTask(task);
+    }
   }
 
   /**
-   * Method to compare 2 member objects
-   * @param obj
-   * @return true if are equal, false otherwise
+   * Method to compare 2 member objects.
+   * @param obj Object to be compared,
+   * @return True if are equal, false otherwise.
    */
-  public boolean equals(Object obj)
-  {
-    if (!(obj instanceof Member))
-    {
-      return false;
-    }
-    Member other = (Member)obj;
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Member)) return false;
+    Member other = (Member) obj;
 
     for(int i = 0; i < assignedTasks.size(); i++)
     {

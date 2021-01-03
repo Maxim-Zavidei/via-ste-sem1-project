@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="mainGrid" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controller">
+
+    <columnConstraints><ColumnConstraints/></columnConstraints>
+    <rowConstraints><RowConstraints/></rowConstraints>
+    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                minWidth="-Infinity" prefHeight="675.0" prefWidth="1200.0" stylesheets="@main.css">
+        <MenuBar layoutX="200.0" prefHeight="36.0" prefWidth="953.0">
+            <Menu mnemonicParsing="false" text="File">
+                <MenuItem mnemonicParsing="false" text="Close"/>
+                <MenuItem mnemonicParsing="false" onAction="#showItemDialog" text="Add project"/>
+                <MenuItem mnemonicParsing="false" onAction="#showRequirementDialog" text="Add requirement"/>
+                <MenuItem mnemonicParsing="false" onAction="#showMemberDialog" text="Assign member"/>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+                <MenuItem mnemonicParsing="false" text="Delete"/>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+                <MenuItem mnemonicParsing="false" text="About"/>
+            </Menu>
+        </MenuBar>
+        <ListView fx:id="projectView" prefHeight="675.0" prefWidth="200.0"/>
+        <ListView fx:id="reqView" layoutX="251.0" layoutY="404.0" prefHeight="247.0" prefWidth="487.0"/>
+        <Pane layoutX="251.0" layoutY="57.0" prefHeight="337.0" prefWidth="487.0"
+              style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(4, 78, 148,0.1), 10, 0.5, 0.0, 0.0);">
+            <Separator layoutX="18.0" layoutY="56.0" prefHeight="7.0" prefWidth="452.0"/>
+            <Text fx:id="projectText" layoutX="33.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Text" wrappingWidth="246.13671875"/>
+            <Text fx:id="idText" layoutX="410.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Text"/>
+            <TextArea fx:id="projectDescription" layoutX="49.0" layoutY="73.0" prefHeight="118.0"
+                      prefWidth="389.0"/>
+            <ListView fx:id="humanListView" layoutX="50.0" layoutY="215.0" prefHeight="96.0" prefWidth="389.0"/>
+            <Text fx:id="idText1" layoutX="363.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="ID:">
+                <font>
+                    <Font size="20.0"/>
+                </font>
+            </Text>
+        </Pane>
+        <Pane layoutX="776.0" layoutY="57.0" prefHeight="272.0" prefWidth="375.0"
+              style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(4, 78, 148,0.1), 10, 0.5, 0.0, 0.0);">
+            <ProgressIndicator fx:id="progressCircle" layoutX="99.0" layoutY="92.0" prefHeight="72.0"
+                               prefWidth="18.0" progress="0.0"/>
+            <Text fx:id="projectText1" layoutX="19.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Project progress:" textAlignment="JUSTIFY" wrappingWidth="246.13671875">
+                <font>
+                    <Font size="23.0"/>
+                </font>
+            </Text>
+        </Pane>
+        <Pane layoutX="776.0" layoutY="340.0" prefHeight="311.0" prefWidth="375.0"
+              style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(4, 78, 148,0.1), 10, 0.5, 0.0, 0.0);">
+            <Text layoutX="26.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Text>
+            <Separator layoutX="9.0" layoutY="43.0" prefHeight="7.0" prefWidth="356.0"/>
+            <Text layoutX="255.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id:">
+                <font>
+                    <Font size="23.0"/>
+                </font>
+            </Text>
+            <Text fx:id="reqId" layoutX="311.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Text"/>
+            <ProgressBar fx:id="progressBar" layoutX="59.0" layoutY="262.0" prefHeight="18.0" prefWidth="256.0"
+                         progress="0.0"/>
+            <Text fx:id="reqTitle" layoutX="33.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Text">
+                <font>
+                    <Font size="23.0"/>
+                </font>
+            </Text>
+            <Separator layoutX="24.0" layoutY="241.0" prefHeight="0.0" prefWidth="71.0"/>
+            <TextArea fx:id="reqDescription" layoutX="42.0" layoutY="60.0" prefHeight="96.0" prefWidth="290.0"/>
+            <Text fx:id="completedReq" fill="#1bc61b" layoutX="176.0" layoutY="293.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" text="Completed"/>
+        </Pane>
+    </AnchorPane>
+
+</GridPane>

@@ -67,6 +67,7 @@ public class Controller {
                 try {
                     projectManagementModelManager.removeProject(project);
                     projects.remove(project);
+                    ProjectManagementPersistence.save(projectManagementModelManager);
                 } catch (Exception e) {
                     Alert errorAlert = new Alert(Alert.AlertType.CONFIRMATION);
                     errorAlert.setTitle("Warning");
@@ -93,6 +94,7 @@ public class Controller {
                 Project project = (Project) projectView.getSelectionModel().getSelectedItem();
                 try {
                     for (Task task : project.getAllTasks()) task.unassignMember(member);
+                    ProjectManagementPersistence.save(projectManagementModelManager);
                 } catch (Exception e) {
                     Alert errorAlert = new Alert(Alert.AlertType.CONFIRMATION);
                     errorAlert.setTitle("Warning");
@@ -119,6 +121,7 @@ public class Controller {
                 Project project = (Project) projectView.getSelectionModel().getSelectedItem();
                 try {
                     project.removeRequirement(requirement);
+                    ProjectManagementPersistence.save(projectManagementModelManager);
                 } catch (Exception e) {
                     Alert errorAlert = new Alert(Alert.AlertType.CONFIRMATION);
                     errorAlert.setTitle("Warning");
@@ -243,6 +246,7 @@ public class Controller {
             DialogController controller = fxmlLoader.getController();
             List<Object> projectData = controller.processResults();
             projects.add(projectManagementModelManager.addProject((String) projectData.get(0), (String) projectData.get(1), 1, 1, 2030));
+            ProjectManagementPersistence.save(projectManagementModelManager);
         }
     }
 
@@ -267,6 +271,7 @@ public class Controller {
             List<Object> requirementData = controller.processReqResults();
             Project project = (Project) projectView.getSelectionModel().getSelectedItem();
             reqView.getSelectionModel().select(project.addRequirement((String) requirementData.get(0), (String) requirementData.get(1), 1, 1, 2025, "Critical"));
+            ProjectManagementPersistence.save(projectManagementModelManager);
         }
     }
 
@@ -291,6 +296,7 @@ public class Controller {
             List<Object> memberData = controller.processMemberResults();
             Project project = (Project) projectView.getSelectionModel().getSelectedItem();
             humanListView.getSelectionModel().select(projectManagementModelManager.addMember((String) memberData.get(0), "Jaime", new MyDate(1, 1, 2000), "jaimeelena@gmail.com"));
+            ProjectManagementPersistence.save(projectManagementModelManager);
         }
     }
 }

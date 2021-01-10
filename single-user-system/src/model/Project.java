@@ -78,7 +78,7 @@ public class Project implements Serializable {
    */
   public void setDeadline(int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
-    if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
+    //if (deadline.isBefore(new MyDate())) throw new IllegalArgumentException("The deadline must be set to a future date.");
     this.deadline = deadline;
   }
 
@@ -325,7 +325,7 @@ public class Project implements Serializable {
    */
   public Requirement addRequirement(String title, String description, int day, int month, int year, String priorityGroup) {
     MyDate deadline = new MyDate(day, month, year);
-    if (!deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the requirement must be set before the deadline of the project.");
+    //if (!deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the requirement must be set before the deadline of the project.");
     return requirementList.addRequirement(id, title, description, deadline, priorityGroup);
   }
 
@@ -345,7 +345,7 @@ public class Project implements Serializable {
    */
   public Requirement addRequirement(String title, int day, int month, int year, String priorityGroup) {
     MyDate deadline = new MyDate(day, month, year);
-    if (!deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the requirement must be set before the deadline of the project.");
+    //if (!deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the requirement must be set before the deadline of the project.");
     return requirementList.addRequirement(id, title, deadline, priorityGroup);
   }
 
@@ -366,7 +366,7 @@ public class Project implements Serializable {
    */
   public Task addTask(String title, String description, float estimatedWorkHours, int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
-    if (!deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the task must be set before the deadline of the project.");
+    //if (!deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the task must be set before the deadline of the project.");
     return taskList.addTask(id, title, description, estimatedWorkHours, deadline);
   }
 
@@ -386,7 +386,7 @@ public class Project implements Serializable {
    */
   public Task addTask(String title, float estimatedWorkHours, int day, int month, int year) {
     MyDate deadline = new MyDate(day, month, year);
-    if (!deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the task must be set before the deadline of the project.");
+    //if (!deadline.isBefore(this.deadline)) throw new IllegalArgumentException("The deadline of the task must be set before the deadline of the project.");
     return taskList.addTask(id, title, estimatedWorkHours, deadline);
   }
 

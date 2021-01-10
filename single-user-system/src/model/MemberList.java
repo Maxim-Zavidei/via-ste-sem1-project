@@ -78,7 +78,7 @@ public class MemberList implements Serializable {
    * @throws IllegalArgumentException if the a member with the same email already exists.
    */
   public Member hireMember(String firstName, String lastName, MyDate birthday, String email, long telephoneNumber) {
-    for (Member member : memberList) if (member.getFirstName().equals(firstName) && member.getLastName().equals(lastName) || member.getEmail().equals(email)) throw new IllegalArgumentException("A member with this full name or email is already registered.");
+    //for (Member member : memberList) if (member.getFirstName().equals(firstName) && member.getLastName().equals(lastName) || member.getEmail().equals(email)) throw new IllegalArgumentException("A member with this full name or email is already registered.");
     Member memberToReturn = new Member(firstName, lastName, birthday, email, telephoneNumber);
     memberList.add(memberToReturn);
     return memberToReturn;
@@ -95,7 +95,7 @@ public class MemberList implements Serializable {
    * @throws IllegalArgumentException if the a member with the same email already exists.
    */
   public Member hireMember(String firstName, String lastName, MyDate birthday, String email) {
-    for (Member member : memberList) if (member.getFirstName().equals(firstName) && member.getLastName().equals(lastName) || member.getEmail().equals(email)) throw new IllegalArgumentException("A member with this full name or email is already registered.");
+    //for (Member member : memberList) if (member.getFirstName().equals(firstName) && member.getLastName().equals(lastName) || member.getEmail().equals(email)) throw new IllegalArgumentException("A member with this full name or email is already registered.");
     Member memberToReturn = new Member(firstName, lastName, birthday, email);
     memberList.add(memberToReturn);
     return memberToReturn;

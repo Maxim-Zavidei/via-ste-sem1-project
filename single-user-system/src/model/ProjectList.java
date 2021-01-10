@@ -295,8 +295,8 @@ public class ProjectList implements Serializable {
    * @throws IllegalArgumentException if deadline is in the past.
    */
   public Project addProject(String title, String description, int day, int month, int year) {
-    for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
-    if (title.length() > 14) throw new IllegalArgumentException("The project title can not be longer then 14 characters.");
+    //for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
+    //if (title.length() > 14) throw new IllegalArgumentException("The project title can not be longer then 14 characters.");
     Project toReturn = new Project(generateId(), title, description, day, month, year);
     projectList.add(toReturn);
     return toReturn;
@@ -315,8 +315,8 @@ public class ProjectList implements Serializable {
    * @throws IllegalArgumentException if deadline is in the past.
    */
   public Project addProject(String title, int day, int month, int year) {
-    for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
-    if (title.length() > 14) throw new IllegalArgumentException("The project title can not be longer then 14 characters.");
+    //for (Project project : projectList) if (project.getTitle().equals(title)) throw new IllegalArgumentException("A project with this title already exists.");
+    //if (title.length() > 14) throw new IllegalArgumentException("The project title can not be longer then 14 characters.");
     Project toReturn = new Project(generateId(), title, day, month, year);
     projectList.add(toReturn);
     return toReturn;
